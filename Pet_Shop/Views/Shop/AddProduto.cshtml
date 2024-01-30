@@ -1,0 +1,63 @@
+﻿@model Pet_Shop.Models.Produto
+
+<div class="container-manage">
+    <div class="manage-produto">
+        <h5 class="titulo-black">Cadastro de Produto</h5></br>
+        <form asp-controller="Shop" asp-action="AddProduto" method="post" enctype="multipart/form-data">
+            <div class="row mb-3">
+                <label for="inputImagem3" class="col-sm-2 col-form-label">Imagem</label>
+                <div class="col-sm-10">
+                    <input type="file" name="Imagem" class="form-control" id="inputImagem3">
+                    <span asp-validation-for="Imagem" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label for="inputNome3" class="col-sm-2 col-form-label">Nome</label>
+                <div class="col-sm-10">
+                    <input type="text" name="Nome" class="form-control" id="inputCpf3">
+                    <span asp-validation-for="Nome" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label for="inputDec3" class="col-sm-2 col-form-label">Descrição</label>
+                <div class="col-sm-10">
+                    <input type="text" name="Descricao" class="form-control" id="inputFesc3" placeholder="Marca,Modelo e Peso">
+                    <span asp-validation-for="Descricao" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label for="inputValor3" class="col-sm-2 col-form-label">Valor</label>
+                <div class="col-sm-10">
+                    <input type="number" name="Valor" class="form-control" id="inputValor3">
+                    <span asp-validation-for="Valor" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label for="inputEm3" class="col-sm-2 col-form-label">Estoque Minimo</label>
+                <div class="col-sm-10">
+                    <input type="number" name="Estoque_Minimo" class="form-control" id="inputEm3">
+                    <span asp-validation-for="Estoque_Minimo" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label for="inputCat3" class="col-sm-2 col-form-label">Categoria</label>
+                <div class="col-sm-10">
+                    <select class="form-control input-busca col-sm-10" aria-label="Default select example" name="Categoria">
+                        <option selected value="">Escolha uma Categoria</option>
+                        <option value="Alimento">Alimento</option>
+                        <option value="Limpeza">Limpeza</option>
+                        <option value="Brinquedos">Brinquedos</option>
+                        <option value="Outros">Outros</option>
+                    </select>
+                    <span asp-validation-for="Categoria" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="btn-login">
+                <button type="submit" class="btn btn-primary">Cadastrar</button>
+                <a class="btn btn-secondary" asp-controller="Shop" asp-action="ManageShop">Voltar</a>
+            </div>
+
+        </form>
+    </div>
+</div>

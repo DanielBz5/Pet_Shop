@@ -1,0 +1,91 @@
+﻿@model IEnumerable<Pet_Shop.Models.Agendamento>
+
+@{
+    ViewData["Title"] = "Agenda";
+}
+
+<h1>Agenda</h1>
+
+<p class="titulo-black">
+    Agenda
+</p>
+
+<form class="BuscaGrid" asp-controller="Agendamento" asp-action="Agenda" method="post">
+    <h5 style="margin-right: 30px; color:black">Filtros</h5>
+    <div class="filtro-item">
+        <label for="inputCategoria5" class="form-label">Categoria</label>
+        <select class="form-control input-busca" aria-label="Default select example" name="Categoria">
+            <option selected value="">Escolha uma Categoria</option>
+            <option value="Alimento">Alimento</option>
+            <option value="Limpeza">Limpeza</option>
+            <option value="Brinquedos">Brinquedos</option>
+            <option value="Outros">Outros</option>
+        </select>
+    </div>
+</form>
+<table class="table table-striped-columns table-bordered Tabelacss">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Cod)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Cpf)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Nome_Cliente)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Telefone)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Nome_Pet)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Especie)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Nome_Servico)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Data)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cod)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cpf)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nome_Cliente)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Telefone)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nome_Pet)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Especie)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nome_Servico)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Data)
+            </td>
+            <td>
+                <a asp-action="DeleteAgendamento" asp-route-Cod="@item.Cod" class="bnt-excluir">
+                    <i class="bi bi-trash3-fill"></i>
+                </a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

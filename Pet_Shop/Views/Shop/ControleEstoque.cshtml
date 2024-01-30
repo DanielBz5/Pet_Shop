@@ -1,0 +1,87 @@
+﻿@model IEnumerable<Pet_Shop.Models.Produto>
+
+
+
+@{
+    ViewData["Title"] = "Controle Estoque";
+}
+
+<h1>Controle Estoque</h1>
+
+<p class="titulo-black">
+    Produtos acabando no estoque
+</p>
+
+
+<table class="table table-striped-columns table-bordered Tabelacss consulta-produto">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Cod)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Nome)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Descricao)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Categoria)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Estoque_Minimo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Quantidade)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Valor)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+
+                <td>
+                    <a class="celula" asp-controller="Shop" asp-action="GerenciaProduto" asp-route-Cod="@item.Cod">
+                        @Html.DisplayFor(modelItem => item.Cod)
+                    </a>
+                </td>
+                <td>
+                    <a class="celula" asp-controller="Shop" asp-action="GerenciaProduto" asp-route-Cod="@item.Cod">
+                        @Html.DisplayFor(modelItem => item.Nome)
+                    </a>
+                </td>
+                <td>
+                    <a class="celula" asp-controller="Shop" asp-action="GerenciaProduto" asp-route-Cod="@item.Cod">
+                        @Html.DisplayFor(modelItem => item.Descricao)
+                    </a>
+                </td>
+                <td>
+                    <a class="celula" asp-controller="Shop" asp-action="GerenciaProduto" asp-route-Cod="@item.Cod">
+                        @Html.DisplayFor(modelItem => item.Categoria)
+                    </a>
+                </td>
+                <td>
+                    <a class="celula" asp-controller="Shop" asp-action="GerenciaProduto" asp-route-Cod="@item.Cod">
+                        @Html.DisplayFor(modelItem => item.Estoque_Minimo)
+                    </a>
+                </td>
+                <td>
+                    <a class="celula" asp-controller="Shop" asp-action="GerenciaProduto" asp-route-Cod="@item.Cod">
+                        @Html.DisplayFor(modelItem => item.Quantidade)
+                    </a>
+                </td>
+                <td>
+                    <a class="celula" asp-controller="Shop" asp-action="GerenciaProduto" asp-route-Cod="@item.Cod">
+                        @Html.DisplayFor(modelItem => item.Valor)
+                    </a>
+                </td>
+
+            </tr>
+        }
+    </tbody>
+</table>

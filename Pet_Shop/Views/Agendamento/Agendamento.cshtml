@@ -1,0 +1,46 @@
+﻿@model (Pet_Shop.Models.Servicos servicos, Pet_Shop.Models.Agendamento agendamento)
+
+
+<div class="container container-agendamento">
+    <div class="agendamento">
+        <form asp-controller="Agendamento" asp-action="Agendamento" method="post">
+            <h6 class="agendamento-text">Faça Um Novo Agendamento</h6>
+            <div class="row mb-3">
+                <label for="inputServico3" class="col-sm-2 col-form-label">Serviço</label>
+                <div class="col-sm-10">
+                    <select id="ListaServicos" class="form-select form-control" aria-label="Default select example" name="servicos.COd" for="inputServico3" asp-items="ViewBag.ServicosList" onchange="ValorServico()">
+                        <option value="" contextmenu="">Escolha o Serviço que deseja agendar</option>
+                    </select>
+                    <span asp-validation-for="servicos.Nome" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label for="inputData3" class="col-sm-2 col-form-label">Data/Hora</label>
+                <div class="col-sm-10">
+                    <input type="datetime-local" name="agendamento.Data" class="form-control" id="inputData3">
+                    <span asp-validation-for="agendamento.Data" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label for="inputValor3" class="col-sm-2 col-form-label">Valor</label>
+                <div class="col-sm-10 box-valor">
+                    <span id="CampoValor">R$ 0,00</span>
+                </div>
+            </div>
+
+            <div class="btn-agendamento">
+                <button type="submit" class="btn btn-primary">Agendar</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@{
+    List<Agendamento> ListaAgenda = ViewBag.ListaAgenda;
+}
+
+@Html.Partial("_AgendaCliente", ListaAgenda)
+
+<script>
+    window.servicosData = @Html.Raw(Json.Serialize(ViewBag.ListaServicos));
+</script>

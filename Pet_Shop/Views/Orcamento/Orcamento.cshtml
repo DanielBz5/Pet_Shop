@@ -1,0 +1,68 @@
+﻿
+<div class="container-orcamento">
+    <div class="container-cards">
+        <div class="escolhecard-text">Escolha os Serviços para Orçamento</div>
+        <div class="card-group cardgroup-orcamento">
+            <div class="card card-orcamento" id="servico1" data-parametro="false" onclick="SelectServico(1, this)">
+                <img src="~/img/banho.jpg" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="cardorcamento-title">Banho</h5>
+                </div>
+            </div>
+            <div class="card card-orcamento" id="servico2" data-parametro="false" onclick="SelectServico(2, this)">
+                <img src="~/img/tosa.jpg" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="cardorcamento-title">Tosa</h5>
+
+                </div>
+            </div>
+            <div class="card card-orcamento" id="servico3" data-parametro="false" onclick="SelectServico(3, this)">
+                <img src="~/img/adestrador.jpg" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="cardorcamento-title">Adestrador</h5>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="card-group cardgroup-orcamento">
+            <div class="card card-orcamento"  id="servico4" data-parametro="false" onclick="SelectServico(4, this)">
+                <img src="~/img/consulta.jpg" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="cardorcamento-title">Consultas</h5>
+
+                </div>
+            </div>
+            <div class="card card-orcamento" id="servico5" data-parametro="false" onclick="SelectServico(5, this)">
+                <img src="~/img/Cirurgia.jpg" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="cardorcamento-title">Cirurgia</h5>
+
+                </div>
+            </div>
+            <div class="card card-orcamento" id="servico6" data-parametro="false" onclick="SelectServico(6, this)">
+                <img src="~/img/hotel.jpg" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="cardorcamento-title">Hotel Pet</h5>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="carrinho">
+        <div class="servicos-orcamento">
+            <span class="titulo-black-center">Orçamento</span>
+            <span id="servico-select"></span>
+        </div>
+        <div class="down-orcamento">
+            <span id="total-orcamento">Total: R$ 0,00</span>
+            <a class="btn btn-secondary" asp-controller="Orcamento" asp-action="OrcamentoSucesso">Enviar Orçamento</a>
+        </div>
+            
+    </div>
+</div>
+
+<script>
+    window.ListaOrcamente = @Html.Raw(Json.Serialize(ViewBag.ListaOrcamente));
+    window.ListaValorOrcamento = @Html.Raw(Json.Serialize(ViewBag.ListaValorOrcamento));
+</script>

@@ -1,0 +1,78 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] Pet_Shop</title>
+    <!--Fontes-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:ital,wght@0,400;1,300&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Jost&display=swap" rel="stylesheet">
+    <!--Bootstrap-->
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <!--Bootstrap Icons-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <!--Meu CSS-->
+    <link rel="stylesheet" href="~/css/site.css" />
+
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg bg-body-tertiary menu">
+            <div class="container-fluid">
+                <a navbar-brand asp-controller="Home" asp-action="Index">
+                    <img class="img-fluid logo d-inline-block align-text-top" src="~/img/logo.png" alt="logo" />
+                </a>
+                <h1>PET SHOP</h1>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon">---</span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                    <div class="navbar-nav navega">
+                        <a class="nav-link active" aria-current="page" asp-controller="Home" asp-action="Index">Home</a>
+                        <a class="nav-link" asp-controller="Agendamento" asp-action="Agendamento" onclick="AvisoLoginTeste()">Agendamentos</a>
+                        <a class="nav-link" asp-controller="Orcamento" asp-action="Orcamento">Orçamento </a>
+                        <a class="nav-link" asp-controller="Shop" asp-action="Shop">Shop</a>
+                        <a class="nav-link" asp-controller="Contato" asp-action="Contato">Contatos</a>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <form asp-controller="Home" asp-action="Logout" method="post">
+                                <button type="submit" class="status-login"><i class="bi bi-box-arrow-in-left icon-acesso"></i></button><!--ta saindo branco no fundo-->
+                            </form>
+                        }
+                        else
+                        {
+                            <a class="status-login" asp-controller="Home" asp-action="Login"><i class="bi bi-person-circle icon-acesso"></i></a>
+                        }
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container container-footer">
+            <a class="footer-item" href="">
+                <i class="bi bi-geo-alt-fill"></i>Rua Nove de semtembro, 356 - Vinhedo
+            </a>
+            <a class="footer-item" href="">
+                <i class="bi bi-whatsapp"></i>(19) 991442015
+            </a>
+            <a class="footer-item" href="">
+                <i class="bi bi-instagram"></i>Pet_Shop_
+            </a>
+
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @RenderSection("Scripts", required: false)  
+</body>
+</html>

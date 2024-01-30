@@ -1,0 +1,552 @@
+﻿
+/*******************************************Layout**************************************************************************
+---------------------------------------------------------------------------------------------------------------------------- */
+
+/*--------Menu*/
+.menu {
+    background-color: #009C8E;
+    /*#009C8E*/
+    /*#15b135*/
+}
+
+.logo {
+    width:80px;
+    height: 80px;
+}
+
+.nav-link {
+    font-size: 19px;
+    color: white;
+    margin-left: 35px;
+    font-family: 'Prompt', sans-serif;
+    font-weight: bold;
+    transition: font-size 0.3s;
+}
+
+.nav-link:hover{
+    font-size: 21px;
+    color:white;
+}
+
+.navega {
+    margin-left: 60px;
+}
+
+h1 {
+    color: white;
+    font-family: 'Prompt', sans-serif;
+    font-weight: bold;
+}
+
+.icon-acesso {
+    font-size: 30px;
+    color: white;
+    background-color: #009C8E;
+}
+
+.status-login {
+    margin-left: 40px;
+    background-color: #009C8E;
+    border: none
+}
+
+/*--------Footer*/
+.footer {
+    background-color: dimgray;
+    margin-top: 40px;
+    height: 100px;
+}
+
+.container-footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px;
+}
+
+.footer-item {
+    font-size: 20px;
+    color: white;
+    transition: font-size 0.5s;
+    margin-left: 25px;
+    margin-right: 25px;
+}
+
+.footer-item:hover {
+    font-size: 21px;
+    color: white;
+}
+
+/*--------MessageBox*/
+.messagebox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 20px;
+    width: auto;
+    margin-bottom: 20%;
+    background-color: #56cbc4;
+    border-radius: 7px;
+    padding: 35px;
+    margin-top: 5%;
+    margin-bottom: 15%;
+    box-shadow: 5px 5px 5px black;
+}
+
+.message{
+    margin-top: 20px;
+    margin-bottom: -5px;
+}
+
+
+
+/*******************************************HOME**************************************************************************
+---------------------------------------------------------------------------------------------------------------------------- */
+
+/*--------Carossel*/
+
+h5 {
+    font-size: 30px;
+    color: white;
+    font-family: 'Prompt', sans-serif;
+    font-weight: bold;
+}
+
+
+.carrosel {
+    border-radius: 10px;
+    margin-top: 20px;
+    padding: 60px;
+    background-color: #009C8E;
+}
+
+.img-slide {
+    border-radius: 15px;
+}
+
+/*--------Cards*/
+.card-group {
+    margin-top: 30px;
+}
+
+.card {
+    background-color: #009C8E;
+    margin-left: 15px;
+    margin-right: 15px;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.card-img-top{
+    border-radius:10px;
+}
+
+.card-title {
+    color: white;
+    font-family: 'Prompt', sans-serif;
+}
+
+.card-text {
+    color: white;
+    font-family: 'Prompt', sans-serif;
+}
+
+
+
+/*******************************************LOGIN ------ REGISTER**************************************************************************
+---------------------------------------------------------------------------------------------------------------------------- */
+
+/*--------Login*/
+
+.container-login{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.login {
+    background-color: #56cbc4;
+    border-radius: 7px;
+    padding: 35px;
+    margin-top: 7%;
+    margin-bottom: 20%;
+    box-shadow: 5px 5px 5px black;
+}
+
+.btn-login{
+    display:flex;
+    justify-content:space-between;
+    margin-top: 50px;
+}
+
+/*--------Register*/
+
+.register {
+    width: 60%;
+    background-color: #56cbc4;
+    border-radius: 7px;
+    padding: 35px;
+    padding-top: 5px;
+    margin-top: 5%;
+    margin-bottom: 7%;
+    box-shadow: 5px 5px 5px black;
+}
+
+.register-text {
+    margin-top:35px;
+    color: black;
+    font-weight: bold;
+}
+
+
+/*******************************************Agendamento**************************************************************************
+---------------------------------------------------------------------------------------------------------------------------- */
+
+.container-agendamento {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.agendamento {
+    width: 60%;
+    background-color: #56cbc4;
+    border-radius: 7px;
+    padding: 35px;
+    padding-top: 5px;
+    margin-top: 5%;
+    margin-bottom: 7%;
+    box-shadow: 5px 5px 5px black;
+}
+
+.btn-agendamento {
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 50px;
+}
+
+.agendamento-text {
+    margin-bottom: 30px;
+    margin-top: 20px;
+}
+
+#CampoValor {
+    font-family: 'Prompt', sans-serif;
+    font-weight: bold;
+}
+
+.box-valor{
+    padding-top: 9px;
+}
+
+.agendamento-sucesso {
+    width: auto;
+    margin-bottom: 20%;
+}
+
+.titulo-black-center {
+    display: flex;
+    justify-content: center;
+    color: black;
+    font-family: 'Prompt', sans-serif;
+    font-weight: bold;
+    font-size: 25px;
+}
+
+
+/*******************************************Agenda***********************************************************************
+---------------------------------------------------------------------------------------------------------------------------- */
+
+
+.Tabelacss {
+    background-color: #56cbc4;
+    box-shadow: 5px 5px 5px black;
+    margin-bottom: 60px;
+}
+
+.BuscaGrid {
+    display: flex;
+    background-color: #56cbc4;
+    padding: 20px;
+    justify-content: flex-start;
+    flex-direction: row;
+    align-items: center;
+    width: auto;
+    box-shadow: 5px 5px 5px black;
+}
+
+.input-busca{
+    width: 300px;
+    margin-right: 50px;
+    margin-left: 5px;
+}
+
+.titulo-black {
+    color: black;
+    font-family: 'Prompt', sans-serif;
+    font-weight: bold;
+    font-size: 30px;
+}
+
+.bnt-excluir{
+    color:#ef4040;
+}
+
+.container-delete {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.delete {
+    width: 50%;
+    background-color: #56cbc4;
+    border-radius: 7px;
+    padding: 35px;
+    margin-top: 2%;
+    box-shadow: 5px 5px 5px black;
+}
+
+.dados-delete{
+    display: flex;
+    flex-direction:column;
+}
+
+.dado-delete {
+    display: flex;
+    flex-direction: row;
+    border-bottom: 1px solid black;
+    margin-top:5px;
+}
+
+
+/*******************************************ORÇAMENTO***********************************************************************
+---------------------------------------------------------------------------------------------------------------------------- */
+
+.container-orcamento{
+    display:flex
+}
+
+.container-cards{
+    width: 60%;
+    margin-right:10px;
+}
+
+.carrinho {
+    display: flex;
+    justify-content:space-between;
+    flex-direction:column;
+    align-items:center;
+    width: 35%;
+    background-color: #009C8E;
+    border-radius: 7px;
+    padding: 35px;
+    margin-top: 5%;
+    box-shadow: 5px 5px 5px black;
+}
+
+.cardgroup-orcamento {
+    width: auto;
+    height: auto;
+}
+
+.cardorcamento-title{
+    font-size: 22px;
+}
+
+.escolhecard-text {
+    margin-top: 3%;
+    color: black;
+    font-weight: bold;
+    margin-bottom: -10px;
+    margin-left: 20px;
+    font-size: 20px;
+}
+
+.card-orcamento:hover {
+    background-color: #139959;
+    border: 1px solid black;
+}
+
+.card-selecionado {
+    background-color: #139959;
+    border: 1px solid black;
+}
+
+.servicos-orcamento {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.down-orcamento {
+    display: flex;
+    flex-direction:column;
+    justify-content:center;
+    
+}
+
+#total-orcamento {
+    font-weight: bold;
+    font-size: 25px;
+    margin-bottom: 20px;
+}
+
+#servico-select {
+    margin-top: 25px;
+    font-weight: bold;
+}
+
+
+/*******************************************SHOP***********************************************************************
+---------------------------------------------------------------------------------------------------------------------------- */
+
+
+.shop {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-top: 30px;
+}
+
+.produto {
+    width: 30%;
+    height: auto;
+    margin-bottom: 40px;
+}
+
+.container-img-shop {
+    display: flex;
+    justify-content:center;
+    padding:0px;
+}
+
+.img-shop {
+    width: 70%;
+    height: auto;
+    margin:0px;
+}
+
+.produto-title {
+    font-weight: 600;
+    color: white;
+    font-family: 'Jost', sans-serif;
+    margin-bottom: 0px;
+}
+
+.produto-text {
+    color: white;
+    font-family: 'Jost', sans-serif;
+}
+
+.produto-valor {
+    font-size: 25px;
+    color: white;
+    font-family: 'Jost', sans-serif;
+}
+
+.filtro {
+    display:flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    border-radius: 10px;
+    display: flex;
+    background-color: #56cbc4;
+    padding: 20px;
+    justify-content: flex-start;
+    flex-direction: row;
+    align-items: center;
+    width: auto;
+}
+
+.filtro-item{
+    display:flex;
+    flex-direction: row;
+    align-items: center;
+    
+}
+
+
+/*--------------Manage*/
+
+.container-manage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: auto
+}
+
+.manage {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-top: 30px;
+    width: 80%;
+}
+
+.icon-manage{
+    color:black;
+    font-size:300%;
+}
+
+.a-manage {
+    display: flex;
+    align-items: center;
+    width: 40%;
+}
+
+/*--------Add Produto*/
+
+.manage-produto {
+    width: 60%;
+    background-color: #56cbc4;
+    border-radius: 7px;
+    padding: 35px;
+    padding-top: 5px;
+    margin-top: 5%;
+    margin-bottom: 7%;
+    box-shadow: 5px 5px 5px black;
+    padding:30px;
+}
+
+
+
+/*--------Consulta Produto*/
+.consulta-produto{
+    margin-bottom: 15%;
+}
+
+.filtro-consulta {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    display: flex;
+    background-color: #56cbc4;
+    padding: 20px;
+    justify-content: flex-start;
+    flex-direction: row;
+    align-items: center;
+    width: auto;
+    box-shadow: 5px 5px 5px black;
+}
+
+th,
+td {/*arruma a grid*/
+    padding: 0px;
+}
+
+
+.celula {
+    display: block;
+    width: 100%;
+    height: 100%;
+    text-decoration: none;
+}
+
+.celula :hover {
+    background-color: #139959;
+}

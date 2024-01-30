@@ -1,0 +1,73 @@
+﻿@model IEnumerable<Pet_Shop.Models.Agendamento>
+
+<p class="titulo-black-center">
+    Meus Agendamentos
+</p>
+
+<form class="BuscaGrid" asp-controller="Agendamento" asp-action="AgendaCliente" method="post">
+    <label for="inputData5" class="form-label">Data</label>
+    <input type="date" id="inputData5" class="form-control input-busca" aria-describedby="passwordHelpBlock" name="Data">
+
+    <button type="submit" class="btn btn-primary">Pesquisar</button>
+</form>
+<table class="table table-striped-columns table-bordered Tabelacss">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Cod)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Cpf)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Nome_Cliente)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Telefone)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Nome_Pet)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Especie)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Nome_Servico)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Data)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Cod)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Cpf)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nome_Cliente)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Telefone)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nome_Pet)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Especie)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nome_Servico)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Data)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

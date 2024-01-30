@@ -1,0 +1,45 @@
+﻿@model List<Pet_Shop.Models.Produto>
+
+
+
+<form class="filtro" asp-controller="Shop" asp-action="FiltroShop" method="post">
+    <h5 style="margin-right: 30px; color:black">Filtros</h5>
+    <div class="filtro-item">
+        <label for="inputCategoria5" class="form-label">Categoria</label>
+        <select class="form-control input-busca" aria-label="Default select example" name="Categoria">
+            <option selected value="">Escolha uma Categoria</option>
+            <option value="Alimento">Alimento</option>
+            <option value="Limpeza">Limpeza</option>
+            <option value="Brinquedos">Brinquedos</option>
+            <option value="Outros">Outros</option>
+        </select>
+    </div>
+
+    <div class="filtro-item">
+        <label for="inputNome5" class="form-label">Nome</label>
+        <input type="text" id="inputNome5" class="form-control input-busca" aria-describedby="passwordHelpBlock" name="Nome">
+    </div>
+
+    <button type="submit" class="btn btn-primary">Pesquisar</button>
+</form>
+
+
+<div class="shop">
+    @foreach (var produto in Model)
+    {
+        <div class="card produto">
+            <div class="container-img-shop">
+                <img class="img-shop"  src="data:image/png;base64,@(Convert.ToBase64String(produto.Imagem))" alt="Imagem do Produto">
+            </div>
+           
+            <div class="card-body">
+                <h5 class="card-title produto-title">@produto.Nome</h5>
+                <p class="card-text">@produto.Descricao</p>
+                <p class="produto-valor">R$ @produto.Valor</p>
+                <button type="button" class="btn btn-light">Adicionar ao Carrinho</button>
+            </div>
+        </div>
+    }
+</div>
+
+

@@ -1,0 +1,88 @@
+﻿@model Pet_Shop.Models.Agendamento
+
+@{
+    ViewData["Title"] = "DeleteAgendamento";
+}
+
+<h1>DeleteAgendamento</h1>
+<div class="container container-delete">
+    <h3>Tem certeza de que deseja excluir esse agendamento?</h3>
+    <div class="delete">
+        <h4>Agendamento</h4>
+        <br/>
+        <dl class="dados-delete">
+            <div class="dado-delete">
+                <dt class="col-sm-6">
+                    @Html.DisplayNameFor(model => model.Cod)
+                </dt>
+                <dd class="col-sm-12">
+                    @Html.DisplayFor(model => model.Cod)
+                </dd>
+            </div>
+            <div class="dado-delete">
+                <dt class="col-sm-6">
+                    @Html.DisplayNameFor(model => model.Cpf)
+                </dt>
+                <dd class="col-sm-12">
+                    @Html.DisplayFor(model => model.Cpf)
+                </dd>
+            </div>
+            <div class="dado-delete">
+                <dt class="col-sm-6">
+                    @Html.DisplayNameFor(model => model.Nome_Cliente)
+                </dt>
+                <dd class="col-sm-12">
+                    @Html.DisplayFor(model => model.Nome_Cliente)
+                </dd>
+            </div>
+            <div class="dado-delete">
+                <dt class="col-sm-6">
+                    @Html.DisplayNameFor(model => model.Telefone)
+                </dt>
+                <dd class="col-sm-12">
+                    @Html.DisplayFor(model => model.Telefone)
+                </dd>
+            </div>   
+            <div class="dado-delete">
+                <dt class="col-sm-6">
+                    @Html.DisplayNameFor(model => model.Nome_Pet)
+                </dt>
+                <dd class="col-sm-12">
+                    @Html.DisplayFor(model => model.Nome_Pet)
+                </dd>
+            </div>
+            <div class="dado-delete">
+                <dt class="col-sm-6">
+                    @Html.DisplayNameFor(model => model.Especie)
+                </dt>
+                <dd class="col-sm-12">
+                    @Html.DisplayFor(model => model.Especie)
+                </dd>
+            </div>   
+            <div class="dado-delete">
+                <dt class="col-sm-6">
+                    @Html.DisplayNameFor(model => model.Nome_Servico)
+                </dt>
+                <dd class="col-sm-12">
+                    @Html.DisplayFor(model => model.Nome_Servico)
+                </dd>
+            </div>
+            <div class="dado-delete">
+                <dt class="col-sm-6">
+                    @Html.DisplayNameFor(model => model.Data)
+                </dt>
+                <dd class="col-sm-12">
+                    @Html.DisplayFor(model => model.Data)
+                </dd>
+            </div>    
+        </dl>
+
+        <form asp-controller="Agendamento" asp-action="DeleteAgendamento" method="post">
+            <input type="hidden" asp-for="Cod" />
+            <div class="btn-login">
+                <input type="submit" value="Excluir" class="btn btn-danger" /> 
+                <a asp-controller="Agendamento" asp-action="Agenda" class="btn btn-secondary"><i class="bi bi-backspace-fill"></i>  Voltar</a>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,73 @@
+﻿@model (Pet_Shop.Models.Cliente cliente, Pet_Shop.Models.Pet pet)
+
+
+<div class="container container-login">
+    <div class="register">
+        <form asp-controller="Home" asp-action="IncluiRegister" method="post">
+            <h6 class="register-text">Seus Dados</h6>
+            <div class="row mb-3">
+                <label for="inputCpf3" class="col-sm-2 col-form-label">CPF</label>
+                <div class="col-sm-10">
+                    <input type="number" name="Cpf" class="form-control" id="inputCpf3">
+                    <span asp-validation-for="cliente.Cpf" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label for="inputNome3" class="col-sm-2 col-form-label">Nome</label>
+                <div class="col-sm-10">
+                    <input type="text" name="Nome" class="form-control" id="inputNome3">
+                    <span asp-validation-for="cliente.Nome" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label for="inputTel3" class="col-sm-2 col-form-label">Telefone</label>
+                <div class="col-sm-10">
+                    <input type="number" name="Telefone" class="form-control" id="inputTel3">
+                    <span asp-validation-for="cliente.Telefone" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label for="inputEnd3" class="col-sm-2 col-form-label">Endereço</label>
+                <div class="col-sm-10">
+                    <input type="text" name="Endereco" class="form-control" id="inputEnd3">
+                    <span asp-validation-for="cliente.Endereco" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label for="inputPassword3" class="col-sm-2 col-form-label">Senha</label>
+                <div class="col-sm-10">
+                    <input type="password" name="Senha" class="form-control" id="inputPassword3">
+                    <span asp-validation-for="cliente.Senha" class="text-danger"></span>
+                </div>
+            </div>
+
+            <h6 class="register-text">Dados do seu Pet</h6>
+            <div class="row mb-3">
+                <label for="inputPet3" class="col-sm-2 col-form-label">Nome Pet</label>
+                <div class="col-sm-10">
+                    <input type="text" name="pet.Nome" class="form-control" id="inputPet3">
+                    <span asp-validation-for="pet.Nome" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label for="inputEspecie3" class="col-sm-2 col-form-label">Espécie</label>
+                <div class="col-sm-10">
+                    <input type="text" name="pet.Especie" placeholder="Ex:Cachorro" class="form-control" id="inputEspecie3">
+                    <span asp-validation-for="pet.Especie" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label for="inputRaca3" class="col-sm-2 col-form-label">Raça</label>
+                <div class="col-sm-10">
+                    <input type="text" name="pet.Raca" placeholder="Ex:Pit Bul" class="form-control" id="inputRaca3">
+                    <span asp-validation-for="pet.Raca" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="btn-login">
+                <button type="submit" class="btn btn-primary">Register</button>
+            </div>
+            <span class="text-danger">@ViewBag.ResultRegister</span>
+        </form>
+    </div>
+</div>
