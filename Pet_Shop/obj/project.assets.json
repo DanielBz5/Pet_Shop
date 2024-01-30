@@ -7601,11 +7601,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Leo M\\OneDrive\\Documentos\\Pessoal\\Asp.Net Core\\Pet_Shop\\Pet_Shop\\Pet_Shop.csproj",
+      "projectUniqueName": "C:\\Users\\Leo M\\Source\\Repos\\DanielBz5\\Pet_Shop\\Pet_Shop\\Pet_Shop.csproj",
       "projectName": "Pet_Shop",
-      "projectPath": "C:\\Users\\Leo M\\OneDrive\\Documentos\\Pessoal\\Asp.Net Core\\Pet_Shop\\Pet_Shop\\Pet_Shop.csproj",
+      "projectPath": "C:\\Users\\Leo M\\Source\\Repos\\DanielBz5\\Pet_Shop\\Pet_Shop\\Pet_Shop.csproj",
       "packagesPath": "C:\\Users\\Leo M\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Leo M\\OneDrive\\Documentos\\Pessoal\\Asp.Net Core\\Pet_Shop\\Pet_Shop\\obj\\",
+      "outputPath": "C:\\Users\\Leo M\\Source\\Repos\\DanielBz5\\Pet_Shop\\Pet_Shop\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Leo M\\AppData\\Roaming\\NuGet\\NuGet.Config",
