@@ -9243,11 +9243,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Leo M\\Source\\Repos\\DanielBz5\\Pet_Shop\\Pet_Shop.Test\\Pet_Shop.Test.csproj",
+      "projectUniqueName": "C:\\Users\\Leo M\\source\\repos\\DanielBz5\\Pet_Shop\\Pet_Shop.Test\\Pet_Shop.Test.csproj",
       "projectName": "Pet_Shop.Test",
-      "projectPath": "C:\\Users\\Leo M\\Source\\Repos\\DanielBz5\\Pet_Shop\\Pet_Shop.Test\\Pet_Shop.Test.csproj",
+      "projectPath": "C:\\Users\\Leo M\\source\\repos\\DanielBz5\\Pet_Shop\\Pet_Shop.Test\\Pet_Shop.Test.csproj",
       "packagesPath": "C:\\Users\\Leo M\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Leo M\\Source\\Repos\\DanielBz5\\Pet_Shop\\Pet_Shop.Test\\obj\\",
+      "outputPath": "C:\\Users\\Leo M\\source\\repos\\DanielBz5\\Pet_Shop\\Pet_Shop.Test\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Leo M\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -9264,8 +9264,8 @@
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
           "projectReferences": {
-            "C:\\Users\\Leo M\\Source\\Repos\\DanielBz5\\Pet_Shop\\Pet_Shop\\Pet_Shop.csproj": {
-              "projectPath": "C:\\Users\\Leo M\\Source\\Repos\\DanielBz5\\Pet_Shop\\Pet_Shop\\Pet_Shop.csproj"
+            "C:\\Users\\Leo M\\source\\repos\\DanielBz5\\Pet_Shop\\Pet_Shop\\Pet_Shop.csproj": {
+              "projectPath": "C:\\Users\\Leo M\\source\\repos\\DanielBz5\\Pet_Shop\\Pet_Shop\\Pet_Shop.csproj"
             }
           }
         }
