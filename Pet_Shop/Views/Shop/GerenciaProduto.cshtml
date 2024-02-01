@@ -1,65 +1,72 @@
 ﻿@model Pet_Shop.Models.Produto
 
 <div class="container-manage">
+    <div class="container-btn">
+        <a class="btn btn-navega" asp-controller="Shop" asp-action="ConsultaProduto"><i class="bi bi-search"></i>Consultar Produtos</a>
+        <a class="btn btn-navega" asp-controller="Shop" asp-action="AddProduto"><i class="bi bi-bag-plus-fill"></i>Cadastrar Produto</a>
+    </div>
     <div class="manage-produto">
-        <h5 class="titulo-black">Gerencia Produto</h5></br>
-        <form asp-controller="Shop" asp-action="GerenciaProdutoPost" method="post" enctype="multipart/form-data">
-            <div class="row mb-3">
-                <div class="col-sm-10">
-                    @*<img class="img-shop" src="data:image/png;base64,@(Convert.ToBase64String(Produto.Imagem))" alt="Imagem do Produto">*@
+        <h5 class="titulo-black">Gerencia Produto</h5><br>
+        <form class="form-gerencia" asp-controller="Shop" asp-action="GerenciaProdutoPost" method="post" enctype="multipart/form-data">
+            <div class="box-gerencia-um">
+                <div class="img-gerencia">
+                    <img class="img-shop" src="data:image/png;base64,@(Convert.ToBase64String(Model.Imagem))" alt="Imagem do Produto">
                 </div>
-            </div>
-            <div class="row mb-3">
-                <label for="inputCod3" class="col-sm-2 col-form-label">Cod</label>
-                <div class="col-sm-10">
-                    <input type="text" asp-for="Cod" class="form-control" id="inputCod3" readonly>
-                </div>
-            </div>
-            <div class="row mb-3">
-                <label for="inputNome3" class="col-sm-2 col-form-label">Nome</label>
-                <div class="col-sm-10">
-                    <input type="text" asp-for="Nome" class="form-control" id="inputNome3" readonly>
-                </div>
-            </div>
-            <div class="row mb-3">
-                <label for="inputDesc3" class="col-sm-2 col-form-label">Descrição</label>
-                <div class="col-sm-10">
-                    <input type="text" asp-for="Descricao" class="form-control" id="inputDesc3" readonly>
-                </div>
-            </div>
-            <div class="row mb-3">
-                <label for="inputValor3" class="col-sm-2 col-form-label">Valor</label>
-                <div class="col-sm-10">
-                    <input type="number" asp-for="Valor" class="form-control" id="inputValor3">
-                    <span asp-validation-for="Valor" class="text-danger"></span>
-                </div>
-            </div>
-            <div class="row mb-3">
-                <label for="inputQtd3" class="col-sm-2 col-form-label">Quantidade</label>
-                <div class="col-sm-10">
-                    <input type="number" asp-for="Quantidade" class="form-control" id="inputQtd3">
-                    <span asp-validation-for="Quantidade" class="text-danger"></span>
-                </div>
-            </div>
-            <div class="row mb-3">
-                <label for="inputEm3" class="col-sm-2 col-form-label">Estoque Minimo</label>
-                <div class="col-sm-10">
-                    <input type="number" asp-for="Estoque_Minimo" class="form-control" id="inputEm3">
-                    <span asp-validation-for="Estoque_Minimo" class="text-danger"></span>
-                </div>
-            </div>
-            <div class="row mb-3">
-                <label for="inputCat3" class="col-sm-2 col-form-label">Categoria</label>
-                <div class="col-sm-10">
-                    <input type="text" asp-for="Categoria" class="form-control" id="inputCat3" readonly>
+
+                <div>
+                    <a class="btn btn-secondary" asp-controller="Shop" asp-action="ConsultaProduto">Voltar</a>
+                    <button type="submit" class="btn btn-primary">Alterar</button>
+                    <a class="btn btn-danger" asp-controller="Shop" asp-action="DeletaProduto">Deletar</a>
                 </div>
             </div>
 
-            <div class="btn-login">
-                <button type="submit" class="btn btn-primary">Atualizar</button>
-                <a class="btn btn-secondary" asp-controller="Shop" asp-action="ConsultaProduto">Voltar</a>
+            <div class="box-gerencia-dois">
+                <div class="row mb-3">
+                    <label for="inputCod3" class="col-sm-2 col-form-label">Cod</label>
+                    <div class="col-sm-10">
+                        <input type="text" asp-for="Cod" class="form-control" id="inputCod3" readonly>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="inputNome3" class="col-sm-2 col-form-label">Nome</label>
+                    <div class="col-sm-10">
+                        <input type="text" asp-for="Nome" class="form-control" id="inputNome3" readonly>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="inputDesc3" class="col-sm-2 col-form-label">Descrição</label>
+                    <div class="col-sm-10">
+                        <input type="text" asp-for="Descricao" class="form-control" id="inputDesc3" readonly>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="inputValor3" class="col-sm-2 col-form-label">Valor</label>
+                    <div class="col-sm-10">
+                        <input type="number" asp-for="Valor" class="form-control" id="inputValor3">
+                        <span asp-validation-for="Valor" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="inputQtd3" class="col-sm-2 col-form-label">Quantidade</label>
+                    <div class="col-sm-10">
+                        <input type="number" asp-for="Quantidade" class="form-control" id="inputQtd3">
+                        <span asp-validation-for="Quantidade" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="inputEm3" class="col-sm-2 col-form-label">Estoque Minimo</label>
+                    <div class="col-sm-10">
+                        <input type="number" asp-for="Estoque_Minimo" class="form-control" id="inputEm3">
+                        <span asp-validation-for="Estoque_Minimo" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="inputCat3" class="col-sm-2 col-form-label">Categoria</label>
+                    <div class="col-sm-10">
+                        <input type="text" asp-for="Categoria" class="form-control" id="inputCat3" readonly>
+                    </div>
+                </div>
             </div>
-
         </form>
     </div>
 </div>

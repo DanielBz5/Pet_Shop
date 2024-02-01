@@ -6,10 +6,13 @@
     ViewData["Title"] = "Consulta Produto";
 }
 
+
+
 <h1>Consulta de Produto</h1>
 
-<p class="titulo-black">
+<p class="titulo-black container-titulo-btn">
     Consulta de Produto
+    <a class="btn btn-navega" asp-controller="Shop" asp-action="AddProduto"><i class="bi bi-bag-plus-fill"></i>Cadastrar Produto</a>
 </p>
 
 <form class="filtro-consulta" asp-controller="Shop" asp-action="ConsultaProduto" method="post">

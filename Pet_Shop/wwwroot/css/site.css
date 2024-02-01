@@ -474,9 +474,12 @@ h5 {
 .container-manage {
     display: flex;
     justify-content: center;
+    flex-direction:column;
     align-items: center;
     width: 100%;
-    height: auto
+    height: auto;
+    margin-top: 4%;
+    margin-bottom: 7%;
 }
 
 .manage {
@@ -502,18 +505,27 @@ h5 {
 /*--------Add Produto*/
 
 .manage-produto {
-    width: 60%;
     background-color: #56cbc4;
     border-radius: 7px;
     padding: 35px;
     padding-top: 5px;
-    margin-top: 5%;
-    margin-bottom: 7%;
     box-shadow: 5px 5px 5px black;
     padding:30px;
 }
 
+.container-btn{
+    display:flex;
+    align-items:start;
+    width:60%;
+    margin-bottom: 7px;
+}
 
+.btn-navega {
+    background-color: #56cbc4;
+    border-radius: 7px;
+    box-shadow: 3px 3px 3px black;
+    margin-right: 10px;
+}
 
 /*--------Consulta Produto*/
 .consulta-produto{
@@ -534,8 +546,13 @@ h5 {
     box-shadow: 5px 5px 5px black;
 }
 
+.container-titulo-btn{
+    display:flex;
+    justify-content:space-between;
+}
+
 th,
-td {/*arruma a grid*/
+td { /*arruma a grid*/
     padding: 0px;
 }
 
@@ -549,4 +566,27 @@ td {/*arruma a grid*/
 
 .celula :hover {
     background-color: #139959;
+}
+
+/*--------Gerencia Produto*/
+
+.form-gerencia {
+    display: flex;
+}
+
+.box-gerencia-um {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 80%;
+    height: auto;
+}
+
+.box-gerencia-dois{
+    width:120%;
+}
+
+.img-gerencia {
+    width: 70%;
+    height: auto;
 }
