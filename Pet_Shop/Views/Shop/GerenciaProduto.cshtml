@@ -14,9 +14,9 @@
                 </div>
 
                 <div>
-                    <a class="btn btn-secondary" asp-controller="Shop" asp-action="ConsultaProduto">Voltar</a>
-                    <button type="submit" class="btn btn-primary">Alterar</button>
-                    <a class="btn btn-danger" asp-controller="Shop" asp-action="DeletaProduto">Deletar</a>
+                    <a class="btn btn-secondary" asp-controller="Shop" asp-action="ConsultaProduto"><i class="bi bi-caret-left-fill"></i>Voltar</a>
+                    <button type="submit" class="btn btn-primary"><i class="bi bi-pencil-fill"></i>Alterar</button>
+                    <a class="btn btn-danger" id="btn-deleta-produto"><i class="bi bi-trash3-fill"></i>Deletar</a>
                 </div>
             </div>
 
@@ -36,7 +36,8 @@
                 <div class="row mb-3">
                     <label for="inputDesc3" class="col-sm-2 col-form-label">Descrição</label>
                     <div class="col-sm-10">
-                        <input type="text" asp-for="Descricao" class="form-control" id="inputDesc3" readonly>
+                        <input type="text" asp-for="Descricao" class="form-control" id="inputDesc3">
+                        <span asp-validation-for="Descricao" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="row mb-3">
@@ -63,10 +64,23 @@
                 <div class="row mb-3">
                     <label for="inputCat3" class="col-sm-2 col-form-label">Categoria</label>
                     <div class="col-sm-10">
-                        <input type="text" asp-for="Categoria" class="form-control" id="inputCat3" readonly>
+                        <select class="form-control input-busca col-sm-10" aria-label="Default select example" name="Categoria">
+                            <option selected value="">Escolha uma Categoria</option>
+                            <option value="Alimento">Alimento</option>
+                            <option value="Limpeza">Limpeza</option>
+                            <option value="Brinquedos">Brinquedos</option>
+                            <option value="Outros">Outros</option>
+                        </select>
+                        <span asp-validation-for="Categoria" class="text-danger"></span>
                     </div>
                 </div>
             </div>
+        </form>
+        
+        <form id="form-deleta-prod" asp-controller="Shop" asp-action="GerenciaProdutoPost" method="post">
+            <h4>Tem Certeza que deseja deletar esse Produto?</h4>
+            <button type="submit" class="btn btn-danger" asp-controller="Shop" asp-action="DeletaProduto" asp-route-Cod="@Model.Cod">Sim</button>
+            <a class="btn btn-secondary" asp-controller="Shop" asp-action="GerenciaProduto" asp-route-Cod="@Model.Cod"><i class="bi bi-caret-left-fill"></i>Não</a>
         </form>
     </div>
 </div>

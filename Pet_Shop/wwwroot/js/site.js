@@ -49,6 +49,18 @@ function SelectServico(Cod, div) {
     servicoSelect.innerHTML = itemsSelecionados.map(item => item.servico + ": " + "R$ " + item.valor + ",00").join("<br>");
 }
 
+
+//Deleta Produto
+var btnDeletaProd = document.getElementById('btn-deleta-produto')
+btnDeletaProd.addEventListener('click', function (){
+    var formDelete = document.getElementById('form-deleta-prod')
+    formDelete.style.display = 'flex'
+    var formGerencia = document.querySelectorAll('form-gerencia')
+    formGerencia.style.display = 'none'
+});
+
+
+
 function AvisoLoginTeste() {
     alert("PARA TESTE Usuarios: Admin ou Daniel/ senha:123");
 }

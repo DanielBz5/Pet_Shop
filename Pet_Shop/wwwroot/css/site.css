@@ -516,7 +516,7 @@ h5 {
 .container-btn{
     display:flex;
     align-items:start;
-    width:60%;
+    width:45%;
     margin-bottom: 7px;
 }
 
@@ -589,4 +589,8 @@ td { /*arruma a grid*/
 .img-gerencia {
     width: 70%;
     height: auto;
+}
+
+#form-deleta-prod{
+    display:none;
 }

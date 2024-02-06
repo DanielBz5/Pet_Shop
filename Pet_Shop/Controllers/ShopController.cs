@@ -147,33 +147,40 @@ namespace Pet_Shop.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult GerenciaProdutoPost(Produto produto)//muda tudo =================================
+        public IActionResult GerenciaProdutoPost(Produto produto)
         {
             if (ModelState.IsValid)
             {
                 Produto produtoOld = shopdao.ConsultaProduto(produto);
-                if (produto.Quantidade != produtoOld.Quantidade)
+                if (shopdao.AtualizaProduto(produtoOld, produto))
                 {
-                    Estoque estoque = new Estoque
-                    {
-                        Cod_Produto = produtoOld.Cod,
-                        Nome = produtoOld.Nome,
-                        Tipo_Movimento = produto.Quantidade > produtoOld.Quantidade ? "Entrada" : "Saida",
-                        Data_ = DateTime.Now,
-                        Quantidade = produto.Quantidade > produtoOld.Quantidade ? produto.Quantidade - produtoOld.Quantidade : produtoOld.Quantidade - produto.Quantidade,
-                    };
+                    return View("MessageBox", TempData["Mensagem"] = "Alteração realizada com Sucesso!");
+                }
+         
 
-                    if (shopdao.AtualizaProduto(produtoOld, produto))
-                    {
-                        if (!shopdao.RegistraEstoque(estoque))
-                        {
-                            shopdao.AtualizaProduto(produto, produtoOld);
-                            return View("MessageBox", (TempData["Mensagem"] = "Não foi possivel Alterar Produto", TempData["Titulo"] = "Atenção!"));
-                        }
+                    //Produto produtoOld = shopdao.ConsultaProduto(produto);
+                    //if (produto.Quantidade != produtoOld.Quantidade)
+                    //{
+                    //    Estoque estoque = new Estoque
+                    //    {
+                    //        Cod_Produto = produtoOld.Cod,
+                    //        Nome = produtoOld.Nome,
+                    //        Tipo_Movimento = produto.Quantidade > produtoOld.Quantidade ? "Entrada" : "Saida",
+                    //        Data_ = DateTime.Now,
+                    //        Quantidade = produto.Quantidade > produtoOld.Quantidade ? produto.Quantidade - produtoOld.Quantidade : produtoOld.Quantidade - produto.Quantidade,
+                    //    };
 
-                        return View("MessageBox", TempData["Mensagem"] = "Atualização realizada com Sucesso!");
-                    }
-                }  
+                    //    if (shopdao.AtualizaProduto(produtoOld, produto))
+                    //    {
+                    //        if (!shopdao.RegistraEstoque(estoque))
+                    //        {
+                    //            shopdao.AtualizaProduto(produto, produtoOld);
+                    //            return View("MessageBox", (TempData["Mensagem"] = "Não foi possivel Alterar Produto", TempData["Titulo"] = "Atenção!"));
+                    //        }
+
+                    //        return View("MessageBox", TempData["Mensagem"] = "Atualização realizada com Sucesso!");
+                    //    }
+                    //}  
             }
             else
             {
@@ -182,6 +189,21 @@ namespace Pet_Shop.Controllers
 
             
             return View("MessageBox", (TempData["Mensagem"] = "Não foi possivel Alterar Produto", TempData["Titulo"] = "Atenção!"));
+        }
+        
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult DeletaProduto(Produto produto)
+        {
+            produto = shopdao.ConsultaProduto(produto);
+            if (shopdao.DeletaProduto(produto))
+            {
+                return View("ConsultaProduto");// deu um erro nesse retorno e arrumar java e vire delete
+            }
+            else
+            {
+                return View("MessageBox", (TempData["Mensagem"] = "Não foi possivel Excluir Produto", TempData["Titulo"] = "Atenção!"));
+            }
         }
 
         public IActionResult ControleEstoque()

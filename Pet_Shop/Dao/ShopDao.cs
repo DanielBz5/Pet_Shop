@@ -70,9 +70,11 @@ namespace Pet_Shop.Dao
         {
             try
             {
+                produtoOld.Descricao = produto.Descricao;
                 produtoOld.Valor = produto.Valor;
                 produtoOld.Quantidade = produto.Quantidade;
                 produtoOld.Estoque_Minimo = produto.Estoque_Minimo;
+                produtoOld.Categoria = produto.Categoria;
 
                 int linhasAfetadas = _context.SaveChanges();
                 return linhasAfetadas > 0 ? true : false;
@@ -108,6 +110,20 @@ namespace Pet_Shop.Dao
                 return null;
             }
 
+        }
+
+        public bool DeletaProduto(Produto produto)
+        {
+            try
+            {
+                _context.Produto.Remove(produto);
+                int linhasAfetadas = _context.SaveChanges();
+                return linhasAfetadas > 0 ? true : false;
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 }
