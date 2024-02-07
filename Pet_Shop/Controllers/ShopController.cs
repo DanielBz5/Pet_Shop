@@ -198,7 +198,7 @@ namespace Pet_Shop.Controllers
             produto = shopdao.ConsultaProduto(produto);
             if (shopdao.DeletaProduto(produto))
             {
-                return View("ConsultaProduto");// deu um erro nesse retorno e arrumar java e vire delete
+                return RedirectToAction("ConsultaProduto");
             }
             else
             {
@@ -211,6 +211,48 @@ namespace Pet_Shop.Controllers
             List<Produto> Produtos = shopdao.ControleMinimo();
             return View(Produtos);
         }
+
+        public IActionResult ConsultaEstoque()
+        {
+            Func<Produto, bool> filtro = p => p.Quantidade >= 0;
+            List<Produto> Produtos = shopdao.BuscaProdutos(filtro);
+            return View(Produtos);
+        }
+
+        public IActionResult MovimentoEstoque(Produto produto)
+        {
+            return View("MovimentoEstoque", produto);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult MovimentoEstoquePost(Produto produto, Estoque estoque)
+        {
+            estoque.Cod_Produto = produto.Cod;
+            estoque.Nome = produto.Nome;
+            estoque.Data_ = DateTime.Now;
+
+            if (ModelState.IsValid)
+            {
+                produto.Quantidade = estoque.Tipo_Movimento == "Entrada" ? produto.Quantidade + estoque.Quantidade : produto.Quantidade - estoque.Quantidade;
+
+                if(produto.Quantidade >= 0)
+                {
+                    // falta atualiza produto
+                    shopdao.RegistraEstoque(estoque);
+                }
+                else
+                {
+                    return View("MessageBox", (TempData["Mensagem"] = "O Estoque não pode ficar negativo", TempData["Titulo"] = "Atenção!"));
+                }
+            }
+            else
+            {
+                return View("MovimentoEstoque");
+            }
+        }
+
+
     }
 
 

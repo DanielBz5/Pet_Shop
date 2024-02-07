@@ -1,0 +1,110 @@
+﻿@model IEnumerable<Pet_Shop.Models.Produto>
+
+
+
+@{
+    ViewData["Title"] = "Consulta Produto";
+}
+
+
+
+<h1>Consulta de Produto</h1>
+
+<p class="titulo-black container-titulo-btn">
+    Consulta de Produto
+    <a class="btn btn-navega" asp-controller="Shop" asp-action="AddProduto"><i class="bi bi-bag-plus-fill"></i>Cadastrar Produto</a>
+</p>
+
+<form class="filtro-consulta" asp-controller="Shop" asp-action="ConsultaProduto" method="post">
+    <h5 style="margin-right: 30px; color:black">Filtros</h5>
+    <div class="filtro-item">
+        <label for="inputCategoria5" class="form-label">Categoria</label>
+        <select class="form-control input-busca" aria-label="Default select example" name="Categoria">
+            <option selected value="">Escolha uma Categoria</option>
+            <option value="Alimento">Alimento</option>
+            <option value="Limpeza">Limpeza</option>
+            <option value="Brinquedos">Brinquedos</option>
+            <option value="Outros">Outros</option>
+        </select>
+    </div>
+
+    <div class="filtro-item">
+        <label for="inputNome5" class="form-label">Nome</label>
+        <input type="text" id="inputNome5" class="form-control input-busca" aria-describedby="passwordHelpBlock" name="Nome">
+    </div>
+
+    <button type="submit" class="btn btn-primary">Pesquisar</button>
+</form>
+
+<table class="table table-striped-columns table-bordered Tabelacss consulta-produto">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Cod)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Nome)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Descricao)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Categoria)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Estoque_Minimo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Quantidade)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Valor)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+
+                <td>
+                    <a class="celula" asp-controller="Shop" asp-action="MovimentoEstoque" asp-route-Cod="@item.Cod">
+                        @Html.DisplayFor(modelItem => item.Cod)
+                    </a>
+                </td>
+                <td>
+                    <a class="celula" asp-controller="Shop" asp-action="MovimentoEstoque" asp-route-Cod="@item.Cod">
+                        @Html.DisplayFor(modelItem => item.Nome)
+                    </a>
+                </td>
+                <td>
+                    <a class="celula" asp-controller="Shop" asp-action="MovimentoEstoque" asp-route-Cod="@item.Cod">
+                        @Html.DisplayFor(modelItem => item.Descricao)
+                    </a>
+                </td>
+                <td>
+                    <a class="celula" asp-controller="Shop" asp-action="MovimentoEstoque" asp-route-Cod="@item.Cod">
+                        @Html.DisplayFor(modelItem => item.Categoria)
+                    </a>
+                </td>
+                <td>
+                    <a class="celula" asp-controller="Shop" asp-action="MovimentoEstoque" asp-route-Cod="@item.Cod">
+                        @Html.DisplayFor(modelItem => item.Estoque_Minimo)
+                    </a>
+                </td>
+                <td>
+                    <a class="celula" asp-controller="Shop" asp-action="MovimentoEstoque" asp-route-Cod="@item.Cod">
+                        @Html.DisplayFor(modelItem => item.Quantidade)
+                    </a>
+                </td>
+                <td>
+                    <a class="celula" asp-controller="Shop" asp-action="MovimentoEstoque" asp-route-Cod="@item.Cod">
+                        @Html.DisplayFor(modelItem => item.Valor)
+                    </a>
+                </td>
+
+            </tr>
+        }
+    </tbody>
+</table>

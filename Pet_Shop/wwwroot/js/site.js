@@ -55,7 +55,7 @@ var btnDeletaProd = document.getElementById('btn-deleta-produto')
 btnDeletaProd.addEventListener('click', function (){
     var formDelete = document.getElementById('form-deleta-prod')
     formDelete.style.display = 'flex'
-    var formGerencia = document.querySelectorAll('form-gerencia')
+    var formGerencia = document.querySelectorAll('.form-gerencia')
     formGerencia.style.display = 'none'
 });
 
