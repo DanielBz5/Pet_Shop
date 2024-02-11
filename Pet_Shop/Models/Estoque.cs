@@ -16,6 +16,8 @@ namespace Pet_Shop.Models
 
         public string Nome { get; set; }
 
+        public string Descricao { get; set; }
+
         [Required(ErrorMessage = "O Tipo de Movimento deve ser informado")]
         public string Tipo_Movimento { get; set; }
 
@@ -24,6 +26,8 @@ namespace Pet_Shop.Models
         [Required(ErrorMessage = "A Quantidade deve ser informado")]
         [Range(0, int.MaxValue, ErrorMessage = "A Quantidade deve ser igual ou maior que 0")]
         public int Quantidade { get; set; }
+
+        
 
     }
 }

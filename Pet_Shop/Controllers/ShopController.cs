@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Pet_Shop.Dao;
 using Pet_Shop.Models;
 using System;
@@ -222,34 +223,57 @@ namespace Pet_Shop.Controllers
         public IActionResult MovimentoEstoque(Produto produto)
         {
             produto = shopdao.ConsultaProduto(produto);
-            Estoque estoque = new Estoque();
-            return View("MovimentoEstoque", (produto, estoque));
+            var ProdutoEstoque = new ProdutoEstoqueViewModel
+            {
+                Cod = produto.Cod,
+                Nome = produto.Nome,
+                Descricao = produto.Descricao,
+                QuantidadeAtual = produto.Quantidade
+            };
+            return View("MovimentoEstoque", ProdutoEstoque);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult MovimentoEstoquePost(Produto produto, Estoque estoque)//modelstate deu errro e arruma o delete 
+        public IActionResult MovimentoEstoquePost(ProdutoEstoqueViewModel ProdutoEstoque)// arruma o delete 
         {
-            estoque.Cod_Produto = produto.Cod;
-            estoque.Nome = produto.Nome;
-            estoque.Data_ = DateTime.Now;
-
+            ProdutoEstoque.Data_ = DateTime.Now;
 
             if (ModelState.IsValid)
-            {    
-                produto.Quantidade = estoque.Tipo_Movimento == "Entrada" ? produto.Quantidade + estoque.Quantidade : produto.Quantidade - estoque.Quantidade;
+            {
+                var QuantidadeInicial = ProdutoEstoque.QuantidadeAtual;
+                ProdutoEstoque.QuantidadeAtual = ProdutoEstoque.TipoMovimento == "Entrada" ?
+                                                 ProdutoEstoque.QuantidadeAtual + ProdutoEstoque.QuantidadeMovimento :
+                                                 ProdutoEstoque.QuantidadeAtual - ProdutoEstoque.QuantidadeMovimento;
 
-                if(produto.Quantidade >= 0)
+                if(ProdutoEstoque.QuantidadeAtual >= 0)
                 {
+                    var produto = new Produto {Cod = ProdutoEstoque.Cod,};
+
                     Produto produtoOld = shopdao.ConsultaProduto(produto);
-                    if (shopdao.AtualizaProduto(produtoOld, produto))
+
+                    var produtoNew =  shopdao.ConsultaProduto(produto);
+                    produtoNew.Quantidade = ProdutoEstoque.QuantidadeAtual;
+
+                    if (shopdao.AtualizaProduto(produtoOld, produtoNew))
                     {
+                        var estoque = new Estoque
+                        { 
+                            Cod_Produto = ProdutoEstoque.Cod, 
+                            Nome = ProdutoEstoque.Nome,
+                            Tipo_Movimento = ProdutoEstoque.TipoMovimento,
+                            Data_ = ProdutoEstoque.Data_,
+                            Quantidade = ProdutoEstoque.QuantidadeMovimento,
+                            Descricao = ProdutoEstoque.Descricao
+                        };
+
                         if (shopdao.RegistraEstoque(estoque))
                         {
                             return View("MessageBox", (TempData["Mensagem"] = "Movimentação do Estoque Concluído", TempData["Titulo"] = "Sucesso!"));
                         }
                         else
                         {
+                            produtoOld.Quantidade = QuantidadeInicial;
                             shopdao.AtualizaProduto(produtoOld, produtoOld);
                             return View("MessageBox", (TempData["Mensagem"] = "Não foi possivel Movimentar Estoque", TempData["Titulo"] = "Atenção!"));
                         }
@@ -266,7 +290,7 @@ namespace Pet_Shop.Controllers
             }
             else
             {
-                return View("MovimentoEstoque", (produto, estoque));
+                return View("MovimentoEstoque", ProdutoEstoque);
             }
         }
 

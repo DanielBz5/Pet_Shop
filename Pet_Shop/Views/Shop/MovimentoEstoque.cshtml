@@ -1,4 +1,4 @@
-﻿@model (Pet_Shop.Models.Produto produto, Pet_Shop.Models.Estoque estoque)
+﻿@model Pet_Shop.Models.ProdutoEstoqueViewModel
 
 
 
@@ -12,56 +12,53 @@
             <div class="row mb-3">
                 <label for="inputCod3" class="col-sm-2 col-form-label">Codigo</label>
                 <div class="col-sm-10">
-                    <input type="number" asp-for="produto.Cod" name="produto.Cod" class="form-control" id="inputCod3" readonly>
-                    <span asp-validation-for="produto.Cod" class="text-danger"></span>
+                    <input type="number" asp-for="Cod" name="Cod" class="form-control" id="inputCod3" readonly>
                 </div>
             </div>
             <div class="row mb-3">
                 <label for="inputNome3" class="col-sm-2 col-form-label">Nome</label>
                 <div class="col-sm-10">
-                    <input type="text" asp-for="produto.Nome" name="produto.Nome" class="form-control" id="inputNome3" readonly>
-                    <span asp-validation-for="produto.Nome" class="text-danger"></span>
+                    <input type="text" asp-for="Nome" name="Nome" class="form-control" id="inputNome3" readonly>
                 </div>
             </div>
 
             <div class="row mb-3">
                 <label for="inputNome3" class="col-sm-2 col-form-label">Descrição</label>
                 <div class="col-sm-10">
-                    <input type="text" asp-for="produto.Descricao" name="produto.Descricao" class="form-control" id="inputNome3" readonly>
-                    <span asp-validation-for="produto.Descricao" class="text-danger"></span>
+                    <input type="text" asp-for="Descricao" name="Descricao" class="form-control" id="inputNome3" readonly>
                 </div>
             </div>
 
              <div class="row mb-3">
                 <label for="inputqtaa3" class="col-sm-2 col-form-label">Quantidade Atual</label>
                 <div class="col-sm-10">
-                    <input type="text" asp-for="produto.Quantidade" name="produto.Quantidade" class="form-control" id="inputqtaa3" readonly>
+                    <input type="text" asp-for="QuantidadeAtual" name="QuantidadeAtual" class="form-control" id="inputqtaa3" readonly>
                 </div>
             </div>
 
              <div class="row mb-3">
                 <label for="inputtpmov3" class="col-sm-2 col-form-label">Tipo Movimento</label>
                 <div class="col-sm-10">
-                    <select class="form-control input-busca col-sm-10" aria-label="Default select example" name="estoque.Tipo_Movimento">
+                    <select class="form-control input-busca col-sm-10" aria-label="Default select example" name="TipoMovimento">
                         <option selected value="">Escolha o Movimento</option>
                         <option value="Entrada">Entrada</option>
                         <option value="Saida">Saida</option>
                         
                     </select>
-                    <span asp-validation-for="estoque.Tipo_Movimento" class="text-danger"></span>
+                    <span asp-validation-for="TipoMovimento" class="text-danger"></span>
                 </div>
             </div>
 
             <div class="row mb-3">
                 <label for="inputqtn3" class="col-sm-2 col-form-label">Quantidade</label>
                 <div class="col-sm-10">
-                    <input type="number" name="estoque.Quantidade" class="form-control" id="inputqtn3" >
-                    <span asp-validation-for="estoque.Quantidade" class="text-danger"></span>
+                    <input type="number" name="QuantidadeMovimento" class="form-control" id="inputqtn3" >
+                    <span asp-validation-for="QuantidadeMovimento" class="text-danger"></span>
                 </div>
             </div>
             
             <div class="btn-login">
-                <button type="submit" class="btn btn-primary"><i class="bi bi-pencil-fill"></i>Atualizar</button>
+                <button type="submit" class="btn btn-primary"><i class="bi bi-arrow-left-right"></i>Movimentar</button>
                 <a class="btn btn-secondary" asp-controller="Shop" asp-action="ConsultaEstoque"><i class="bi bi-caret-left-fill"></i>Voltar</a>
             </div>
 
