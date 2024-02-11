@@ -1,4 +1,5 @@
-﻿using Pet_Shop.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using Pet_Shop.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -79,10 +80,15 @@ namespace Pet_Shop.Dao
                 int linhasAfetadas = _context.SaveChanges();
                 return linhasAfetadas > 0 ? true : false;
             }
+            catch (DbUpdateConcurrencyException)
+            {
+                throw new Exception("Deadlock! Aguarde um instante e tente novamente");
+            }
             catch
             {
                 return false;
             }
+            
         }
 
         public bool RegistraEstoque(Estoque estoque)

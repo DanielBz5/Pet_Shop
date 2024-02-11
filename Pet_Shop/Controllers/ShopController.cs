@@ -110,7 +110,7 @@ namespace Pet_Shop.Controllers
             {
                 if (shopdao.IncluiProduto(produto))
                 {
-                    return View("MessageBox", TempData["Mensagem"] = "Produto Cadastrado com Sucesso!");
+                    return View("MessageBox", (TempData["Mensagem"] = "Produto Cadastrado.", TempData["Titulo"] = "Sucesso!"));
                 }
                 else
                 {
@@ -154,7 +154,7 @@ namespace Pet_Shop.Controllers
                 Produto produtoOld = shopdao.ConsultaProduto(produto);
                 if (shopdao.AtualizaProduto(produtoOld, produto))
                 {
-                    return View("MessageBox", TempData["Mensagem"] = "Alteração realizada com Sucesso!");
+                    return View("MessageBox", (TempData["Mensagem"] = "Produto Alterado.", TempData["Titulo"] = "Sucesso!"));
                 }
          
 
@@ -221,25 +221,43 @@ namespace Pet_Shop.Controllers
 
         public IActionResult MovimentoEstoque(Produto produto)
         {
-            return View("MovimentoEstoque", produto);
+            produto = shopdao.ConsultaProduto(produto);
+            Estoque estoque = new Estoque();
+            return View("MovimentoEstoque", (produto, estoque));
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult MovimentoEstoquePost(Produto produto, Estoque estoque)
+        public IActionResult MovimentoEstoquePost(Produto produto, Estoque estoque)//modelstate deu errro e arruma o delete 
         {
             estoque.Cod_Produto = produto.Cod;
             estoque.Nome = produto.Nome;
             estoque.Data_ = DateTime.Now;
 
+
             if (ModelState.IsValid)
-            {
+            {    
                 produto.Quantidade = estoque.Tipo_Movimento == "Entrada" ? produto.Quantidade + estoque.Quantidade : produto.Quantidade - estoque.Quantidade;
 
                 if(produto.Quantidade >= 0)
                 {
-                    // falta atualiza produto
-                    shopdao.RegistraEstoque(estoque);
+                    Produto produtoOld = shopdao.ConsultaProduto(produto);
+                    if (shopdao.AtualizaProduto(produtoOld, produto))
+                    {
+                        if (shopdao.RegistraEstoque(estoque))
+                        {
+                            return View("MessageBox", (TempData["Mensagem"] = "Movimentação do Estoque Concluído", TempData["Titulo"] = "Sucesso!"));
+                        }
+                        else
+                        {
+                            shopdao.AtualizaProduto(produtoOld, produtoOld);
+                            return View("MessageBox", (TempData["Mensagem"] = "Não foi possivel Movimentar Estoque", TempData["Titulo"] = "Atenção!"));
+                        }
+                    }
+                    else
+                    {
+                        return View("MessageBox", (TempData["Mensagem"] = "Não foi possivel Alterar Produto", TempData["Titulo"] = "Atenção!"));
+                    }
                 }
                 else
                 {
@@ -248,7 +266,7 @@ namespace Pet_Shop.Controllers
             }
             else
             {
-                return View("MovimentoEstoque");
+                return View("MovimentoEstoque", (produto, estoque));
             }
         }
 

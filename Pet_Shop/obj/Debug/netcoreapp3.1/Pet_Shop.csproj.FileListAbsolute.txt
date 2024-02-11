@@ -864,3 +864,5 @@ C:\Users\Leo M\Source\Repos\DanielBz5\Pet_Shop\Pet_Shop\obj\Debug\netcoreapp3.1\
 C:\Users\Leo M\Source\Repos\DanielBz5\Pet_Shop\Pet_Shop\obj\Debug\netcoreapp3.1\Pet_Shop.dll
 C:\Users\Leo M\Source\Repos\DanielBz5\Pet_Shop\Pet_Shop\obj\Debug\netcoreapp3.1\Pet_Shop.pdb
 C:\Users\Leo M\Source\Repos\DanielBz5\Pet_Shop\Pet_Shop\obj\Debug\netcoreapp3.1\Pet_Shop.genruntimeconfig.cache
+C:\Users\Leo M\source\repos\DanielBz5\Pet_Shop\Pet_Shop\obj\Debug\netcoreapp3.1\Razor\Views\Shop\ConsultaEstoque.cshtml.g.cs
+C:\Users\Leo M\source\repos\DanielBz5\Pet_Shop\Pet_Shop\obj\Debug\netcoreapp3.1\Razor\Views\Shop\MovimentoEstoque.cshtml.g.cs
