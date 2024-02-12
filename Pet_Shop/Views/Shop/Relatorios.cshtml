@@ -1,0 +1,79 @@
+﻿@model Pet_Shop.Models.Relatorio
+
+
+
+<div class="container-manage">
+    <div class="manage-produto">
+        <h5 class="titulo-black">Relatorios</h5><br>
+        <form asp-controller="Shop" asp-action="Relatorios" method="post" >
+
+            <div class="row mb-3">
+                <label for="inputCat3" class="col-sm-2 col-form-label">Modelo</label>
+                <div class="col-sm-10">
+                    <select id="select-relatorio" class="form-control input-busca col-sm-10" aria-label="Default select example" name="Modelo" onchange="selectModel()">
+                        <option selected value="">Escolha o Moldeo</option>
+                        <option value="Produto">Produtos</option>
+                        <option value="Estoque">Estoque</option>
+                    </select>
+                    <span asp-validation-for="Modelo" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div id="Rel-produto">
+                <div class="row mb-3">
+                    <label for="inputCat3" class="col-sm-2 col-form-label">Categoria</label>
+                    <div class="col-sm-10">
+                        <select class="form-control input-busca col-sm-10" aria-label="Default select example" name="Categoria">
+                            <option selected value="">Escolha uma Categoria</option>
+                            <option value="Alimento">Alimento</option>
+                            <option value="Limpeza">Limpeza</option>
+                            <option value="Brinquedos">Brinquedos</option>
+                            <option value="Outros">Outros</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+           
+            <div id="Rel-estoque">
+                <div class="row mb-3">
+                    <label for="inputdtini3" class="col-sm-2 col-form-label">Data Inicio</label>
+                    <div class="col-sm-10">
+                        <input type="date" name="DataInicial" class="form-control" id="inputdtini3">
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label for="inputdtfn3" class="col-sm-2 col-form-label">Data Final</label>
+                    <div class="col-sm-10">
+                        <input type="date" name="DataFinal" class="form-control" id="inputdtfn3">
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label for="inputcod3" class="col-sm-2 col-form-label">Codigo</label>
+                    <div class="col-sm-10">
+                        <input type="number" name="Codigo" class="form-control" id="inputcod3">
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label for="inputtpmov3" class="col-sm-2 col-form-label">Tipo Movimento</label>
+                    <div class="col-sm-10">
+                        <select class="form-control input-busca col-sm-10" aria-label="Default select example" name="TipoMovimento">
+                            <option selected value="">Escolha o Movimento</option>
+                            <option value="Entrada">Entrada</option>
+                            <option value="Saida">Saida</option>
+
+                        </select>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="btn-login">
+                <button type="submit" class="btn btn-primary"><i class="bi bi-printer-fill"></i>Visualizar</button>
+                <a class="btn btn-secondary" asp-controller="Shop" asp-action="ManageShop"><i class="bi bi-caret-left-fill"></i>Voltar</a>
+            </div>
+
+        </form>
+    </div>
+</div>

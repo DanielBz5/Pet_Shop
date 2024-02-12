@@ -594,3 +594,15 @@ td { /*arruma a grid*/
 #form-deleta-prod{
     display:none;
 }
+
+
+/*--------Relatorios*/
+
+#Rel-produto{
+    display: none;
+}
+
+#Rel-estoque {
+    display: none;
+    flex-direction:column;
+}

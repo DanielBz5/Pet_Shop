@@ -157,31 +157,6 @@ namespace Pet_Shop.Controllers
                 {
                     return View("MessageBox", (TempData["Mensagem"] = "Produto Alterado.", TempData["Titulo"] = "Sucesso!"));
                 }
-         
-
-                    //Produto produtoOld = shopdao.ConsultaProduto(produto);
-                    //if (produto.Quantidade != produtoOld.Quantidade)
-                    //{
-                    //    Estoque estoque = new Estoque
-                    //    {
-                    //        Cod_Produto = produtoOld.Cod,
-                    //        Nome = produtoOld.Nome,
-                    //        Tipo_Movimento = produto.Quantidade > produtoOld.Quantidade ? "Entrada" : "Saida",
-                    //        Data_ = DateTime.Now,
-                    //        Quantidade = produto.Quantidade > produtoOld.Quantidade ? produto.Quantidade - produtoOld.Quantidade : produtoOld.Quantidade - produto.Quantidade,
-                    //    };
-
-                    //    if (shopdao.AtualizaProduto(produtoOld, produto))
-                    //    {
-                    //        if (!shopdao.RegistraEstoque(estoque))
-                    //        {
-                    //            shopdao.AtualizaProduto(produto, produtoOld);
-                    //            return View("MessageBox", (TempData["Mensagem"] = "Não foi possivel Alterar Produto", TempData["Titulo"] = "Atenção!"));
-                    //        }
-
-                    //        return View("MessageBox", TempData["Mensagem"] = "Atualização realizada com Sucesso!");
-                    //    }
-                    //}  
             }
             else
             {
@@ -291,6 +266,60 @@ namespace Pet_Shop.Controllers
             else
             {
                 return View("MovimentoEstoque", ProdutoEstoque);
+            }
+        }
+
+        public IActionResult Relatorios()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Relatorios(Relatorio relatorio)
+        {
+            if (ModelState.IsValid)
+            {
+                if(relatorio.Modelo == "Produto")
+                {
+                    List<Produto> Produtos = new List<Produto>();
+                    Func<Produto, bool> filtro = p => true;
+
+                    if (relatorio.Categoria != null)
+                    {
+                        filtro = p => p.Categoria == relatorio.Categoria;
+                    }
+
+                    Produtos = shopdao.BuscaProdutosFiltro(filtro);
+                    return View("ReportView", Produtos);
+                }
+                else if(relatorio.Modelo == "Estoque")
+                {
+                    List<Estoque> Estoque = new List<Estoque>();
+                    Func<Estoque, bool> filtro = e => true;
+
+                    if (relatorio.DataInicial != null && relatorio.DataFinal != null)
+                    {
+                        filtro = e => filtro(e) && e.Data_ >= relatorio.DataInicial && e.Data_ <= relatorio.DataFinal;
+                    }
+                    else if(relatorio.Codigo != 0)
+                    {
+                        filtro = e => filtro(e) && e.Cod_Produto == relatorio.Codigo;
+                    }
+                    else if(relatorio.TipoMovimento != null)
+                    {
+                        filtro = e => filtro(e) && e.Tipo_Movimento == relatorio.TipoMovimento;
+                    }
+
+                    Estoque = shopdao.BuscaEstoque(filtro);
+                    return View("ReportView", Estoque);
+                }
+
+                return View("Relatorios");
+            }
+            else
+            {
+                return View("Relatorios");
             }
         }
 

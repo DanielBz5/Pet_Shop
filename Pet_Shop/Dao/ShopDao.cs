@@ -131,5 +131,17 @@ namespace Pet_Shop.Dao
                 return false;
             }
         }
+
+        public List<Estoque> BuscaEstoque(Func<Estoque, bool> filtro)
+        {
+            try
+            {
+                return _context.Estoque.Where(filtro).ToList();
+            }
+            catch
+            {
+                return null;
+            }
+        }
     }
 }
