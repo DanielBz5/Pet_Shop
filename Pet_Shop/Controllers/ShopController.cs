@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using FastReport.Export.PdfSimple;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Pet_Shop.Dao;
@@ -15,8 +17,10 @@ namespace Pet_Shop.Controllers
     public class ShopController : Controller
     {
         private readonly ShopDao shopdao;
-        public ShopController(ApplicationDbContext context)
+        public readonly IWebHostEnvironment _webHostEnv;
+        public ShopController(ApplicationDbContext context, IWebHostEnvironment webHostEnv)
         {
+            _webHostEnv = webHostEnv;
             shopdao = new ShopDao(context);
         }
 
@@ -274,13 +278,27 @@ namespace Pet_Shop.Controllers
             return View();
         }
 
+        
+        //public IActionResult CreateReport(List<Produto> Produtos)
+        //{
+        //    var caminhoReport = Path.Combine(_webHostEnv.WebRootPath, @"reports\Produtos.frx");
+        //    var reportFile = caminhoReport;
+        //    var freport = new FastReport.Report();
+            
+
+        //    freport.Dictionary.RegisterBusinessObject(Produtos, "productList", 10, true);
+        //    freport.Report.Save(reportFile);
+
+        //    return Ok($" Relatorio gerado : {caminhoReport}");
+        //}
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Relatorios(Relatorio relatorio)
         {
             if (ModelState.IsValid)
             {
-                if(relatorio.Modelo == "Produto")
+                if (relatorio.Modelo == "Produto")
                 {
                     List<Produto> Produtos = new List<Produto>();
                     Func<Produto, bool> filtro = p => true;
@@ -291,9 +309,10 @@ namespace Pet_Shop.Controllers
                     }
 
                     Produtos = shopdao.BuscaProdutosFiltro(filtro);
-                    return View("ReportView", Produtos);
+                    
+                    return ReportView(Produtos);
                 }
-                else if(relatorio.Modelo == "Estoque")
+                else if (relatorio.Modelo == "Estoque")
                 {
                     List<Estoque> Estoque = new List<Estoque>();
                     Func<Estoque, bool> filtro = e => true;
@@ -302,17 +321,18 @@ namespace Pet_Shop.Controllers
                     {
                         filtro = e => filtro(e) && e.Data_ >= relatorio.DataInicial && e.Data_ <= relatorio.DataFinal;
                     }
-                    else if(relatorio.Codigo != 0)
+                    else if (relatorio.Codigo != 0)
                     {
                         filtro = e => filtro(e) && e.Cod_Produto == relatorio.Codigo;
                     }
-                    else if(relatorio.TipoMovimento != null)
+                    else if (relatorio.TipoMovimento != null)
                     {
                         filtro = e => filtro(e) && e.Tipo_Movimento == relatorio.TipoMovimento;
                     }
 
                     Estoque = shopdao.BuscaEstoque(filtro);
-                    return View("ReportView", Estoque);
+                    ViewBag.ReportData = Estoque;
+                    return View("ReportView");
                 }
 
                 return View("Relatorios");
@@ -323,6 +343,25 @@ namespace Pet_Shop.Controllers
             }
         }
 
+        public IActionResult ReportView(List<Produto> produtos)
+        {
+            var caminhoReport = Path.Combine(_webHostEnv.WebRootPath, @"reports\Produtos.frx");
+            var reportFile = caminhoReport;
+            var freport = new FastReport.Report();
+            
+
+            freport.Report.Load(reportFile);
+            freport.Dictionary.RegisterBusinessObject(produtos, "productList", 10, true);
+            freport.Prepare();
+
+            var pdfExport = new PDFSimpleExport();
+
+            using MemoryStream ms = new MemoryStream();
+            pdfExport.Export(freport, ms);
+            ms.Flush();
+
+            return File(ms.ToArray(), "application/pdf");
+        }
 
     }
 

@@ -6,14 +6,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="FastReport.OpenSource" Version="2024.1.6" />
+    <PackageReference Include="FastReport.OpenSource.Export.PdfSimple" Version="2024.1.6" />
+    <PackageReference Include="FastReport.OpenSource.Web" Version="2024.1.6" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.29" />
-    <PackageReference Include="Microsoft.ReportingServices.ReportViewerControl.WebForms" Version="150.1620.0" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.5" />
     <PackageReference Include="MySql.EntityFrameworkCore" Version="5.0.17.2" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="wwwroot\img\" />
+    <Folder Include="wwwroot\reports\" />
   </ItemGroup>
 
     <ItemGroup>

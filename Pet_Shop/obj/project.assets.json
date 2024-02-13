@@ -2,6 +2,75 @@
   "version": 3,
   "targets": {
     ".NETCoreApp,Version=v3.1": {
+      "FastReport.Compat/2024.1.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.CodeAnalysis.CSharp": "3.3.1",
+          "Microsoft.CodeAnalysis.VisualBasic": "3.3.1",
+          "System.Drawing.Common": "4.7.0"
+        },
+        "compile": {
+          "lib/netcoreapp3.0/_._": {}
+        },
+        "runtime": {
+          "lib/netcoreapp3.0/_._": {}
+        },
+        "build": {
+          "buildTransitive/netcoreapp3.0/FastReport.Compat.targets": {}
+        },
+        "runtimeTargets": {
+          "runtimes/any/lib/netcoreapp3.0/FastReport.Compat.dll": {
+            "assetType": "runtime",
+            "rid": "any"
+          }
+        }
+      },
+      "FastReport.OpenSource/2024.1.6": {
+        "type": "package",
+        "dependencies": {
+          "FastReport.Compat": "[2024.1.0]",
+          "System.Drawing.Common": "4.7.3",
+          "System.Security.Cryptography.Pkcs": "4.7.0",
+          "System.Security.Permissions": "4.5.0",
+          "System.Text.Encoding.CodePages": "4.7.0"
+        },
+        "compile": {
+          "lib/netstandard2.1/FastReport.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.1/FastReport.dll": {}
+        },
+        "build": {
+          "buildTransitive/FastReport.OpenSource.props": {}
+        },
+        "buildMultiTargeting": {
+          "buildMultiTargeting/FastReport.OpenSource.props": {}
+        }
+      },
+      "FastReport.OpenSource.Export.PdfSimple/2024.1.6": {
+        "type": "package",
+        "dependencies": {
+          "FastReport.OpenSource": "2024.1.6"
+        },
+        "compile": {
+          "lib/netstandard2.0/FastReport.OpenSource.Export.PdfSimple.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/FastReport.OpenSource.Export.PdfSimple.dll": {}
+        }
+      },
+      "FastReport.OpenSource.Web/2024.1.6": {
+        "type": "package",
+        "compile": {
+          "lib/netcoreapp3.1/FastReport.OpenSource.Web.dll": {}
+        },
+        "runtime": {
+          "lib/netcoreapp3.1/FastReport.OpenSource.Web.dll": {}
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
+      },
       "Google.Protobuf/3.21.9": {
         "type": "package",
         "dependencies": {
@@ -328,6 +397,59 @@
           "lib/netstandard2.0/Microsoft.CodeAnalysis.Razor.dll": {}
         }
       },
+      "Microsoft.CodeAnalysis.VisualBasic/3.3.1": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.CodeAnalysis.Common": "[3.3.1]"
+        },
+        "compile": {
+          "lib/netstandard2.0/Microsoft.CodeAnalysis.VisualBasic.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Microsoft.CodeAnalysis.VisualBasic.dll": {}
+        },
+        "resource": {
+          "lib/netstandard2.0/cs/Microsoft.CodeAnalysis.VisualBasic.resources.dll": {
+            "locale": "cs"
+          },
+          "lib/netstandard2.0/de/Microsoft.CodeAnalysis.VisualBasic.resources.dll": {
+            "locale": "de"
+          },
+          "lib/netstandard2.0/es/Microsoft.CodeAnalysis.VisualBasic.resources.dll": {
+            "locale": "es"
+          },
+          "lib/netstandard2.0/fr/Microsoft.CodeAnalysis.VisualBasic.resources.dll": {
+            "locale": "fr"
+          },
+          "lib/netstandard2.0/it/Microsoft.CodeAnalysis.VisualBasic.resources.dll": {
+            "locale": "it"
+          },
+          "lib/netstandard2.0/ja/Microsoft.CodeAnalysis.VisualBasic.resources.dll": {
+            "locale": "ja"
+          },
+          "lib/netstandard2.0/ko/Microsoft.CodeAnalysis.VisualBasic.resources.dll": {
+            "locale": "ko"
+          },
+          "lib/netstandard2.0/pl/Microsoft.CodeAnalysis.VisualBasic.resources.dll": {
+            "locale": "pl"
+          },
+          "lib/netstandard2.0/pt-BR/Microsoft.CodeAnalysis.VisualBasic.resources.dll": {
+            "locale": "pt-BR"
+          },
+          "lib/netstandard2.0/ru/Microsoft.CodeAnalysis.VisualBasic.resources.dll": {
+            "locale": "ru"
+          },
+          "lib/netstandard2.0/tr/Microsoft.CodeAnalysis.VisualBasic.resources.dll": {
+            "locale": "tr"
+          },
+          "lib/netstandard2.0/zh-Hans/Microsoft.CodeAnalysis.VisualBasic.resources.dll": {
+            "locale": "zh-Hans"
+          },
+          "lib/netstandard2.0/zh-Hant/Microsoft.CodeAnalysis.VisualBasic.resources.dll": {
+            "locale": "zh-Hant"
+          }
+        }
+      },
       "Microsoft.CodeAnalysis.Workspaces.Common/3.3.1": {
         "type": "package",
         "dependencies": {
@@ -553,7 +675,7 @@
           "lib/netcoreapp3.0/Microsoft.Extensions.Primitives.dll": {}
         }
       },
-      "Microsoft.NETCore.Platforms/3.1.0": {
+      "Microsoft.NETCore.Platforms/3.1.9": {
         "type": "package",
         "compile": {
           "lib/netstandard1.0/_._": {}
@@ -569,219 +691,6 @@
         },
         "runtime": {
           "lib/netstandard1.0/_._": {}
-        }
-      },
-      "Microsoft.ReportingServices.ReportViewerControl.WebForms/150.1620.0": {
-        "type": "package",
-        "dependencies": {
-          "Microsoft.SqlServer.Types": "14.0.0"
-        },
-        "compile": {
-          "lib/net40/Microsoft.ReportViewer.Common.dll": {},
-          "lib/net40/Microsoft.ReportViewer.DataVisualization.dll": {},
-          "lib/net40/Microsoft.ReportViewer.Design.dll": {},
-          "lib/net40/Microsoft.ReportViewer.ProcessingObjectModel.dll": {},
-          "lib/net40/Microsoft.ReportViewer.WebDesign.dll": {},
-          "lib/net40/Microsoft.ReportViewer.WebForms.dll": {}
-        },
-        "runtime": {
-          "lib/net40/Microsoft.ReportViewer.Common.dll": {},
-          "lib/net40/Microsoft.ReportViewer.DataVisualization.dll": {},
-          "lib/net40/Microsoft.ReportViewer.Design.dll": {},
-          "lib/net40/Microsoft.ReportViewer.ProcessingObjectModel.dll": {},
-          "lib/net40/Microsoft.ReportViewer.WebDesign.dll": {},
-          "lib/net40/Microsoft.ReportViewer.WebForms.dll": {}
-        },
-        "resource": {
-          "lib/net40/de/Microsoft.ReportViewer.Common.resources.dll": {
-            "locale": "de"
-          },
-          "lib/net40/de/Microsoft.ReportViewer.DataVisualization.resources.dll": {
-            "locale": "de"
-          },
-          "lib/net40/de/Microsoft.ReportViewer.Design.resources.dll": {
-            "locale": "de"
-          },
-          "lib/net40/de/Microsoft.ReportViewer.WebDesign.resources.dll": {
-            "locale": "de"
-          },
-          "lib/net40/de/Microsoft.ReportViewer.WebForms.resources.dll": {
-            "locale": "de"
-          },
-          "lib/net40/de/Microsoft.ReportViewer.WinForms.resources.dll": {
-            "locale": "de"
-          },
-          "lib/net40/es/Microsoft.ReportViewer.Common.resources.dll": {
-            "locale": "es"
-          },
-          "lib/net40/es/Microsoft.ReportViewer.DataVisualization.resources.dll": {
-            "locale": "es"
-          },
-          "lib/net40/es/Microsoft.ReportViewer.Design.resources.dll": {
-            "locale": "es"
-          },
-          "lib/net40/es/Microsoft.ReportViewer.WebDesign.resources.dll": {
-            "locale": "es"
-          },
-          "lib/net40/es/Microsoft.ReportViewer.WebForms.resources.dll": {
-            "locale": "es"
-          },
-          "lib/net40/es/Microsoft.ReportViewer.WinForms.resources.dll": {
-            "locale": "es"
-          },
-          "lib/net40/fr/Microsoft.ReportViewer.Common.resources.dll": {
-            "locale": "fr"
-          },
-          "lib/net40/fr/Microsoft.ReportViewer.DataVisualization.resources.dll": {
-            "locale": "fr"
-          },
-          "lib/net40/fr/Microsoft.ReportViewer.Design.resources.dll": {
-            "locale": "fr"
-          },
-          "lib/net40/fr/Microsoft.ReportViewer.WebDesign.resources.dll": {
-            "locale": "fr"
-          },
-          "lib/net40/fr/Microsoft.ReportViewer.WebForms.resources.dll": {
-            "locale": "fr"
-          },
-          "lib/net40/fr/Microsoft.ReportViewer.WinForms.resources.dll": {
-            "locale": "fr"
-          },
-          "lib/net40/it/Microsoft.ReportViewer.Common.resources.dll": {
-            "locale": "it"
-          },
-          "lib/net40/it/Microsoft.ReportViewer.DataVisualization.resources.dll": {
-            "locale": "it"
-          },
-          "lib/net40/it/Microsoft.ReportViewer.Design.resources.dll": {
-            "locale": "it"
-          },
-          "lib/net40/it/Microsoft.ReportViewer.WebDesign.resources.dll": {
-            "locale": "it"
-          },
-          "lib/net40/it/Microsoft.ReportViewer.WebForms.resources.dll": {
-            "locale": "it"
-          },
-          "lib/net40/it/Microsoft.ReportViewer.WinForms.resources.dll": {
-            "locale": "it"
-          },
-          "lib/net40/ja/Microsoft.ReportViewer.Common.resources.dll": {
-            "locale": "ja"
-          },
-          "lib/net40/ja/Microsoft.ReportViewer.DataVisualization.resources.dll": {
-            "locale": "ja"
-          },
-          "lib/net40/ja/Microsoft.ReportViewer.Design.resources.dll": {
-            "locale": "ja"
-          },
-          "lib/net40/ja/Microsoft.ReportViewer.WebDesign.resources.dll": {
-            "locale": "ja"
-          },
-          "lib/net40/ja/Microsoft.ReportViewer.WebForms.resources.dll": {
-            "locale": "ja"
-          },
-          "lib/net40/ja/Microsoft.ReportViewer.WinForms.resources.dll": {
-            "locale": "ja"
-          },
-          "lib/net40/ko/Microsoft.ReportViewer.Common.resources.dll": {
-            "locale": "ko"
-          },
-          "lib/net40/ko/Microsoft.ReportViewer.DataVisualization.resources.dll": {
-            "locale": "ko"
-          },
-          "lib/net40/ko/Microsoft.ReportViewer.Design.resources.dll": {
-            "locale": "ko"
-          },
-          "lib/net40/ko/Microsoft.ReportViewer.WebDesign.resources.dll": {
-            "locale": "ko"
-          },
-          "lib/net40/ko/Microsoft.ReportViewer.WebForms.resources.dll": {
-            "locale": "ko"
-          },
-          "lib/net40/ko/Microsoft.ReportViewer.WinForms.resources.dll": {
-            "locale": "ko"
-          },
-          "lib/net40/pt/Microsoft.ReportViewer.Common.resources.dll": {
-            "locale": "pt"
-          },
-          "lib/net40/pt/Microsoft.ReportViewer.DataVisualization.resources.dll": {
-            "locale": "pt"
-          },
-          "lib/net40/pt/Microsoft.ReportViewer.Design.resources.dll": {
-            "locale": "pt"
-          },
-          "lib/net40/pt/Microsoft.ReportViewer.WebDesign.resources.dll": {
-            "locale": "pt"
-          },
-          "lib/net40/pt/Microsoft.ReportViewer.WebForms.resources.dll": {
-            "locale": "pt"
-          },
-          "lib/net40/pt/Microsoft.ReportViewer.WinForms.resources.dll": {
-            "locale": "pt"
-          },
-          "lib/net40/ru/Microsoft.ReportViewer.Common.resources.dll": {
-            "locale": "ru"
-          },
-          "lib/net40/ru/Microsoft.ReportViewer.DataVisualization.resources.dll": {
-            "locale": "ru"
-          },
-          "lib/net40/ru/Microsoft.ReportViewer.Design.resources.dll": {
-            "locale": "ru"
-          },
-          "lib/net40/ru/Microsoft.ReportViewer.WebDesign.resources.dll": {
-            "locale": "ru"
-          },
-          "lib/net40/ru/Microsoft.ReportViewer.WebForms.resources.dll": {
-            "locale": "ru"
-          },
-          "lib/net40/ru/Microsoft.ReportViewer.WinForms.resources.dll": {
-            "locale": "ru"
-          },
-          "lib/net40/zh-CHS/Microsoft.ReportViewer.Common.resources.dll": {
-            "locale": "zh-CHS"
-          },
-          "lib/net40/zh-CHS/Microsoft.ReportViewer.DataVisualization.resources.dll": {
-            "locale": "zh-CHS"
-          },
-          "lib/net40/zh-CHS/Microsoft.ReportViewer.Design.resources.dll": {
-            "locale": "zh-CHS"
-          },
-          "lib/net40/zh-CHS/Microsoft.ReportViewer.WebDesign.resources.dll": {
-            "locale": "zh-CHS"
-          },
-          "lib/net40/zh-CHS/Microsoft.ReportViewer.WebForms.resources.dll": {
-            "locale": "zh-CHS"
-          },
-          "lib/net40/zh-CHS/Microsoft.ReportViewer.WinForms.resources.dll": {
-            "locale": "zh-CHS"
-          },
-          "lib/net40/zh-CHT/Microsoft.ReportViewer.Common.resources.dll": {
-            "locale": "zh-CHT"
-          },
-          "lib/net40/zh-CHT/Microsoft.ReportViewer.DataVisualization.resources.dll": {
-            "locale": "zh-CHT"
-          },
-          "lib/net40/zh-CHT/Microsoft.ReportViewer.Design.resources.dll": {
-            "locale": "zh-CHT"
-          },
-          "lib/net40/zh-CHT/Microsoft.ReportViewer.WebDesign.resources.dll": {
-            "locale": "zh-CHT"
-          },
-          "lib/net40/zh-CHT/Microsoft.ReportViewer.WebForms.resources.dll": {
-            "locale": "zh-CHT"
-          },
-          "lib/net40/zh-CHT/Microsoft.ReportViewer.WinForms.resources.dll": {
-            "locale": "zh-CHT"
-          }
-        }
-      },
-      "Microsoft.SqlServer.Types/14.0.314.76": {
-        "type": "package",
-        "compile": {
-          "lib/net40/Microsoft.SqlServer.Types.dll": {}
-        },
-        "runtime": {
-          "lib/net40/Microsoft.SqlServer.Types.dll": {}
         }
       },
       "Microsoft.VisualStudio.Web.CodeGeneration/3.1.5": {
@@ -1479,14 +1388,14 @@
           "ref/netstandard1.5/System.Diagnostics.Tracing.dll": {}
         }
       },
-      "System.Drawing.Common/4.7.0": {
+      "System.Drawing.Common/4.7.3": {
         "type": "package",
         "dependencies": {
-          "Microsoft.NETCore.Platforms": "3.1.0",
+          "Microsoft.NETCore.Platforms": "3.1.9",
           "Microsoft.Win32.SystemEvents": "4.7.0"
         },
         "compile": {
-          "ref/netcoreapp3.0/_._": {}
+          "ref/netcoreapp3.0/System.Drawing.Common.dll": {}
         },
         "runtime": {
           "lib/netstandard2.0/System.Drawing.Common.dll": {}
@@ -2089,30 +1998,16 @@
           }
         }
       },
-      "System.Security.Cryptography.Cng/4.3.0": {
+      "System.Security.Cryptography.Cng/4.7.0": {
         "type": "package",
-        "dependencies": {
-          "Microsoft.NETCore.Platforms": "1.1.0",
-          "System.IO": "4.3.0",
-          "System.Resources.ResourceManager": "4.3.0",
-          "System.Runtime": "4.3.0",
-          "System.Runtime.Extensions": "4.3.0",
-          "System.Runtime.Handles": "4.3.0",
-          "System.Runtime.InteropServices": "4.3.0",
-          "System.Security.Cryptography.Algorithms": "4.3.0",
-          "System.Security.Cryptography.Encoding": "4.3.0",
-          "System.Security.Cryptography.Primitives": "4.3.0",
-          "System.Text.Encoding": "4.3.0"
-        },
         "compile": {
-          "ref/netstandard1.6/_._": {}
+          "ref/netcoreapp3.0/_._": {}
+        },
+        "runtime": {
+          "lib/netcoreapp3.0/System.Security.Cryptography.Cng.dll": {}
         },
         "runtimeTargets": {
-          "runtimes/unix/lib/netstandard1.6/System.Security.Cryptography.Cng.dll": {
-            "assetType": "runtime",
-            "rid": "unix"
-          },
-          "runtimes/win/lib/netstandard1.6/System.Security.Cryptography.Cng.dll": {
+          "runtimes/win/lib/netcoreapp3.0/System.Security.Cryptography.Cng.dll": {
             "assetType": "runtime",
             "rid": "win"
           }
@@ -2206,6 +2101,24 @@
           "runtimes/unix/lib/netstandard1.6/System.Security.Cryptography.OpenSsl.dll": {
             "assetType": "runtime",
             "rid": "unix"
+          }
+        }
+      },
+      "System.Security.Cryptography.Pkcs/4.7.0": {
+        "type": "package",
+        "dependencies": {
+          "System.Security.Cryptography.Cng": "4.7.0"
+        },
+        "compile": {
+          "ref/netcoreapp3.0/System.Security.Cryptography.Pkcs.dll": {}
+        },
+        "runtime": {
+          "lib/netcoreapp3.0/System.Security.Cryptography.Pkcs.dll": {}
+        },
+        "runtimeTargets": {
+          "runtimes/win/lib/netcoreapp3.0/System.Security.Cryptography.Pkcs.dll": {
+            "assetType": "runtime",
+            "rid": "win"
           }
         }
       },
@@ -2328,11 +2241,10 @@
           "ref/netstandard1.3/System.Text.Encoding.dll": {}
         }
       },
-      "System.Text.Encoding.CodePages/4.5.1": {
+      "System.Text.Encoding.CodePages/4.7.0": {
         "type": "package",
         "dependencies": {
-          "Microsoft.NETCore.Platforms": "2.1.2",
-          "System.Runtime.CompilerServices.Unsafe": "4.5.2"
+          "Microsoft.NETCore.Platforms": "3.1.0"
         },
         "compile": {
           "lib/netstandard2.0/System.Text.Encoding.CodePages.dll": {}
@@ -2523,6 +2435,81 @@
     }
   },
   "libraries": {
+    "FastReport.Compat/2024.1.0": {
+      "sha512": "Y+GEeXCTOE5NExGZ6tigCNpvGzz6yjGl8JVv0crp/YP8/3oh160TGuK/U+73fNEZbKw/OWjkFjaXHw/RdxI12w==",
+      "type": "package",
+      "path": "fastreport.compat/2024.1.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE.md",
+        "build/netcoreapp3.0/FastReport.Compat.targets",
+        "build/netcoreapp3.0/lib/Any/FastReport.Compat.dll",
+        "build/netcoreapp3.0/lib/Win/FastReport.Compat.dll",
+        "buildTransitive/netcoreapp3.0/FastReport.Compat.targets",
+        "fastreport.compat.2024.1.0.nupkg.sha512",
+        "fastreport.compat.nuspec",
+        "frlogo192.png",
+        "lib/net40/FastReport.Compat.dll",
+        "lib/net5.0-windows7.0/FastReport.Compat.dll",
+        "lib/netcoreapp3.0/_._",
+        "lib/netstandard2.0/FastReport.Compat.dll",
+        "lib/netstandard2.1/FastReport.Compat.dll",
+        "runtimes/any/lib/netcoreapp3.0/FastReport.Compat.dll"
+      ]
+    },
+    "FastReport.OpenSource/2024.1.6": {
+      "sha512": "yVes70O9R9FqAjTYoYs9edXnOCqJJy26zmCTdgnzfZiYRLqe/8blGuOC6vuimzHukDRSDsMPdE7dHQyphCyKXQ==",
+      "type": "package",
+      "path": "fastreport.opensource/2024.1.6",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "FastReport MIT license.md",
+        "build/FastReport.OpenSource.props",
+        "buildMultiTargeting/FastReport.OpenSource.props",
+        "buildTransitive/FastReport.OpenSource.props",
+        "fastreport.opensource.2024.1.6.nupkg.sha512",
+        "fastreport.opensource.nuspec",
+        "frlogo192.png",
+        "lib/net462/FastReport.dll",
+        "lib/net462/FastReport.xml",
+        "lib/netstandard2.0/FastReport.dll",
+        "lib/netstandard2.0/FastReport.xml",
+        "lib/netstandard2.1/FastReport.dll",
+        "lib/netstandard2.1/FastReport.xml"
+      ]
+    },
+    "FastReport.OpenSource.Export.PdfSimple/2024.1.6": {
+      "sha512": "VyBUWrBttFJvX8AKsge8AVGWuKmLsSRO6g+OeNdwH+luaqgFxOyxsQG5efk0MZ5wKh2OHgw5WFL7et43ZaIxTA==",
+      "type": "package",
+      "path": "fastreport.opensource.export.pdfsimple/2024.1.6",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "fastreport.opensource.export.pdfsimple.2024.1.6.nupkg.sha512",
+        "fastreport.opensource.export.pdfsimple.nuspec",
+        "lib/net462/FastReport.OpenSource.Export.PdfSimple.dll",
+        "lib/netstandard2.0/FastReport.OpenSource.Export.PdfSimple.dll"
+      ]
+    },
+    "FastReport.OpenSource.Web/2024.1.6": {
+      "sha512": "7uQgdoU9IngfgGqfEoHzFLpNOpfvDagn/X5ubOGf3DfROoBzIEAdbtvHAFHn20kvHbFBA20oqb9Tym9aFZltxA==",
+      "type": "package",
+      "path": "fastreport.opensource.web/2024.1.6",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "FastReport MIT license.md",
+        "fastreport.opensource.web.2024.1.6.nupkg.sha512",
+        "fastreport.opensource.web.nuspec",
+        "frlogo192.png",
+        "lib/net6.0/FastReport.OpenSource.Web.dll",
+        "lib/net6.0/FastReport.OpenSource.Web.xml",
+        "lib/netcoreapp3.1/FastReport.OpenSource.Web.dll",
+        "lib/netcoreapp3.1/FastReport.OpenSource.Web.xml"
+      ]
+    },
     "Google.Protobuf/3.21.9": {
       "sha512": "OTpFujTgkmqMLbg3KT7F/iuKi1rg6s5FCS2M9XcVLDn40zL8wgXm37CY/F6MeOEXKjdcnXGCN/h7oyMkVydVsg==",
       "type": "package",
@@ -2885,6 +2872,34 @@
         "microsoft.codeanalysis.razor.nuspec"
       ]
     },
+    "Microsoft.CodeAnalysis.VisualBasic/3.3.1": {
+      "sha512": "F7fc/G+0ocOYkKSCJ7Y8Q7eAEkAdG5RYODI9FtSl2Hm8zIDBVA3NccCm98gaOvCamLfMHYqeOjpb3yJnnw3m/w==",
+      "type": "package",
+      "path": "microsoft.codeanalysis.visualbasic/3.3.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "ThirdPartyNotices.rtf",
+        "lib/netstandard2.0/Microsoft.CodeAnalysis.VisualBasic.dll",
+        "lib/netstandard2.0/Microsoft.CodeAnalysis.VisualBasic.pdb",
+        "lib/netstandard2.0/Microsoft.CodeAnalysis.VisualBasic.xml",
+        "lib/netstandard2.0/cs/Microsoft.CodeAnalysis.VisualBasic.resources.dll",
+        "lib/netstandard2.0/de/Microsoft.CodeAnalysis.VisualBasic.resources.dll",
+        "lib/netstandard2.0/es/Microsoft.CodeAnalysis.VisualBasic.resources.dll",
+        "lib/netstandard2.0/fr/Microsoft.CodeAnalysis.VisualBasic.resources.dll",
+        "lib/netstandard2.0/it/Microsoft.CodeAnalysis.VisualBasic.resources.dll",
+        "lib/netstandard2.0/ja/Microsoft.CodeAnalysis.VisualBasic.resources.dll",
+        "lib/netstandard2.0/ko/Microsoft.CodeAnalysis.VisualBasic.resources.dll",
+        "lib/netstandard2.0/pl/Microsoft.CodeAnalysis.VisualBasic.resources.dll",
+        "lib/netstandard2.0/pt-BR/Microsoft.CodeAnalysis.VisualBasic.resources.dll",
+        "lib/netstandard2.0/ru/Microsoft.CodeAnalysis.VisualBasic.resources.dll",
+        "lib/netstandard2.0/tr/Microsoft.CodeAnalysis.VisualBasic.resources.dll",
+        "lib/netstandard2.0/zh-Hans/Microsoft.CodeAnalysis.VisualBasic.resources.dll",
+        "lib/netstandard2.0/zh-Hant/Microsoft.CodeAnalysis.VisualBasic.resources.dll",
+        "microsoft.codeanalysis.visualbasic.3.3.1.nupkg.sha512",
+        "microsoft.codeanalysis.visualbasic.nuspec"
+      ]
+    },
     "Microsoft.CodeAnalysis.Workspaces.Common/3.3.1": {
       "sha512": "NfBz3b5hFSbO+7xsCNryD+p8axsIJFTG7qM3jvMTC/MqYrU6b8E1b6JoRj5rJSOBB+pSunk+CMqyGQTOWHeDUg==",
       "type": "package",
@@ -3180,17 +3195,18 @@
         "version.txt"
       ]
     },
-    "Microsoft.NETCore.Platforms/3.1.0": {
-      "sha512": "z7aeg8oHln2CuNulfhiLYxCVMPEwBl3rzicjvIX+4sUuCwvXw5oXQEtbiU2c0z4qYL5L3Kmx0mMA/+t/SbY67w==",
+    "Microsoft.NETCore.Platforms/3.1.9": {
+      "sha512": "e+/BrhryHoMojWlbcPJAFcShpk3JYvsMfrmoM26dnvHARWR6vtmGbfHppZcANVqf7DUBDIRxlZXcWg7v/9e1TQ==",
       "type": "package",
-      "path": "microsoft.netcore.platforms/3.1.0",
+      "path": "microsoft.netcore.platforms/3.1.9",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
+        "Icon.png",
         "LICENSE.TXT",
         "THIRD-PARTY-NOTICES.TXT",
         "lib/netstandard1.0/_._",
-        "microsoft.netcore.platforms.3.1.0.nupkg.sha512",
+        "microsoft.netcore.platforms.3.1.9.nupkg.sha512",
         "microsoft.netcore.platforms.nuspec",
         "runtime.json",
         "useSharedDesignerContext.txt",
@@ -3210,117 +3226,6 @@
         "microsoft.netcore.targets.1.1.0.nupkg.sha512",
         "microsoft.netcore.targets.nuspec",
         "runtime.json"
-      ]
-    },
-    "Microsoft.ReportingServices.ReportViewerControl.WebForms/150.1620.0": {
-      "sha512": "qGWg2VAfNZ7nnZ3EoigTVnpCHBd8vIjYvcwoIdtCG2QSS69Vlzg88b6Fo42tRnin+GdFbFwKvL+QikhlWw4uOg==",
-      "type": "package",
-      "path": "microsoft.reportingservices.reportviewercontrol.webforms/150.1620.0",
-      "hasTools": true,
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "content/web.config.install.xdt",
-        "lib/net40/Microsoft.ReportViewer.Common.dll",
-        "lib/net40/Microsoft.ReportViewer.Common.resources.dll",
-        "lib/net40/Microsoft.ReportViewer.DataVisualization.dll",
-        "lib/net40/Microsoft.ReportViewer.DataVisualization.resources.dll",
-        "lib/net40/Microsoft.ReportViewer.Design.dll",
-        "lib/net40/Microsoft.ReportViewer.Design.resources.dll",
-        "lib/net40/Microsoft.ReportViewer.ProcessingObjectModel.dll",
-        "lib/net40/Microsoft.ReportViewer.WebDesign.dll",
-        "lib/net40/Microsoft.ReportViewer.WebDesign.resources.dll",
-        "lib/net40/Microsoft.ReportViewer.WebForms.dll",
-        "lib/net40/Microsoft.ReportViewer.WebForms.resources.dll",
-        "lib/net40/Microsoft.ReportViewer.WinForms.dll",
-        "lib/net40/Microsoft.ReportViewer.WinForms.resources.dll",
-        "lib/net40/de/Microsoft.ReportViewer.Common.resources.dll",
-        "lib/net40/de/Microsoft.ReportViewer.DataVisualization.resources.dll",
-        "lib/net40/de/Microsoft.ReportViewer.Design.resources.dll",
-        "lib/net40/de/Microsoft.ReportViewer.WebDesign.resources.dll",
-        "lib/net40/de/Microsoft.ReportViewer.WebForms.resources.dll",
-        "lib/net40/de/Microsoft.ReportViewer.WinForms.resources.dll",
-        "lib/net40/es/Microsoft.ReportViewer.Common.resources.dll",
-        "lib/net40/es/Microsoft.ReportViewer.DataVisualization.resources.dll",
-        "lib/net40/es/Microsoft.ReportViewer.Design.resources.dll",
-        "lib/net40/es/Microsoft.ReportViewer.WebDesign.resources.dll",
-        "lib/net40/es/Microsoft.ReportViewer.WebForms.resources.dll",
-        "lib/net40/es/Microsoft.ReportViewer.WinForms.resources.dll",
-        "lib/net40/fr/Microsoft.ReportViewer.Common.resources.dll",
-        "lib/net40/fr/Microsoft.ReportViewer.DataVisualization.resources.dll",
-        "lib/net40/fr/Microsoft.ReportViewer.Design.resources.dll",
-        "lib/net40/fr/Microsoft.ReportViewer.WebDesign.resources.dll",
-        "lib/net40/fr/Microsoft.ReportViewer.WebForms.resources.dll",
-        "lib/net40/fr/Microsoft.ReportViewer.WinForms.resources.dll",
-        "lib/net40/it/Microsoft.ReportViewer.Common.resources.dll",
-        "lib/net40/it/Microsoft.ReportViewer.DataVisualization.resources.dll",
-        "lib/net40/it/Microsoft.ReportViewer.Design.resources.dll",
-        "lib/net40/it/Microsoft.ReportViewer.WebDesign.resources.dll",
-        "lib/net40/it/Microsoft.ReportViewer.WebForms.resources.dll",
-        "lib/net40/it/Microsoft.ReportViewer.WinForms.resources.dll",
-        "lib/net40/ja/Microsoft.ReportViewer.Common.resources.dll",
-        "lib/net40/ja/Microsoft.ReportViewer.DataVisualization.resources.dll",
-        "lib/net40/ja/Microsoft.ReportViewer.Design.resources.dll",
-        "lib/net40/ja/Microsoft.ReportViewer.WebDesign.resources.dll",
-        "lib/net40/ja/Microsoft.ReportViewer.WebForms.resources.dll",
-        "lib/net40/ja/Microsoft.ReportViewer.WinForms.resources.dll",
-        "lib/net40/ko/Microsoft.ReportViewer.Common.resources.dll",
-        "lib/net40/ko/Microsoft.ReportViewer.DataVisualization.resources.dll",
-        "lib/net40/ko/Microsoft.ReportViewer.Design.resources.dll",
-        "lib/net40/ko/Microsoft.ReportViewer.WebDesign.resources.dll",
-        "lib/net40/ko/Microsoft.ReportViewer.WebForms.resources.dll",
-        "lib/net40/ko/Microsoft.ReportViewer.WinForms.resources.dll",
-        "lib/net40/pt/Microsoft.ReportViewer.Common.resources.dll",
-        "lib/net40/pt/Microsoft.ReportViewer.DataVisualization.resources.dll",
-        "lib/net40/pt/Microsoft.ReportViewer.Design.resources.dll",
-        "lib/net40/pt/Microsoft.ReportViewer.WebDesign.resources.dll",
-        "lib/net40/pt/Microsoft.ReportViewer.WebForms.resources.dll",
-        "lib/net40/pt/Microsoft.ReportViewer.WinForms.resources.dll",
-        "lib/net40/ru/Microsoft.ReportViewer.Common.resources.dll",
-        "lib/net40/ru/Microsoft.ReportViewer.DataVisualization.resources.dll",
-        "lib/net40/ru/Microsoft.ReportViewer.Design.resources.dll",
-        "lib/net40/ru/Microsoft.ReportViewer.WebDesign.resources.dll",
-        "lib/net40/ru/Microsoft.ReportViewer.WebForms.resources.dll",
-        "lib/net40/ru/Microsoft.ReportViewer.WinForms.resources.dll",
-        "lib/net40/zh-CHS/Microsoft.ReportViewer.Common.resources.dll",
-        "lib/net40/zh-CHS/Microsoft.ReportViewer.DataVisualization.resources.dll",
-        "lib/net40/zh-CHS/Microsoft.ReportViewer.Design.resources.dll",
-        "lib/net40/zh-CHS/Microsoft.ReportViewer.WebDesign.resources.dll",
-        "lib/net40/zh-CHS/Microsoft.ReportViewer.WebForms.resources.dll",
-        "lib/net40/zh-CHS/Microsoft.ReportViewer.WinForms.resources.dll",
-        "lib/net40/zh-CHT/Microsoft.ReportViewer.Common.resources.dll",
-        "lib/net40/zh-CHT/Microsoft.ReportViewer.DataVisualization.resources.dll",
-        "lib/net40/zh-CHT/Microsoft.ReportViewer.Design.resources.dll",
-        "lib/net40/zh-CHT/Microsoft.ReportViewer.WebDesign.resources.dll",
-        "lib/net40/zh-CHT/Microsoft.ReportViewer.WebForms.resources.dll",
-        "lib/net40/zh-CHT/Microsoft.ReportViewer.WinForms.resources.dll",
-        "license/License_ReportViewer.rtf",
-        "license/ThirdPartyNotices_ReportViewer.txt",
-        "microsoft.reportingservices.reportviewercontrol.webforms.150.1620.0.nupkg.sha512",
-        "microsoft.reportingservices.reportviewercontrol.webforms.nuspec",
-        "tools/install.ps1"
-      ]
-    },
-    "Microsoft.SqlServer.Types/14.0.314.76": {
-      "sha512": "gAekCmSfjtRBaiuuRIqJJV6cfEsEbYY5vI7Ssoc5sYI04JcyPrZ4C8RC3z7K9xfpr9ejQAQ1AtfvtgqEnjmwOw==",
-      "type": "package",
-      "path": "microsoft.sqlserver.types/14.0.314.76",
-      "hasTools": true,
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "content/SqlServerTypes/Loader.cs",
-        "content/SqlServerTypes/readme.htm",
-        "lib/net40/Microsoft.SqlServer.Types.dll",
-        "license/license_SysClrTypes.rtf",
-        "microsoft.sqlserver.types.14.0.314.76.nupkg.sha512",
-        "microsoft.sqlserver.types.nuspec",
-        "nativeBinaries/x64/SqlServerSpatial140.dll",
-        "nativeBinaries/x64/msvcr120.dll",
-        "nativeBinaries/x86/SqlServerSpatial140.dll",
-        "nativeBinaries/x86/msvcr120.dll",
-        "tools/install.ps1",
-        "tools/uninstall.ps1"
       ]
     },
     "Microsoft.VisualStudio.Web.CodeGeneration/3.1.5": {
@@ -4869,13 +4774,14 @@
         "system.diagnostics.tracing.nuspec"
       ]
     },
-    "System.Drawing.Common/4.7.0": {
-      "sha512": "v+XbyYHaZjDfn0ENmJEV1VYLgGgCTx1gnfOBcppowbpOAriglYgGCvFCPr2EEZyBvXlpxbEsTwkOlInl107ahA==",
+    "System.Drawing.Common/4.7.3": {
+      "sha512": "B3+wwhAeoUQ6KeshWSq3IRLQiMoqPEzSHzyVyxTI/EbYuqIp90lXrRISlip2AF+5tj74ycIVPpnRY4M424HahA==",
       "type": "package",
-      "path": "system.drawing.common/4.7.0",
+      "path": "system.drawing.common/4.7.3",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
+        "Icon.png",
         "LICENSE.TXT",
         "THIRD-PARTY-NOTICES.TXT",
         "lib/MonoAndroid10/_._",
@@ -4902,7 +4808,7 @@
         "runtimes/win/lib/netcoreapp2.0/System.Drawing.Common.dll",
         "runtimes/win/lib/netcoreapp3.0/System.Drawing.Common.dll",
         "runtimes/win/lib/netcoreapp3.0/System.Drawing.Common.xml",
-        "system.drawing.common.4.7.0.nupkg.sha512",
+        "system.drawing.common.4.7.3.nupkg.sha512",
         "system.drawing.common.nuspec",
         "useSharedDesignerContext.txt",
         "version.txt"
@@ -6836,32 +6742,84 @@
         "system.security.cryptography.algorithms.nuspec"
       ]
     },
-    "System.Security.Cryptography.Cng/4.3.0": {
-      "sha512": "03idZOqFlsKRL4W+LuCpJ6dBYDUWReug6lZjBa3uJWnk5sPCUXckocevTaUA8iT/MFSrY/2HXkOt753xQ/cf8g==",
+    "System.Security.Cryptography.Cng/4.7.0": {
+      "sha512": "4WQjFuypWtxb/bl/YwEE7LYGn4fgpsikFfBU6xwEm4YBYiRAhXAEJ62lILBu2JJSFbClIAntFTGfDZafn8yZTg==",
       "type": "package",
-      "path": "system.security.cryptography.cng/4.3.0",
+      "path": "system.security.cryptography.cng/4.7.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
-        "ThirdPartyNotices.txt",
-        "dotnet_library_license.txt",
+        "LICENSE.TXT",
+        "THIRD-PARTY-NOTICES.TXT",
+        "lib/MonoAndroid10/_._",
+        "lib/MonoTouch10/_._",
         "lib/net46/System.Security.Cryptography.Cng.dll",
         "lib/net461/System.Security.Cryptography.Cng.dll",
-        "lib/net463/System.Security.Cryptography.Cng.dll",
+        "lib/net461/System.Security.Cryptography.Cng.xml",
+        "lib/net462/System.Security.Cryptography.Cng.dll",
+        "lib/net462/System.Security.Cryptography.Cng.xml",
+        "lib/net47/System.Security.Cryptography.Cng.dll",
+        "lib/net47/System.Security.Cryptography.Cng.xml",
+        "lib/netcoreapp2.1/System.Security.Cryptography.Cng.dll",
+        "lib/netcoreapp3.0/System.Security.Cryptography.Cng.dll",
+        "lib/netcoreapp3.0/System.Security.Cryptography.Cng.xml",
+        "lib/netstandard1.3/System.Security.Cryptography.Cng.dll",
+        "lib/netstandard1.4/System.Security.Cryptography.Cng.dll",
+        "lib/netstandard1.6/System.Security.Cryptography.Cng.dll",
+        "lib/netstandard2.0/System.Security.Cryptography.Cng.dll",
+        "lib/netstandard2.0/System.Security.Cryptography.Cng.xml",
+        "lib/netstandard2.1/System.Security.Cryptography.Cng.dll",
+        "lib/netstandard2.1/System.Security.Cryptography.Cng.xml",
+        "lib/uap10.0.16299/_._",
+        "lib/xamarinios10/_._",
+        "lib/xamarinmac20/_._",
+        "lib/xamarintvos10/_._",
+        "lib/xamarinwatchos10/_._",
+        "ref/MonoAndroid10/_._",
+        "ref/MonoTouch10/_._",
         "ref/net46/System.Security.Cryptography.Cng.dll",
         "ref/net461/System.Security.Cryptography.Cng.dll",
-        "ref/net463/System.Security.Cryptography.Cng.dll",
+        "ref/net461/System.Security.Cryptography.Cng.xml",
+        "ref/net462/System.Security.Cryptography.Cng.dll",
+        "ref/net462/System.Security.Cryptography.Cng.xml",
+        "ref/net47/System.Security.Cryptography.Cng.dll",
+        "ref/net47/System.Security.Cryptography.Cng.xml",
+        "ref/netcoreapp2.0/System.Security.Cryptography.Cng.dll",
+        "ref/netcoreapp2.0/System.Security.Cryptography.Cng.xml",
+        "ref/netcoreapp2.1/System.Security.Cryptography.Cng.dll",
+        "ref/netcoreapp2.1/System.Security.Cryptography.Cng.xml",
+        "ref/netcoreapp3.0/System.Security.Cryptography.Cng.dll",
+        "ref/netcoreapp3.0/System.Security.Cryptography.Cng.xml",
         "ref/netstandard1.3/System.Security.Cryptography.Cng.dll",
         "ref/netstandard1.4/System.Security.Cryptography.Cng.dll",
         "ref/netstandard1.6/System.Security.Cryptography.Cng.dll",
-        "runtimes/unix/lib/netstandard1.6/System.Security.Cryptography.Cng.dll",
+        "ref/netstandard2.0/System.Security.Cryptography.Cng.dll",
+        "ref/netstandard2.0/System.Security.Cryptography.Cng.xml",
+        "ref/netstandard2.1/System.Security.Cryptography.Cng.dll",
+        "ref/netstandard2.1/System.Security.Cryptography.Cng.xml",
+        "ref/uap10.0.16299/_._",
+        "ref/xamarinios10/_._",
+        "ref/xamarinmac20/_._",
+        "ref/xamarintvos10/_._",
+        "ref/xamarinwatchos10/_._",
         "runtimes/win/lib/net46/System.Security.Cryptography.Cng.dll",
         "runtimes/win/lib/net461/System.Security.Cryptography.Cng.dll",
-        "runtimes/win/lib/net463/System.Security.Cryptography.Cng.dll",
+        "runtimes/win/lib/net461/System.Security.Cryptography.Cng.xml",
+        "runtimes/win/lib/net462/System.Security.Cryptography.Cng.dll",
+        "runtimes/win/lib/net462/System.Security.Cryptography.Cng.xml",
+        "runtimes/win/lib/net47/System.Security.Cryptography.Cng.dll",
+        "runtimes/win/lib/net47/System.Security.Cryptography.Cng.xml",
+        "runtimes/win/lib/netcoreapp2.0/System.Security.Cryptography.Cng.dll",
+        "runtimes/win/lib/netcoreapp2.1/System.Security.Cryptography.Cng.dll",
+        "runtimes/win/lib/netcoreapp3.0/System.Security.Cryptography.Cng.dll",
+        "runtimes/win/lib/netcoreapp3.0/System.Security.Cryptography.Cng.xml",
         "runtimes/win/lib/netstandard1.4/System.Security.Cryptography.Cng.dll",
         "runtimes/win/lib/netstandard1.6/System.Security.Cryptography.Cng.dll",
-        "system.security.cryptography.cng.4.3.0.nupkg.sha512",
-        "system.security.cryptography.cng.nuspec"
+        "runtimes/win/lib/uap10.0.16299/_._",
+        "system.security.cryptography.cng.4.7.0.nupkg.sha512",
+        "system.security.cryptography.cng.nuspec",
+        "useSharedDesignerContext.txt",
+        "version.txt"
       ]
     },
     "System.Security.Cryptography.Csp/4.3.0": {
@@ -6951,6 +6909,55 @@
         "runtimes/unix/lib/netstandard1.6/System.Security.Cryptography.OpenSsl.dll",
         "system.security.cryptography.openssl.4.3.0.nupkg.sha512",
         "system.security.cryptography.openssl.nuspec"
+      ]
+    },
+    "System.Security.Cryptography.Pkcs/4.7.0": {
+      "sha512": "0Srzh6YlhjuMxaqMyeCCdZs22cucaUAG6SKDd3gNHBJmre0VZ71ekzWu9rvLD4YXPetyNdPvV6Qst+8C++9v3Q==",
+      "type": "package",
+      "path": "system.security.cryptography.pkcs/4.7.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE.TXT",
+        "THIRD-PARTY-NOTICES.TXT",
+        "lib/net46/System.Security.Cryptography.Pkcs.dll",
+        "lib/net461/System.Security.Cryptography.Pkcs.dll",
+        "lib/net461/System.Security.Cryptography.Pkcs.xml",
+        "lib/netcoreapp2.1/System.Security.Cryptography.Pkcs.dll",
+        "lib/netcoreapp3.0/System.Security.Cryptography.Pkcs.dll",
+        "lib/netcoreapp3.0/System.Security.Cryptography.Pkcs.xml",
+        "lib/netstandard1.3/System.Security.Cryptography.Pkcs.dll",
+        "lib/netstandard2.0/System.Security.Cryptography.Pkcs.dll",
+        "lib/netstandard2.0/System.Security.Cryptography.Pkcs.xml",
+        "lib/netstandard2.1/System.Security.Cryptography.Pkcs.dll",
+        "lib/netstandard2.1/System.Security.Cryptography.Pkcs.xml",
+        "ref/net46/System.Security.Cryptography.Pkcs.dll",
+        "ref/net461/System.Security.Cryptography.Pkcs.dll",
+        "ref/net461/System.Security.Cryptography.Pkcs.xml",
+        "ref/netcoreapp2.1/System.Security.Cryptography.Pkcs.dll",
+        "ref/netcoreapp2.1/System.Security.Cryptography.Pkcs.xml",
+        "ref/netcoreapp3.0/System.Security.Cryptography.Pkcs.dll",
+        "ref/netcoreapp3.0/System.Security.Cryptography.Pkcs.xml",
+        "ref/netstandard1.3/System.Security.Cryptography.Pkcs.dll",
+        "ref/netstandard2.0/System.Security.Cryptography.Pkcs.dll",
+        "ref/netstandard2.0/System.Security.Cryptography.Pkcs.xml",
+        "ref/netstandard2.1/System.Security.Cryptography.Pkcs.dll",
+        "ref/netstandard2.1/System.Security.Cryptography.Pkcs.xml",
+        "runtimes/win/lib/net46/System.Security.Cryptography.Pkcs.dll",
+        "runtimes/win/lib/net461/System.Security.Cryptography.Pkcs.dll",
+        "runtimes/win/lib/net461/System.Security.Cryptography.Pkcs.xml",
+        "runtimes/win/lib/netcoreapp2.1/System.Security.Cryptography.Pkcs.dll",
+        "runtimes/win/lib/netcoreapp3.0/System.Security.Cryptography.Pkcs.dll",
+        "runtimes/win/lib/netcoreapp3.0/System.Security.Cryptography.Pkcs.xml",
+        "runtimes/win/lib/netstandard1.3/System.Security.Cryptography.Pkcs.dll",
+        "runtimes/win/lib/netstandard2.0/System.Security.Cryptography.Pkcs.dll",
+        "runtimes/win/lib/netstandard2.0/System.Security.Cryptography.Pkcs.xml",
+        "runtimes/win/lib/netstandard2.1/System.Security.Cryptography.Pkcs.dll",
+        "runtimes/win/lib/netstandard2.1/System.Security.Cryptography.Pkcs.xml",
+        "system.security.cryptography.pkcs.4.7.0.nupkg.sha512",
+        "system.security.cryptography.pkcs.nuspec",
+        "useSharedDesignerContext.txt",
+        "version.txt"
       ]
     },
     "System.Security.Cryptography.Primitives/4.3.0": {
@@ -7228,10 +7235,10 @@
         "system.text.encoding.nuspec"
       ]
     },
-    "System.Text.Encoding.CodePages/4.5.1": {
-      "sha512": "4J2JQXbftjPMppIHJ7IC+VXQ9XfEagN92vZZNoG12i+zReYlim5dMoXFC1Zzg7tsnKDM7JPo5bYfFK4Jheq44w==",
+    "System.Text.Encoding.CodePages/4.7.0": {
+      "sha512": "aeu4FlaUTemuT1qOd1MyU4T516QR4Fy+9yDbwWMPHOHy7U8FD6SgTzdZFO7gHcfAPHtECqInbwklVvUK4RHcNg==",
       "type": "package",
-      "path": "system.text.encoding.codepages/4.5.1",
+      "path": "system.text.encoding.codepages/4.7.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -7241,8 +7248,10 @@
         "lib/MonoTouch10/_._",
         "lib/net46/System.Text.Encoding.CodePages.dll",
         "lib/net461/System.Text.Encoding.CodePages.dll",
+        "lib/net461/System.Text.Encoding.CodePages.xml",
         "lib/netstandard1.3/System.Text.Encoding.CodePages.dll",
         "lib/netstandard2.0/System.Text.Encoding.CodePages.dll",
+        "lib/netstandard2.0/System.Text.Encoding.CodePages.xml",
         "lib/xamarinios10/_._",
         "lib/xamarinmac20/_._",
         "lib/xamarintvos10/_._",
@@ -7254,10 +7263,13 @@
         "ref/xamarintvos10/_._",
         "ref/xamarinwatchos10/_._",
         "runtimes/win/lib/net461/System.Text.Encoding.CodePages.dll",
+        "runtimes/win/lib/net461/System.Text.Encoding.CodePages.xml",
         "runtimes/win/lib/netcoreapp2.0/System.Text.Encoding.CodePages.dll",
+        "runtimes/win/lib/netcoreapp2.0/System.Text.Encoding.CodePages.xml",
         "runtimes/win/lib/netstandard1.3/System.Text.Encoding.CodePages.dll",
         "runtimes/win/lib/netstandard2.0/System.Text.Encoding.CodePages.dll",
-        "system.text.encoding.codepages.4.5.1.nupkg.sha512",
+        "runtimes/win/lib/netstandard2.0/System.Text.Encoding.CodePages.xml",
+        "system.text.encoding.codepages.4.7.0.nupkg.sha512",
         "system.text.encoding.codepages.nuspec",
         "useSharedDesignerContext.txt",
         "version.txt"
@@ -7914,8 +7926,10 @@
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v3.1": [
+      "FastReport.OpenSource >= 2024.1.6",
+      "FastReport.OpenSource.Export.PdfSimple >= 2024.1.6",
+      "FastReport.OpenSource.Web >= 2024.1.6",
       "Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation >= 3.1.29",
-      "Microsoft.ReportingServices.ReportViewerControl.WebForms >= 150.1620.0",
       "Microsoft.VisualStudio.Web.CodeGeneration.Design >= 3.1.5",
       "MySql.EntityFrameworkCore >= 5.0.17.2"
     ]
@@ -7959,13 +7973,21 @@
       "netcoreapp3.1": {
         "targetAlias": "netcoreapp3.1",
         "dependencies": {
+          "FastReport.OpenSource": {
+            "target": "Package",
+            "version": "[2024.1.6, )"
+          },
+          "FastReport.OpenSource.Export.PdfSimple": {
+            "target": "Package",
+            "version": "[2024.1.6, )"
+          },
+          "FastReport.OpenSource.Web": {
+            "target": "Package",
+            "version": "[2024.1.6, )"
+          },
           "Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation": {
             "target": "Package",
             "version": "[3.1.29, )"
-          },
-          "Microsoft.ReportingServices.ReportViewerControl.WebForms": {
-            "target": "Package",
-            "version": "[150.1620.0, )"
           },
           "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
             "target": "Package",
@@ -7997,37 +8019,5 @@
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.416\\RuntimeIdentifierGraph.json"
       }
     }
-  },
-  "logs": [
-    {
-      "code": "NU1603",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Microsoft.ReportingServices.ReportViewerControl.WebForms 150.1620.0 depende de Microsoft.SqlServer.Types (>= 14.0.0), mas Microsoft.SqlServer.Types 14.0.0 não foi encontrado. A melhor correspondência aproximada de Microsoft.SqlServer.Types 14.0.314.76 foi resolvida.",
-      "libraryId": "Microsoft.SqlServer.Types",
-      "targetGraphs": [
-        ".NETCoreApp,Version=v3.1"
-      ]
-    },
-    {
-      "code": "NU1701",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "O pacote 'Microsoft.ReportingServices.ReportViewerControl.WebForms 150.1620.0' foi restaurado usando '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' em vez da estrutura de destino do projeto '.NETCoreApp,Version=v3.1'. Esse pacote pode não ser totalmente compatível com o seu projeto.",
-      "libraryId": "Microsoft.ReportingServices.ReportViewerControl.WebForms",
-      "targetGraphs": [
-        ".NETCoreApp,Version=v3.1"
-      ]
-    },
-    {
-      "code": "NU1701",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "O pacote 'Microsoft.SqlServer.Types 14.0.314.76' foi restaurado usando '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' em vez da estrutura de destino do projeto '.NETCoreApp,Version=v3.1'. Esse pacote pode não ser totalmente compatível com o seu projeto.",
-      "libraryId": "Microsoft.SqlServer.Types",
-      "targetGraphs": [
-        ".NETCoreApp,Version=v3.1"
-      ]
-    }
-  ]
+  }
 }
