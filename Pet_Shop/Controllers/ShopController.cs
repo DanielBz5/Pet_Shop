@@ -278,15 +278,15 @@ namespace Pet_Shop.Controllers
             return View();
         }
 
-        
-        //public IActionResult CreateReport(List<Produto> Produtos)
+
+        //public IActionResult CreateReport(List<Estoque> Estoque)
         //{
-        //    var caminhoReport = Path.Combine(_webHostEnv.WebRootPath, @"reports\Produtos.frx");
+        //    var caminhoReport = Path.Combine(_webHostEnv.WebRootPath, @"reports\Estoque.frx");
         //    var reportFile = caminhoReport;
         //    var freport = new FastReport.Report();
-            
 
-        //    freport.Dictionary.RegisterBusinessObject(Produtos, "productList", 10, true);
+
+        //    freport.Dictionary.RegisterBusinessObject(Estoque, "estoqueList", 10, true);
         //    freport.Report.Save(reportFile);
 
         //    return Ok($" Relatorio gerado : {caminhoReport}");
@@ -294,7 +294,7 @@ namespace Pet_Shop.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Relatorios(Relatorio relatorio)
+        public IActionResult Relatorios(Relatorio relatorio)// não está passando os filtros 
         {
             if (ModelState.IsValid)
             {
@@ -310,14 +310,14 @@ namespace Pet_Shop.Controllers
 
                     Produtos = shopdao.BuscaProdutosFiltro(filtro);
                     
-                    return ReportView(Produtos);
+                    return ReportView(Produtos, null);
                 }
                 else if (relatorio.Modelo == "Estoque")
                 {
                     List<Estoque> Estoque = new List<Estoque>();
                     Func<Estoque, bool> filtro = e => true;
 
-                    if (relatorio.DataInicial != null && relatorio.DataFinal != null)
+                    if (relatorio.DataInicial != DateTime.MinValue && relatorio.DataFinal != DateTime.MinValue)
                     {
                         filtro = e => filtro(e) && e.Data_ >= relatorio.DataInicial && e.Data_ <= relatorio.DataFinal;
                     }
@@ -331,8 +331,7 @@ namespace Pet_Shop.Controllers
                     }
 
                     Estoque = shopdao.BuscaEstoque(filtro);
-                    ViewBag.ReportData = Estoque;
-                    return View("ReportView");
+                    return ReportView(null ,Estoque);
                 }
 
                 return View("Relatorios");
@@ -343,15 +342,31 @@ namespace Pet_Shop.Controllers
             }
         }
 
-        public IActionResult ReportView(List<Produto> produtos)
+        public IActionResult ReportView(List<Produto> produtos, List<Estoque> estoque)
         {
-            var caminhoReport = Path.Combine(_webHostEnv.WebRootPath, @"reports\Produtos.frx");
+            List<dynamic> RelModel = new List<dynamic>();
+            var RelName = "";
+            var dbSet = "";
+            if (produtos != null)
+            {
+                RelModel.AddRange(produtos);
+                RelName = "Produtos";
+                dbSet = "productList";
+            }
+            else if(estoque != null)
+            {
+                RelModel.AddRange(estoque);
+                RelName = "Estoque";
+                dbSet = "estoqueList";
+            }
+
+            var caminhoReport = Path.Combine(_webHostEnv.WebRootPath, @"reports\"+RelName+".frx");
             var reportFile = caminhoReport;
             var freport = new FastReport.Report();
             
 
             freport.Report.Load(reportFile);
-            freport.Dictionary.RegisterBusinessObject(produtos, "productList", 10, true);
+            freport.Dictionary.RegisterBusinessObject(RelModel, dbSet, 10, true);
             freport.Prepare();
 
             var pdfExport = new PDFSimpleExport();
