@@ -1,8 +1,10 @@
 ﻿using FastReport.Export.PdfSimple;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using OfficeOpenXml;
 using Pet_Shop.Dao;
 using Pet_Shop.Models;
 using System;
@@ -294,7 +296,7 @@ namespace Pet_Shop.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Relatorios(Relatorio relatorio)// não está passando os filtros 
+        public IActionResult Relatorios(Relatorio relatorio)// não está passando os filtros //arruma isso
         {
             if (ModelState.IsValid)
             {
@@ -376,6 +378,70 @@ namespace Pet_Shop.Controllers
             ms.Flush();
 
             return File(ms.ToArray(), "application/pdf");
+        }
+
+
+        public IActionResult ImportProdutos()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult ImportProdutos(IFormFile excelFile)
+        {
+            ValidaExcel(excelFile);
+
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+            using (var package = new ExcelPackage(excelFile.OpenReadStream()))
+            {
+                var workbook = package.Workbook;
+                if (workbook != null)
+                {
+                    var worksheet = workbook.Worksheets.FirstOrDefault();
+                    if (worksheet != null)
+                    {
+                        int rowCount = worksheet.Dimension.Rows;
+                        int colCount = worksheet.Dimension.Columns;
+                        var TotalProdutos = 0;
+
+
+                        for (int row = 2; row <= rowCount; row++) // Começa na linha 2, assumindo que a primeira linha é o cabeçalho
+                        {
+                            Produto produto = new Produto
+                            {
+                                Imagem = Convert.FromBase64String((string)worksheet.Cells[row, 1].Value),
+                                Nome = worksheet.Cells[row, 2].Value?.ToString(),
+                                Valor = Convert.ToDouble(worksheet.Cells[row, 3].Value),
+                                Estoque_Minimo = Convert.ToInt32(worksheet.Cells[row, 4].Value),
+                                Categoria = worksheet.Cells[row, 5].Value?.ToString(),
+                                Descricao = worksheet.Cells[row, 6].Value?.ToString(),
+                            };
+
+                            if (shopdao.IncluiProduto(produto))
+                            {
+                                TotalProdutos++;
+                            }
+                        }
+
+                        return View("MessageBox", (TempData["Mensagem"] = "Foi Importado "+TotalProdutos+" Produtos", TempData["Titulo"] = "Sucesso!"));
+                    }
+                }
+
+                return View("MessageBox", (TempData["Mensagem"] = "Erro na importação", TempData["Titulo"] = "Atenção!"));
+            }
+        }
+
+        private void ValidaExcel(IFormFile excelFile)
+        {
+            if (excelFile == null && excelFile.Length < 0)
+            {
+                RedirectToPage("MessageBox", (TempData["Mensagem"] = "Arquivo Invalido, Escolha um arquivo Excel.", TempData["Titulo"] = "Atenção!"));
+            }
+            else if (!Path.GetExtension(excelFile.FileName).Equals(".xlsx", StringComparison.OrdinalIgnoreCase))
+            {
+                RedirectToPage("MessageBox", (TempData["Mensagem"] = "Arquivo no formato invalido, Use o formato .xlsx", TempData["Titulo"] = "Atenção!"));
+            }
         }
 
     }

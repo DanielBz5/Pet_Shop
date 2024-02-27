@@ -1,0 +1,27 @@
+﻿@model Pet_Shop.Models.Produto
+
+
+
+<div class="container-manage">
+    <div class="container-btn">
+        <a class="btn btn-navega" asp-controller="Shop" asp-action="ConsultaProduto"><i class="bi bi-search"></i>Consultar Produtos</a>
+    </div>
+    <div class="manage-produto">
+        <h5 class="titulo-black">Importar Produtos</h5><br>
+        <form asp-controller="Shop" asp-action="ImportProdutos" method="post" enctype="multipart/form-data">
+            <div class="row mb-3">
+                <label for="inputImagem3" class="col-sm-2 col-form-label">Selecione o arquivo Excel</label>
+                <div class="col-sm-10">
+                    <input type="file" class="form-control" id="excelFile" name="excelFile">
+                    <span asp-validation-for="Imagem" class="text-danger"></span>
+                </div>
+            </div>
+            
+            <div class="btn-login">
+                <button type="submit" class="btn btn-primary"><i class="bi bi-plus-lg"></i>Importar</button>
+                <a class="btn btn-secondary" asp-controller="Shop" asp-action="ManageShop"><i class="bi bi-caret-left-fill"></i>Voltar</a>
+            </div>
+
+        </form>
+    </div>
+</div>
