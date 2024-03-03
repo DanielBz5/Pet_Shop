@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using OfficeOpenXml;
+using OfficeOpenXml.Style;
 using Pet_Shop.Dao;
 using Pet_Shop.Models;
 using System;
@@ -441,6 +442,92 @@ namespace Pet_Shop.Controllers
             else if (!Path.GetExtension(excelFile.FileName).Equals(".xlsx", StringComparison.OrdinalIgnoreCase))
             {
                 RedirectToPage("MessageBox", (TempData["Mensagem"] = "Arquivo no formato invalido, Use o formato .xlsx", TempData["Titulo"] = "Atenção!"));
+            }
+        }
+
+
+        
+        public IActionResult ExportProdutos()
+        {
+            try
+            {
+                LimpaTemp();
+
+                List<Produto> Produtos = new List<Produto>();
+                Func<Produto, bool> filtro = p => true;
+                Produtos = shopdao.BuscaProdutos(filtro);
+
+                if (Produtos != null)
+                {
+                    var filePath = Path.Combine(_webHostEnv.WebRootPath, "Temp", "Produtos.xlsx");
+
+                    ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+                    using (var excel = new ExcelPackage(new FileInfo(filePath)))
+                    {
+                        var worksheet = excel.Workbook.Worksheets.Add("Produtos");
+
+                        //defini propriedades
+                        worksheet.TabColor = System.Drawing.Color.Black; //cor row
+                        worksheet.DefaultRowHeight = 12; //tamanho row
+
+                        //propriedadea primeira linha
+                        worksheet.Row(1).Height = 20;
+                        worksheet.Row(1).Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                        worksheet.Row(1).Style.Font.Bold = true;
+
+                        //define cabeçalho
+                        worksheet.Cells[1, 1].Value = "Imagem";
+                        worksheet.Cells[1, 2].Value = "Codigo";
+                        worksheet.Cells[1, 3].Value = "Nome";
+                        worksheet.Cells[1, 4].Value = "Descrição";
+                        worksheet.Cells[1, 5].Value = "Valor";
+                        worksheet.Cells[1, 6].Value = "Quantidade";
+                        worksheet.Cells[1, 7].Value = "Estoque Minimo";
+                        worksheet.Cells[1, 8].Value = "Categoria";
+
+
+                        int row = 2;
+                        foreach (var produto in Produtos)
+                        {
+                            worksheet.Cells[row, 1].Value = produto.Imagem;
+                            worksheet.Cells[row, 2].Value = produto.Cod;
+                            worksheet.Cells[row, 3].Value = produto.Nome;
+                            worksheet.Cells[row, 4].Value = produto.Descricao;
+                            worksheet.Cells[row, 5].Value = produto.Valor;
+                            worksheet.Cells[row, 6].Value = produto.Quantidade;
+                            worksheet.Cells[row, 7].Value = produto.Estoque_Minimo;
+                            worksheet.Cells[row, 8].Value = produto.Categoria;
+                            row++;
+                        }
+
+                        // Ajusta tamanho colunas
+                        worksheet.Cells[worksheet.Dimension.Address].AutoFitColumns();
+
+                        excel.Save();
+                    }
+
+                    // Retorna o arquivo Excel como um FileStreamResult para abrir o explorador de arquivos
+                    var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
+                    return File(fileStream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Produtos.xlsx");
+                }
+                else
+                {
+                    return View("MessageBox", (TempData["Mensagem"] = "Nenhum produto encontrado", TempData["Titulo"] = "Atenção!"));
+                }
+            }
+            catch (Exception ex)
+            {
+                return View("MessageBox", (TempData["Mensagem"] = $"Não foi possível exportar o Excel. Erro: {ex.Message}", TempData["Titulo"] = "Atenção!"));
+            }
+        }
+
+        public void LimpaTemp()
+        {
+            string tempFolderPath = Path.Combine(_webHostEnv.WebRootPath, "Temp");
+            DirectoryInfo tempDir = new DirectoryInfo(tempFolderPath);
+            foreach (FileInfo file in tempDir.GetFiles())
+            {
+                file.Delete();
             }
         }
 
