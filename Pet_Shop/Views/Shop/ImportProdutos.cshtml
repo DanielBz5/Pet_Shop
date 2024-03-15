@@ -10,13 +10,21 @@
         <h5 class="titulo-black">Importar Produtos</h5><br>
         <form asp-controller="Shop" asp-action="ImportProdutos" method="post" enctype="multipart/form-data">
             <div class="row mb-3">
-                <label for="inputImagem3" class="col-sm-2 col-form-label">Selecione o arquivo Excel</label>
+                <label for="inputImagem3" class="col-sm-2 col-form-label">Selecione Planilha</label>
                 <div class="col-sm-10">
-                    <input type="file" class="form-control" id="excelFile" name="excelFile">
+                    <input type="file" class="form-control" id="excelFile" name="excelFile" accept=".xlsx">
                     <span asp-validation-for="Imagem" class="text-danger"></span>
                 </div>
             </div>
             
+            <div class="row mb-3">
+                <label for="inputImagem3" class="col-sm-2 col-form-label">Selecione Imagens</label>
+                <div class="col-sm-10">
+                    <input type="file" class="form-control" id="excelFile" name="Imagens" accept=".jpg,.jpeg,.png" multiple>
+                    <span asp-validation-for="Imagem" class="text-danger"></span>
+                </div>
+            </div>
+
             <div class="btn-login">
                 <button type="submit" class="btn btn-primary"><i class="bi bi-plus-lg"></i>Importar</button>
                 <a class="btn btn-secondary" asp-controller="Shop" asp-action="ManageShop"><i class="bi bi-caret-left-fill"></i>Voltar</a>

@@ -10,6 +10,7 @@ using Pet_Shop.Dao;
 using Pet_Shop.Models;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Security.Claims;
@@ -389,8 +390,10 @@ namespace Pet_Shop.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult ImportProdutos(IFormFile excelFile)
+        public IActionResult ImportProdutos(IFormFile excelFile, IFormFileCollection Imagens )
         {
+            ImportaImagens(Imagens);
+
             ValidaExcel(excelFile);
 
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
@@ -405,31 +408,99 @@ namespace Pet_Shop.Controllers
                         int rowCount = worksheet.Dimension.Rows;
                         int colCount = worksheet.Dimension.Columns;
                         var TotalProdutos = 0;
+                        var ErroProdutos = 0;
 
 
                         for (int row = 2; row <= rowCount; row++) // Começa na linha 2, assumindo que a primeira linha é o cabeçalho
                         {
-                            Produto produto = new Produto
+                            try
                             {
-                                Imagem = Convert.FromBase64String((string)worksheet.Cells[row, 1].Value),
-                                Nome = worksheet.Cells[row, 2].Value?.ToString(),
-                                Valor = Convert.ToDouble(worksheet.Cells[row, 3].Value),
-                                Estoque_Minimo = Convert.ToInt32(worksheet.Cells[row, 4].Value),
-                                Categoria = worksheet.Cells[row, 5].Value?.ToString(),
-                                Descricao = worksheet.Cells[row, 6].Value?.ToString(),
-                            };
+                                Produto produto = new Produto
+                                {
+                                    Imagem = BuscaBinario(worksheet.Cells[row, 1].Value?.ToString()),
+                                    Nome = worksheet.Cells[row, 2].Value?.ToString(),
+                                    Valor = Convert.ToDouble(worksheet.Cells[row, 3].Value),
+                                    Estoque_Minimo = Convert.ToInt32(worksheet.Cells[row, 4].Value),
+                                    Categoria = worksheet.Cells[row, 5].Value?.ToString(),
+                                    Descricao = worksheet.Cells[row, 6].Value?.ToString(),
+                                };
 
-                            if (shopdao.IncluiProduto(produto))
-                            {
-                                TotalProdutos++;
+                                if (TryValidateModel(produto))
+                                {
+                                    if (shopdao.IncluiProduto(produto))
+                                        TotalProdutos++;
+                                }
+                                else
+                                {
+                                    ErroProdutos++;
+                                }
                             }
+                            catch
+                            {
+                                ErroProdutos++;
+                            } 
                         }
 
-                        return View("MessageBox", (TempData["Mensagem"] = "Foi Importado "+TotalProdutos+" Produtos", TempData["Titulo"] = "Sucesso!"));
+                        return View("MessageBox", (TempData["Mensagem"] = "Foi Importado "+TotalProdutos+" Produtos, e "+ ErroProdutos + "apresentaram erro.", TempData["Titulo"] = "Sucesso!"));
                     }
                 }
 
                 return View("MessageBox", (TempData["Mensagem"] = "Erro na importação", TempData["Titulo"] = "Atenção!"));
+            }
+        }
+
+
+        private async Task<IActionResult> ImportaImagens(IFormFileCollection imagens)
+        {
+            try
+            {
+                LimpaTempImg();
+
+                if (imagens == null || imagens.Count == 0)
+                    return View("MessageBox", (TempData["Mensagem"] = "Nenhuma Imagem Selecionada", TempData["Titulo"] = "Atenção!"));
+
+                var Diretorio = Path.Combine(_webHostEnv.WebRootPath, "img", "temp");
+
+                if (!Directory.Exists(Diretorio))
+                    Directory.CreateDirectory(Diretorio); // Cria diretorio se não existir
+
+                foreach (var imagem in imagens)
+                {
+                    using (var img = Image.FromStream(imagem.OpenReadStream()))
+                    {
+                        if (img.RawFormat.Guid == System.Drawing.Imaging.ImageFormat.Jpeg.Guid ||
+                            img.RawFormat.Guid == System.Drawing.Imaging.ImageFormat.Png.Guid ||
+                            img.RawFormat.Guid == System.Drawing.Imaging.ImageFormat.Gif.Guid)//valida formato imagem
+                        {
+                            var filePath = Path.Combine(Diretorio, imagem.FileName);
+                            using (var stream = new FileStream(filePath, FileMode.Create))
+                            {
+                                await imagem.CopyToAsync(stream);
+                            }
+                        }
+                        else
+                        {
+                            return View("MessageBox", (TempData["Mensagem"] = "Um ou mais arquivos não são imagens válidas. Só é permitido Imagens .png .jpg .jpeg", TempData["Titulo"] = "Atenção!"));
+                        }
+                    }
+                }
+
+                return null;
+            }
+            catch (Exception ex)// não está acionando ao importar arquivo errado
+            {
+                return View("MessageBox", (TempData["Mensagem"] = "Erro na importação Imagens:" + ex.Message, TempData["Titulo"] = "Atenção!"));
+            }
+        }
+
+
+        public void LimpaTempImg()
+        {
+            var Diretorio = Path.Combine(_webHostEnv.WebRootPath, "img", "temp");
+            DirectoryInfo tempDir = new DirectoryInfo(Diretorio);
+            foreach (FileInfo file in tempDir.GetFiles())
+            {
+                file.Delete();
             }
         }
 
@@ -445,8 +516,38 @@ namespace Pet_Shop.Controllers
             }
         }
 
+        private byte[] BuscaBinario(string NameImg)
+        {
+            try
+            {
+                byte[] imgBinario = null;
 
-        
+                var diretorio = Path.Combine(_webHostEnv.WebRootPath, "img", "temp");
+                var tempDir = new DirectoryInfo(diretorio);
+
+                var imagem = tempDir.GetFiles("*.*", SearchOption.TopDirectoryOnly)
+                                      .Where(file => new[] { ".png", ".jpg", ".jpeg" }.Any(ext => file.Name.Equals(NameImg + ext, StringComparison.OrdinalIgnoreCase)))
+                                      .ToArray();//Busca os arquivos no diretorio e compara se algum coresponde ao nome+opções de extenção e retorna martrix
+
+                if (imagem.Length > 0)
+                {
+                    var arquivo = imagem[0];
+                    using (var ms = new MemoryStream())
+                    using (var fileStream = arquivo.OpenRead())
+                    {
+                        fileStream.CopyTo(ms);
+                        imgBinario = ms.ToArray();
+                    }
+                }
+
+                return imgBinario;
+            }
+            catch
+            {
+                return null;
+            }    
+        }
+
         public IActionResult ExportProdutos()
         {
             try
