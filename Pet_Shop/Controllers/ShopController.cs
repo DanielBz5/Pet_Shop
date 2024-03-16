@@ -411,7 +411,7 @@ namespace Pet_Shop.Controllers
                         var ErroProdutos = 0;
 
 
-                        for (int row = 2; row <= rowCount; row++) // Começa na linha 2, assumindo que a primeira linha é o cabeçalho
+                        for (int row = 2; row <= rowCount; row++) // Começa na linha 2
                         {
                             try
                             {
@@ -425,7 +425,7 @@ namespace Pet_Shop.Controllers
                                     Descricao = worksheet.Cells[row, 6].Value?.ToString(),
                                 };
 
-                                if (TryValidateModel(produto))
+                                if (TryValidateModel(produto) && produto.Imagem != null)
                                 {
                                     if (shopdao.IncluiProduto(produto))
                                         TotalProdutos++;
@@ -441,7 +441,7 @@ namespace Pet_Shop.Controllers
                             } 
                         }
 
-                        return View("MessageBox", (TempData["Mensagem"] = "Foi Importado "+TotalProdutos+" Produtos, e "+ ErroProdutos + "apresentaram erro.", TempData["Titulo"] = "Sucesso!"));
+                        return View("MessageBox", (TempData["Mensagem"] = "Foi Importado "+TotalProdutos+" Produtos, e "+ ErroProdutos + " apresentou erro.", TempData["Titulo"] = "Sucesso!"));
                     }
                 }
 
@@ -450,7 +450,7 @@ namespace Pet_Shop.Controllers
         }
 
 
-        private async Task<IActionResult> ImportaImagens(IFormFileCollection imagens)
+        private IActionResult ImportaImagens(IFormFileCollection imagens)
         {
             try
             {
@@ -464,32 +464,28 @@ namespace Pet_Shop.Controllers
                 if (!Directory.Exists(Diretorio))
                     Directory.CreateDirectory(Diretorio); // Cria diretorio se não existir
 
-                foreach (var imagem in imagens)
+                foreach (var imagem in imagens) // estão importando binario errado.using (var img = Image.FromStream(imagem.OpenReadStream()))
                 {
-                    using (var img = Image.FromStream(imagem.OpenReadStream()))
+                    var extensao = Path.GetExtension(imagem.FileName).ToLower();
+                    if (extensao == ".png" || extensao == ".jpeg" || extensao == ".jpg")//valida extenção
                     {
-                        if (img.RawFormat.Guid == System.Drawing.Imaging.ImageFormat.Jpeg.Guid ||
-                            img.RawFormat.Guid == System.Drawing.Imaging.ImageFormat.Png.Guid ||
-                            img.RawFormat.Guid == System.Drawing.Imaging.ImageFormat.Gif.Guid)//valida formato imagem
+                        var filePath = Path.Combine(Diretorio, imagem.FileName);
+                        using (var stream = new FileStream(filePath, FileMode.Create)) //cria arq
                         {
-                            var filePath = Path.Combine(Diretorio, imagem.FileName);
-                            using (var stream = new FileStream(filePath, FileMode.Create))
-                            {
-                                await imagem.CopyToAsync(stream);
-                            }
+                            imagem.CopyToAsync(stream);//copia content
                         }
-                        else
-                        {
-                            return View("MessageBox", (TempData["Mensagem"] = "Um ou mais arquivos não são imagens válidas. Só é permitido Imagens .png .jpg .jpeg", TempData["Titulo"] = "Atenção!"));
-                        }
+                    }
+                    else
+                    {
+                        return View("MessageBox", (TempData["Mensagem"] = "Um ou mais arquivos não são imagens válidas. Só é permitido Imagens .png .jpeg .jpg", TempData["Titulo"] = "Atenção!"));
                     }
                 }
 
                 return null;
             }
-            catch (Exception ex)// não está acionando ao importar arquivo errado
+            catch (Exception ex)
             {
-                return View("MessageBox", (TempData["Mensagem"] = "Erro na importação Imagens:" + ex.Message, TempData["Titulo"] = "Atenção!"));
+                throw new Exception("Erro na Importação de Imagem:" + ex.Message );
             }
         }
 
@@ -533,10 +529,10 @@ namespace Pet_Shop.Controllers
                 {
                     var arquivo = imagem[0];
                     using (var ms = new MemoryStream())
-                    using (var fileStream = arquivo.OpenRead())
+                    using (var fileStream = arquivo.OpenRead()) //le
                     {
-                        fileStream.CopyTo(ms);
-                        imgBinario = ms.ToArray();
+                        fileStream.CopyTo(ms); //copia content
+                        imgBinario = ms.ToArray(); //gera byte
                     }
                 }
 
