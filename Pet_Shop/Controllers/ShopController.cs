@@ -87,16 +87,19 @@ namespace Pet_Shop.Controllers
             return Produtos;
         }
 
+        [Authorize]
         public IActionResult ManageShop()
         {
             return View();
         }
 
+        [Authorize]
         public IActionResult AddProduto()
         {
             return View();
         }
 
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult AddProduto(Produto produto)
@@ -132,6 +135,7 @@ namespace Pet_Shop.Controllers
             }
         }
 
+        [Authorize]
         public IActionResult ConsultaProduto()
         {
             Func<Produto, bool> filtro = p => p.Quantidade >= 0;
@@ -139,6 +143,7 @@ namespace Pet_Shop.Controllers
             return View(Produtos);
         }
 
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult ConsultaProduto(Produto produto)
@@ -147,6 +152,7 @@ namespace Pet_Shop.Controllers
             return View(Produtos);
         }
 
+        [Authorize]
         [HttpGet]
         public IActionResult GerenciaProduto(Produto produto)
         {
@@ -154,6 +160,7 @@ namespace Pet_Shop.Controllers
             return View(produto);
         }
 
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult GerenciaProdutoPost(Produto produto)
@@ -175,6 +182,8 @@ namespace Pet_Shop.Controllers
             return View("MessageBox", (TempData["Mensagem"] = "Não foi possivel Alterar Produto", TempData["Titulo"] = "Atenção!"));
         }
         
+
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult DeletaProduto(Produto produto)
@@ -190,12 +199,14 @@ namespace Pet_Shop.Controllers
             }
         }
 
+        [Authorize]
         public IActionResult ControleEstoque()
         {
             List<Produto> Produtos = shopdao.ControleMinimo();
             return View(Produtos);
         }
 
+        [Authorize]
         public IActionResult ConsultaEstoque()
         {
             Func<Produto, bool> filtro = p => p.Quantidade >= 0;
@@ -203,6 +214,7 @@ namespace Pet_Shop.Controllers
             return View(Produtos);
         }
 
+        [Authorize]
         public IActionResult MovimentoEstoque(Produto produto)
         {
             produto = shopdao.ConsultaProduto(produto);
@@ -216,6 +228,7 @@ namespace Pet_Shop.Controllers
             return View("MovimentoEstoque", ProdutoEstoque);
         }
 
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult MovimentoEstoquePost(ProdutoEstoqueViewModel ProdutoEstoque)// arruma o delete 
@@ -277,6 +290,7 @@ namespace Pet_Shop.Controllers
             }
         }
 
+        [Authorize]
         public IActionResult Relatorios()
         {
             return View();
@@ -296,6 +310,7 @@ namespace Pet_Shop.Controllers
         //    return Ok($" Relatorio gerado : {caminhoReport}");
         //}
 
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Relatorios(Relatorio relatorio)// não está passando os filtros //arruma isso
@@ -346,6 +361,7 @@ namespace Pet_Shop.Controllers
             }
         }
 
+        [Authorize]
         public IActionResult ReportView(List<Produto> produtos, List<Estoque> estoque)
         {
             List<dynamic> RelModel = new List<dynamic>();
@@ -382,12 +398,13 @@ namespace Pet_Shop.Controllers
             return File(ms.ToArray(), "application/pdf");
         }
 
-
+        [Authorize]
         public IActionResult ImportProdutos()
         {
             return View();
         }
 
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ImportProdutos(IFormFile excelFile, IFormFileCollection Imagens )
@@ -477,7 +494,7 @@ namespace Pet_Shop.Controllers
                         var filePath = Path.Combine(Diretorio, imagem.FileName);
                         using (var stream = new FileStream(filePath, FileMode.Create))
                         {
-                            await imagem.CopyToAsync(stream);
+                            await imagem.CopyToAsync(stream);//await para corrigir erros na importação pois é uma tarefa demanda tempo
                         }
                     }
                     else
@@ -554,6 +571,7 @@ namespace Pet_Shop.Controllers
             }    
         }
 
+        [Authorize]
         public IActionResult ExportProdutos()
         {
             try
