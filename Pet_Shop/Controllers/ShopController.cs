@@ -390,11 +390,13 @@ namespace Pet_Shop.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult ImportProdutos(IFormFile excelFile, IFormFileCollection Imagens )
+        public async Task<IActionResult> ImportProdutos(IFormFile excelFile, IFormFileCollection Imagens )
         {
-            ImportaImagens(Imagens);
+            if(await ImportaImagens(Imagens) != true)
+                return View("MessageBox", TempData["Titulo"] = "Atenção!");
 
-            ValidaExcel(excelFile);
+            if (ValidaExcel(excelFile) != true)
+                return View("MessageBox", TempData["Titulo"] = "Atenção!");
 
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
             using (var package = new ExcelPackage(excelFile.OpenReadStream()))
@@ -450,42 +452,46 @@ namespace Pet_Shop.Controllers
         }
 
 
-        private IActionResult ImportaImagens(IFormFileCollection imagens)
+        private async Task<bool> ImportaImagens(IFormFileCollection imagens)
         {
             try
             {
                 LimpaTempImg();
 
                 if (imagens == null || imagens.Count == 0)
-                    return View("MessageBox", (TempData["Mensagem"] = "Nenhuma Imagem Selecionada", TempData["Titulo"] = "Atenção!"));
+                {
+                    TempData["Mensagem"] = "Nenhuma Imagem Selecionada";
+                    return false;
+                }
 
                 var Diretorio = Path.Combine(_webHostEnv.WebRootPath, "img", "temp");
 
                 if (!Directory.Exists(Diretorio))
                     Directory.CreateDirectory(Diretorio); // Cria diretorio se não existir
 
-                foreach (var imagem in imagens) // estão importando binario errado.using (var img = Image.FromStream(imagem.OpenReadStream()))
+                foreach (var imagem in imagens)
                 {
                     var extensao = Path.GetExtension(imagem.FileName).ToLower();
-                    if (extensao == ".png" || extensao == ".jpeg" || extensao == ".jpg")//valida extenção
+                    if (extensao == ".png" || extensao == ".jpeg" || extensao == ".jpg")
                     {
                         var filePath = Path.Combine(Diretorio, imagem.FileName);
-                        using (var stream = new FileStream(filePath, FileMode.Create)) //cria arq
+                        using (var stream = new FileStream(filePath, FileMode.Create))
                         {
-                            imagem.CopyToAsync(stream);//copia content
+                            await imagem.CopyToAsync(stream);
                         }
                     }
                     else
                     {
-                        return View("MessageBox", (TempData["Mensagem"] = "Um ou mais arquivos não são imagens válidas. Só é permitido Imagens .png .jpeg .jpg", TempData["Titulo"] = "Atenção!"));
+                        TempData["Mensagem"] = "Um ou mais arquivos não são imagens válidas. Só é permitido Imagens .png .jpeg .jpg";
+                        return false;
                     }
                 }
-
-                return null;
+                return true;
             }
             catch (Exception ex)
             {
-                throw new Exception("Erro na Importação de Imagem:" + ex.Message );
+                TempData["Mensagem"] = "Erro na Importação de Imagens:" + ex.Message;
+                return false;
             }
         }
 
@@ -500,16 +506,20 @@ namespace Pet_Shop.Controllers
             }
         }
 
-        private void ValidaExcel(IFormFile excelFile)
+        private bool ValidaExcel(IFormFile excelFile)
         {
-            if (excelFile == null && excelFile.Length < 0)
+            if (excelFile == null)
             {
-                RedirectToPage("MessageBox", (TempData["Mensagem"] = "Arquivo Invalido, Escolha um arquivo Excel.", TempData["Titulo"] = "Atenção!"));
+                TempData["Mensagem"] = "Nenhuma Planilha Excel Seleciona";
+                return false;
             }
             else if (!Path.GetExtension(excelFile.FileName).Equals(".xlsx", StringComparison.OrdinalIgnoreCase))
             {
-                RedirectToPage("MessageBox", (TempData["Mensagem"] = "Arquivo no formato invalido, Use o formato .xlsx", TempData["Titulo"] = "Atenção!"));
+                TempData["Mensagem"] = "Arquivo no formato invalido, Use o formato .xlsx";
+                return false;
             }
+
+            return true;
         }
 
         private byte[] BuscaBinario(string NameImg)
