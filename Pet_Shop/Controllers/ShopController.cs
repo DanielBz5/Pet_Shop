@@ -614,7 +614,16 @@ namespace Pet_Shop.Controllers
                         int row = 2;
                         foreach (var produto in Produtos)
                         {
-                            worksheet.Cells[row, 1].Value = produto.Imagem;
+
+                            var picture = worksheet.Drawings.AddPicture(produto.Nome, ConvertBinarioImg(produto.Imagem));
+                            var cell = worksheet.Cells[row, 1];
+                            worksheet.Row(cell.Start.Row).Height = 100;//largura celula linha
+                            var width = 110;//img tamanho largura
+                            var height = 110;//img tamanho altura
+                            picture.SetSize(Convert.ToInt32(width), Convert.ToInt32(height));
+                            picture.SetPosition(cell.Start.Row, -120, cell.Start.Column, -120); // Define a posição e o tamanho da imagem(vertical/horizontal)
+                            
+
                             worksheet.Cells[row, 2].Value = produto.Cod;
                             worksheet.Cells[row, 3].Value = produto.Nome;
                             worksheet.Cells[row, 4].Value = produto.Descricao;
@@ -624,14 +633,16 @@ namespace Pet_Shop.Controllers
                             worksheet.Cells[row, 8].Value = produto.Categoria;
                             row++;
                         }
-
-                        // Ajusta tamanho colunas
+                        //Ajustes finais de alinhamento e tamanho de colunas
+                        worksheet.Cells[worksheet.Dimension.Address].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+                        worksheet.Cells[worksheet.Dimension.Address].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
                         worksheet.Cells[worksheet.Dimension.Address].AutoFitColumns();
+                        worksheet.Column(1).Width = 20;
 
                         excel.Save();
                     }
 
-                    // Retorna o arquivo Excel como um FileStreamResult para abrir o explorador de arquivos
+                    // Retorna FileStreamResult para navegardor
                     var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
                     return File(fileStream, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Produtos.xlsx");
                 }
@@ -644,6 +655,19 @@ namespace Pet_Shop.Controllers
             {
                 return View("MessageBox", (TempData["Mensagem"] = $"Não foi possível exportar o Excel. Erro: {ex.Message}", TempData["Titulo"] = "Atenção!"));
             }
+        }
+
+        public MemoryStream ConvertBinarioImg(byte[] binario)
+        {
+            if (binario == null || binario.Length == 0)
+            {
+                throw new ArgumentException("Erro na Conversão de imagem");
+            }
+
+            MemoryStream memoryStream = new MemoryStream(binario);
+            memoryStream.Position = 0;
+
+            return memoryStream;
         }
 
         public void LimpaTemp()
