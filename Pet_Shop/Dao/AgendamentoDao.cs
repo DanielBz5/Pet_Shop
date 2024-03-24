@@ -57,6 +57,40 @@ namespace Pet_Shop.Dao
             }
         }
 
+        public Servicos BuscaServico(int CodServico)
+        {
+            Servicos servico = new Servicos();
+            try
+            {
+                string sql = "SELECT * FROM servicos WHERE Cod = '"+ CodServico + "';";
+
+                MySqlConnection connection = conexaobanco.Open();
+
+                MySqlCommand command = new MySqlCommand(sql, connection);
+
+                using (MySqlDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        servico.Cod = Convert.ToInt32(reader["Cod"]);
+                        servico.Nome = reader["Nome"].ToString();
+                        servico.Valor = Convert.ToInt32(reader["Valor"]);
+                        servico.Descricao = reader["Descricao"].ToString();
+                    }
+                }
+
+                return servico;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+            finally
+            {
+                conexaobanco.Close();
+            }
+        }
+
         public Tuple<Cliente, Pet> BuscaClientePet(Cliente cliente)
         {
             try

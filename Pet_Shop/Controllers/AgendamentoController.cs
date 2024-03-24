@@ -54,12 +54,20 @@ namespace Pet_Shop.Controllers
 
             List<Servicos> servicos = agendamentodao.ListaServicos();
             SelectList listaSuspensa = new SelectList(servicos, "Cod", "Nome");
-            List<int> listaValor = servicos.Select(servico => servico.Valor).ToList();
-
             ViewBag.ServicosList = listaSuspensa;
-            ViewBag.ListaServicos = listaValor;
 
             return View();
+        }
+
+        [HttpGet("Agendamento/BuscaServicos")]
+        public IActionResult BuscaServicos(int CodServico)
+        {
+            Servicos servico = agendamentodao.BuscaServico(CodServico);
+            if (servico == null)
+            {
+                return NotFound();
+            }
+            return Ok(servico);
         }
 
         [HttpPost]
