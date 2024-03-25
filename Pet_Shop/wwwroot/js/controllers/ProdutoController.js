@@ -1,8 +1,8 @@
 ﻿/*import Produto from '../models/Produto';*/
 
 export function DeleteProduto() {
-    var formDelete = document.getElementById('form-deleta-prod')
-    formDelete.style.display = 'flex'
-    var formGerencia = document.querySelectorAll('.form-gerencia')
-    formGerencia.style.display = 'none'
+    const overlay = document.getElementById('overlay');
+    const msgbox = document.getElementById('msgbox-deleta-prod');
+    overlay.style.display = 'block';
+    msgbox.style.display = 'block';
 }

@@ -1,86 +1,92 @@
 ﻿@model Pet_Shop.Models.Produto
 
 <div class="container-manage">
-    <div class="container-btn">
-        <a class="btn btn-navega" asp-controller="Shop" asp-action="ConsultaProduto"><i class="bi bi-search"></i>Consultar Produtos</a>
-        <a class="btn btn-navega" asp-controller="Shop" asp-action="AddProduto"><i class="bi bi-bag-plus-fill"></i>Cadastrar Produto</a>
-    </div>
-    <div class="manage-produto">
-        <h5 class="titulo-black">Gerencia Produto</h5><br>
-        <form class="form-gerencia" asp-controller="Shop" asp-action="GerenciaProdutoPost" method="post" enctype="multipart/form-data">
-            <div class="box-gerencia-um">
-                <div class="img-gerencia">
-                    <img class="img-shop" src="data:image/png;base64,@(Convert.ToBase64String(Model.Imagem))" alt="Imagem do Produto">
+    <div id="overlay" class="overlay"></div>
+        <div class="container-btn">
+            <a class="btn btn-navega" asp-controller="Shop" asp-action="ConsultaProduto"><i class="bi bi-search"></i>Consultar Produtos</a>
+            <a class="btn btn-navega" asp-controller="Shop" asp-action="AddProduto"><i class="bi bi-bag-plus-fill"></i>Cadastrar Produto</a>
+        </div>
+        <div class="manage-produto">
+            <h5 class="titulo-black">Gerencia Produto</h5><br>
+            <form class="form-gerencia" asp-controller="Shop" asp-action="GerenciaProdutoPost" method="post" enctype="multipart/form-data">
+                <div class="box-gerencia-um">
+                    <div class="img-gerencia">
+                        <img class="img-shop" src="data:image/png;base64,@(Convert.ToBase64String(Model.Imagem))" alt="Imagem do Produto">
+                    </div>
+
+                    <div>
+                        <a class="btn btn-secondary" asp-controller="Shop" asp-action="ConsultaProduto"><i class="bi bi-caret-left-fill"></i>Voltar</a>
+                        <button type="submit" class="btn btn-primary"><i class="bi bi-pencil-fill"></i>Alterar</button>
+                        <a class="btn btn-danger" id="btn-deleta-produto"><i class="bi bi-trash3-fill"></i>Deletar</a>
+                    </div>
                 </div>
 
-                <div>
-                    <a class="btn btn-secondary" asp-controller="Shop" asp-action="ConsultaProduto"><i class="bi bi-caret-left-fill"></i>Voltar</a>
-                    <button type="submit" class="btn btn-primary"><i class="bi bi-pencil-fill"></i>Alterar</button>
-                    <a class="btn btn-danger" id="btn-deleta-produto"><i class="bi bi-trash3-fill"></i>Deletar</a>
+                <div class="box-gerencia-dois">
+                    <div class="row mb-3">
+                        <label for="inputCod3" class="col-sm-2 col-form-label">Código</label>
+                        <div class="col-sm-10">
+                            <input type="text" asp-for="Cod" class="form-control" id="inputCod3" readonly>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label for="inputNome3" class="col-sm-2 col-form-label">Nome</label>
+                        <div class="col-sm-10">
+                            <input type="text" asp-for="Nome" class="form-control" id="inputNome3" readonly>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label for="inputDesc3" class="col-sm-2 col-form-label">Descrição</label>
+                        <div class="col-sm-10">
+                            <input type="text" asp-for="Descricao" class="form-control" id="inputDesc3">
+                            <span asp-validation-for="Descricao" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label for="inputValor3" class="col-sm-2 col-form-label">Valor</label>
+                        <div class="col-sm-10">
+                            <input type="number" asp-for="Valor" class="form-control" id="inputValor3">
+                            <span asp-validation-for="Valor" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label for="inputQtd3" class="col-sm-2 col-form-label">Quantidade</label>
+                        <div class="col-sm-10">
+                            <input type="number" asp-for="Quantidade" class="form-control" id="inputQtd3">
+                            <span asp-validation-for="Quantidade" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label for="inputEm3" class="col-sm-2 col-form-label">Estoque Minimo</label>
+                        <div class="col-sm-10">
+                            <input type="number" asp-for="Estoque_Minimo" class="form-control" id="inputEm3">
+                            <span asp-validation-for="Estoque_Minimo" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label for="inputCat3" class="col-sm-2 col-form-label">Categoria</label>
+                        <div class="col-sm-10">
+                            <select class="form-control input-busca col-sm-10" aria-label="Default select example" asp-for="Categoria">
+                                <option selected value="">Escolha uma Categoria</option>
+                                <option value="Alimento">Alimento</option>
+                                <option value="Limpeza">Limpeza</option>
+                                <option value="Brinquedos">Brinquedos</option>
+                                <option value="Outros">Outros</option>
+                            </select>
+                            <span asp-validation-for="Categoria" class="text-danger"></span>
+                        </div>
+                    </div>
                 </div>
-            </div>
+            </form>
+        </div>
+    
+</div>
 
-            <div class="box-gerencia-dois">
-                <div class="row mb-3">
-                    <label for="inputCod3" class="col-sm-2 col-form-label">Código</label>
-                    <div class="col-sm-10">
-                        <input type="text" asp-for="Cod" class="form-control" id="inputCod3" readonly>
-                    </div>
-                </div>
-                <div class="row mb-3">
-                    <label for="inputNome3" class="col-sm-2 col-form-label">Nome</label>
-                    <div class="col-sm-10">
-                        <input type="text" asp-for="Nome" class="form-control" id="inputNome3" readonly>
-                    </div>
-                </div>
-                <div class="row mb-3">
-                    <label for="inputDesc3" class="col-sm-2 col-form-label">Descrição</label>
-                    <div class="col-sm-10">
-                        <input type="text" asp-for="Descricao" class="form-control" id="inputDesc3">
-                        <span asp-validation-for="Descricao" class="text-danger"></span>
-                    </div>
-                </div>
-                <div class="row mb-3">
-                    <label for="inputValor3" class="col-sm-2 col-form-label">Valor</label>
-                    <div class="col-sm-10">
-                        <input type="number" asp-for="Valor" class="form-control" id="inputValor3">
-                        <span asp-validation-for="Valor" class="text-danger"></span>
-                    </div>
-                </div>
-                <div class="row mb-3">
-                    <label for="inputQtd3" class="col-sm-2 col-form-label">Quantidade</label>
-                    <div class="col-sm-10">
-                        <input type="number" asp-for="Quantidade" class="form-control" id="inputQtd3">
-                        <span asp-validation-for="Quantidade" class="text-danger"></span>
-                    </div>
-                </div>
-                <div class="row mb-3">
-                    <label for="inputEm3" class="col-sm-2 col-form-label">Estoque Minimo</label>
-                    <div class="col-sm-10">
-                        <input type="number" asp-for="Estoque_Minimo" class="form-control" id="inputEm3">
-                        <span asp-validation-for="Estoque_Minimo" class="text-danger"></span>
-                    </div>
-                </div>
-                <div class="row mb-3">
-                    <label for="inputCat3" class="col-sm-2 col-form-label">Categoria</label>
-                    <div class="col-sm-10">
-                        <select class="form-control input-busca col-sm-10" aria-label="Default select example" name="Categoria">
-                            <option selected value="">Escolha uma Categoria</option>
-                            <option value="Alimento">Alimento</option>
-                            <option value="Limpeza">Limpeza</option>
-                            <option value="Brinquedos">Brinquedos</option>
-                            <option value="Outros">Outros</option>
-                        </select>
-                        <span asp-validation-for="Categoria" class="text-danger"></span>
-                    </div>
-                </div>
-            </div>
-        </form>
-        
-        <form id="form-deleta-prod" asp-controller="Shop" asp-action="GerenciaProdutoPost" method="post">
-            <h4>Tem Certeza que deseja deletar esse Produto?</h4>
-            <button type="submit" class="btn btn-danger" asp-controller="Shop" asp-action="DeletaProduto" asp-route-Cod="@Model.Cod">Sim</button>
+<div id="msgbox-deleta-prod">
+    <form id="form-deleta-prod" asp-controller="Shop" asp-action="GerenciaProdutoPost" method="post">
+        <h4>Tem Certeza que deseja deletar esse Produto?</h4>
+        <div style="margin-top:15px;">
             <a class="btn btn-secondary" asp-controller="Shop" asp-action="GerenciaProduto" asp-route-Cod="@Model.Cod"><i class="bi bi-caret-left-fill"></i>Não</a>
-        </form>
-    </div>
+            <button type="submit" class="btn btn-danger" asp-controller="Shop" asp-action="DeletaProduto" asp-route-Cod="@Model.Cod"><i class="bi bi-trash3-fill"></i>Sim</button>
+        </div>
+    </form>
 </div>

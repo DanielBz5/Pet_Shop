@@ -32,7 +32,7 @@ namespace Pet_Shop.Models
         [Required(ErrorMessage = "A Categoria deve ser informado")]
         public string Categoria { get; set; }
 
-        [Required(ErrorMessage = "A Descrição Minimo deve ser informado")]
+        [Required(ErrorMessage = "A Descrição deve ser informada")]
         [StringLength(50, MinimumLength = 5, ErrorMessage = "O Estoque Minimo deve ter de 5 à 50 caracteres")]
         public string Descricao { get; set; }
 
