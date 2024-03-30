@@ -468,13 +468,53 @@ h5 {
     
 }
 
+#mostra-produto {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    border: 1px solid #ccc;
+    z-index: 1001;
+    border-radius:5px;
+}
 
+.organiza-mostra{
+    display:flex;
+    flex-direction:row;
+    justify-content:center;
+}
+
+.select-quantidade{
+    display:flex;
+    flex-direction:row;
+    width:120%;
+}
+
+.btn-maismenos {
+    margin-right: 5px;
+    margin-left: 5px;
+    border-radius:8px;
+}
+
+#display-quantidade{
+    margin:0;
+    background-color:white;
+    padding: 15px;
+    border-radius: 10px;
+    margin-right:10px;
+}
+
+.mostra-img{
+    width:30%;
+    height:30%;
+}
 /*--------------Manage*/
-
 .container-manage {
     display: flex;
     justify-content: center;
-    flex-direction:column;
+    flex-direction: column;
     align-items: center;
     width: 100%;
     height: auto;

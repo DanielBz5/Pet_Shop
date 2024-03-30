@@ -1,15 +1,15 @@
 ﻿
 export default class Produto {
 
-    constructor(cod, nome, valor, quantidade, estoque_minimo, categoria, descricao, imagem) {
-        this.cod = cod;
-        this.nome = nome;
-        this.valor = valor;
-        this.quantidade = quantidade;
-        this.estoque_minimo = estoque_minimo;
-        this.categoria = categoria;
-        this.descricao = descricao;
-        this.imagem = imagem;  
+    constructor(produto) {
+        this.cod = produto.cod || null;//garanti que tds propriedades tenha um valor msm que null
+        this.nome = produto.nome || null;
+        this.valor = produto.valor || null;
+        this.quantidade = produto.quantidade || null;
+        this.estoque_minimo = produto.estoque_minimo || null;
+        this.categoria = produto.categoria || null;
+        this.descricao = produto.descricao || null;
+        this.imagem = produto.imagem || null;
     }
 
     get cod() {
@@ -43,7 +43,7 @@ export default class Produto {
     get estoque_minimo() {
         return this._estoque_minimo;
     }
-    set estoque_minimo(novoEstoque_minimoe) {
+    set estoque_minimo(novoEstoque_minimo) {
         this._estoque_minimo = novoEstoque_minimo;
     }
 

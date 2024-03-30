@@ -4,13 +4,32 @@ import * as produtosCtrl from './controllers/ProdutoController.js';
 
 
 //View Agendamentos - Atualiza Valor ao selecionar serviço
-document.addEventListener('DOMContentLoaded', function () {
-    document.getElementById('ListaServicos').addEventListener('change', servicosCtrl.ValorServico);
-});
-
+const selectServico = document.getElementById('ListaServicos');
+if (selectServico) {
+    selectServico.addEventListener('change', servicosCtrl.ValorServico);
+}
 
 //Exibição Deleta Produto
-document.getElementById('btn-deleta-produto').addEventListener('click', produtosCtrl.DeleteProduto);
+const bntDelete = document.getElementById('btn-deleta-produto');
+if (bntDelete) {
+    bntDelete.addEventListener('click', produtosCtrl.DeleteProduto);
+}
+
+
+//Shop - Mostra Produto
+const buttons = document.querySelectorAll('.btn-comprar');
+buttons.forEach(button => {
+    button.addEventListener('click', produtosCtrl.MostraProduto);
+});
+
+const btnMais = document.getElementById('btn-mais');
+if (btnMais) {
+    btnMais.addEventListener('click', produtosCtrl.SomaQtd)
+}
+const btnMenos = document.getElementById('btn-menos');
+if (btnMenos) {
+    btnMenos.addEventListener('click', produtosCtrl.SubQtd)
+}
 
 
 var total = 0;

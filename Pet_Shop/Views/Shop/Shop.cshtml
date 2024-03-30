@@ -1,7 +1,6 @@
 ﻿@model List<Pet_Shop.Models.Produto>
 
-
-
+<div id="overlay" class="overlay"></div>
 <form class="filtro" asp-controller="Shop" asp-action="FiltroShop" method="post">
     <h5 style="margin-right: 30px; color:black">Filtros</h5>
     <div class="filtro-item">
@@ -29,17 +28,44 @@
     {
         <div class="card produto">
             <div class="container-img-shop">
-                <img class="img-shop"  src="data:image/png;base64,@(Convert.ToBase64String(produto.Imagem))" alt="Imagem do Produto">
+                <img class="img-shop" src="data:image/png;base64,@(Convert.ToBase64String(produto.Imagem))" alt="Imagem do Produto">
             </div>
-           
+
             <div class="card-body">
                 <h5 class="card-title produto-title">@produto.Nome</h5>
                 <p class="card-text">@produto.Descricao</p>
                 <p class="produto-valor">R$ @produto.Valor</p>
-                <button type="button" class="btn btn-light">Adicionar ao Carrinho</button>
+                <button type="button" class="btn btn-light btn-comprar">Comprar<p id="Cod-Produto" hidden>@produto.Cod</p></button>
             </div>
         </div>
     }
 </div>
+
+<div id="mostra-produto">
+    <div class="manage-produto organiza-mostra">
+        <div class="box-gerencia-um" style="width:40%;">
+            <div class="img-gerencia mostra-img" style="margin:0px; margin-bottom:25px;";>
+                <img id="img-mostra" class="img-shop" alt="Imagem do Produto">
+            </div>
+            <div style="width:40%;">
+                <a class="btn btn-secondary" asp-controller="Shop" asp-action="Shop" ><i class="bi bi-caret-left-fill"></i>Voltar</a>
+            </div>
+        </div>
+
+        <div class="box-gerencia-dois" style="width:auto";>
+            <h5 id="nome-mostra" class="card-title produto-title"></h5>
+            <p id="descri-mostra" class="card-text"></p>
+            <p id="valor-mostra" class="produto-valor"></p>
+            <p id="categ-mostra" class="card-text"></p>
+            <div class="select-quantidade">
+                <p id="display-quantidade">Quantidade:<span id="qtd"> 1</span></p>
+                <button id="btn-mais" class=" btn btn-light btn-maismenos">+</button>
+                <button id="btn-menos" class=" btn btn-light btn-maismenos">-</button>
+            </div>
+            <button type="button" class="btn btn-light" style="margin-top: 40px; width: auto">Adicionar ao Carrinho</button>
+        </div>
+    </div>
+</div>
+
 
 

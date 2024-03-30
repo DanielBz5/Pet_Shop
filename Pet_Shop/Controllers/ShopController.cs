@@ -87,6 +87,18 @@ namespace Pet_Shop.Controllers
             return Produtos;
         }
 
+        [HttpGet("Shop/BuscaProduto")]
+        public IActionResult BuscaProduto(int codProduto)
+        {
+            var cod = new Produto{Cod = codProduto};
+            Produto produto = shopdao.ConsultaProduto(cod);
+            if (produto == null)
+            {
+                return NotFound();
+            }
+            return Ok(produto);
+        }
+
         [Authorize]
         public IActionResult ManageShop()
         {
