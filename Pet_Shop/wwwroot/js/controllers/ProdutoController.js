@@ -1,5 +1,7 @@
 ﻿import Produto from '../models/Produto.js';
 
+let valorBase = 0;
+
 export function DeleteProduto() {
     const overlay = document.getElementById('overlay');
     const msgbox = document.getElementById('msgbox-deleta-prod');
@@ -14,11 +16,12 @@ export async function MostraProduto(event) {
     document.getElementById('mostra-produto').style.display = 'flex';
     document.getElementById('overlay').style.display = 'block';
     document.getElementById('img-mostra').src = `data:image/png;base64,${produto.imagem}`;
-    document.getElementById('nome-mostra').innerHTML = produto.nome
-    document.getElementById('descri-mostra').innerHTML = produto.descricao
+    document.getElementById('nome-mostra').innerHTML = produto.nome;
+    document.getElementById('descri-mostra').innerHTML = produto.descricao;
     document.getElementById('valor-mostra').innerHTML = "R$ " + produto.valor + ".00";
-    document.getElementById('categ-mostra').innerHTML = produto.categoria
- 
+    document.getElementById('categ-mostra').innerHTML = produto.categoria;
+
+    valorBase = produto.valor;
 }
 
 function BuscaProduto(codProduto) {
@@ -41,17 +44,30 @@ function BuscaProduto(codProduto) {
 }
 
 export function SomaQtd() {
+    //soma quantidade
     const spanQtd = document.getElementById('qtd');
     let qtd = parseInt(spanQtd.textContent);
     qtd = qtd + 1;
     spanQtd.innerHTML = " " + qtd;
+
+    UpdateValorQtd(qtd);
 }
 
 export function SubQtd() {
+    //Subtrai quantidade
     const spanQtd = document.getElementById('qtd');
     let qtd = parseInt(spanQtd.textContent);
     if (qtd >= 2) {
         qtd = qtd - 1;
-        spanQtd.innerHTML = " "+qtd;
+        spanQtd.innerHTML = " " + qtd;
+
+        UpdateValorQtd(qtd);
     }     
 }
+
+function UpdateValorQtd(qtd) {
+    //atualiza valor
+    let valor = valorBase * qtd;
+    document.getElementById('valor-mostra').innerHTML = "R$ " + valor.toFixed(2);
+}
+
