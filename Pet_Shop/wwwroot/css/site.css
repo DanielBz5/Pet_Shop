@@ -333,7 +333,7 @@ h5 {
     margin-right:10px;
 }
 
-.carrinho {
+.carrinho-orça {
     display: flex;
     justify-content:space-between;
     flex-direction:column;
@@ -510,7 +510,72 @@ h5 {
     width:30%;
     height:30%;
 }
-/*--------------Manage*/
+
+#carrinho {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    border: 1px solid #ccc;
+    z-index: 1001;
+    
+    flex-direction:column;
+    align-items:center;
+    width:33%;
+    background-color: #56cbc4;
+    border-radius: 7px;
+    padding: 10px;
+    padding-top: 20px;
+    box-shadow: 5px 5px 5px black;
+}
+
+.clone-item {
+    display: none;
+    flex-direction: row;
+    padding: 10px;
+}
+
+.item-carrinho{
+    display:none;
+}
+
+.img-carrinho {
+    width: 13%;
+    height: auto;
+}
+
+.row-text-item{
+    display:flex;
+    justify-content:space-between;
+}
+
+#open-carrinho {
+    border-radius: 25px;
+    margin-left: 10px;
+}
+
+.btn-remove-carrinho{
+    height:min-content;
+}
+
+.top-carrinho{
+    display:flex;
+    justify-content:space-between;
+    width:100%;
+    margin-bottom:20px;
+}
+
+.bnt-fechar {
+    width: min-content;
+    border-radius: 5px;
+    padding: 0px;
+    padding-left: 8px;
+    padding-right: 8px;
+}
+/*******************************************Manage***********************************************************************
+---------------------------------------------------------------------------------------------------------------------------- */
 .container-manage {
     display: flex;
     justify-content: center;

@@ -20,6 +20,7 @@
     </div>
 
     <button type="submit" class="btn btn-primary">Pesquisar</button>
+    <button type="button" id="open-carrinho" class="btn btn-dark"><i class="bi bi-cart3" style="font-size:20px;"></i></button>
 </form>
 
 
@@ -52,8 +53,9 @@
             </div>
         </div>
 
-        <div class="box-gerencia-dois" style="width:auto";>
+        <div class="box-gerencia-dois" style="width:auto" ;>
             <h5 id="nome-mostra" class="card-title produto-title"></h5>
+            <p id="cod-mostra" class="card-text" hidden></p>
             <p id="descri-mostra" class="card-text"></p>
             <p id="valor-mostra" class="produto-valor"></p>
             <p id="categ-mostra" class="card-text"></p>
@@ -62,10 +64,41 @@
                 <button id="btn-mais" class=" btn btn-light btn-maismenos">+</button>
                 <button id="btn-menos" class=" btn btn-light btn-maismenos">-</button>
             </div>
-            <button type="button" class="btn btn-light" style="margin-top: 40px; width: auto">Adicionar ao Carrinho</button>
+            <button type="button" id="btn-add-carrinho" class="btn btn-light" style="margin-top: 40px; width: auto">Adicionar ao Carrinho</button>
         </div>
     </div>
 </div>
 
+<div id="carrinho">
+    <div class="top-carrinho">
+        <div></div>
+        <h5 style="color:black">Carrinho<i class="bi bi-cart3"></i></h5>
+        <button type="button" id="btn-fechar-carrinho" class="btn btn-danger bnt-fechar"><i class="bi bi-x-lg"></i></button>
+    </div>
 
+    <div class="carrinho-items">
+        <div class="card item-carrinho">
+            <div class="img-carrinho">
+                <img class="card-img-top">
+            </div>
+            <div class="card-body" style="margin:0px;padding-bottom:0px;">
+                <div class="row-text-item">
+                    <p class="card-text"></p>
+                    <p class="card-text"></p>
+                </div>
+                <div class="row-text-item">
+                    <p class="card-text"></p>
+                    <p class="card-text"></p>
+                </div>
+            </div>
+            <button type="button" class="btn btn-danger btn-remove-carrinho">
+                <i class="bi bi-trash3-fill"><span class="cod-prod-carrinho"  hidden></span></i>
+            </button>
+        </div>
+    </div>
+    <div class=carinho-info>
+        <h6>Valor: R$<span></span></h6>
+        <button type="button" class="btn btn-light">Continuar Pedido</button>
+    </div>
+</div>
 

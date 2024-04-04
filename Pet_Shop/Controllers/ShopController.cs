@@ -99,6 +99,14 @@ namespace Pet_Shop.Controllers
             return Ok(produto);
         }
 
+        [HttpGet("Shop/MessageBox")]
+        public IActionResult MessageBox(string titulo, string mensagem)
+        {
+            TempData["Mensagem"] = mensagem;
+            TempData["Titulo"] = titulo;
+            return Ok();
+        }
+
         [Authorize]
         public IActionResult ManageShop()
         {

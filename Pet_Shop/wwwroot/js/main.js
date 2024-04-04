@@ -16,9 +16,10 @@ if (bntDelete) {
 }
 
 
-//Shop - Mostra Produto
-const buttons = document.querySelectorAll('.btn-comprar');
-buttons.forEach(button => {
+//-----------------------------------------------------------Shop  
+//Mostra Produto
+const buttonsCompra = document.querySelectorAll('.btn-comprar');
+buttonsCompra.forEach(button => {
     button.addEventListener('click', produtosCtrl.MostraProduto);
 });
 
@@ -30,6 +31,31 @@ const btnMenos = document.getElementById('btn-menos');
 if (btnMenos) {
     btnMenos.addEventListener('click', produtosCtrl.SubQtd)
 }
+
+const btnAddCarrinho = document.getElementById('btn-add-carrinho')
+if (btnAddCarrinho) {
+    btnAddCarrinho.addEventListener('click', produtosCtrl.AddCarrinho)
+}
+
+const openCarrinho = document.getElementById('open-carrinho')
+if (openCarrinho) {
+    openCarrinho.addEventListener('click', produtosCtrl.LoadCarrinho)
+}
+
+document.body.addEventListener('click', function (event) {
+    if (event.target.classList.contains('btn-remove-carrinho')) {
+        const codRemove = event.target.id;
+        produtosCtrl.RemoveLocalStorage(codRemove);
+    }
+});
+
+const fecharCarrinho = document.getElementById('btn-fechar-carrinho')
+if (fecharCarrinho) {
+    fecharCarrinho.addEventListener('click', produtosCtrl.FecharCarrinho)
+}
+
+
+
 
 
 var total = 0;
