@@ -104,7 +104,7 @@ namespace Pet_Shop.Controllers
         {
             TempData["Mensagem"] = mensagem;
             TempData["Titulo"] = titulo;
-            return Ok();
+            return View("MessageBox", (TempData["Mensagem"] = mensagem, TempData["Titulo"] = titulo));
         }
 
         [Authorize]
