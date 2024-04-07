@@ -32,8 +32,8 @@ namespace Pet_Shop
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options =>
                 {
-                    options.LoginPath = "/Home/Login"; 
-                    options.LogoutPath = "/Home/Logout"; 
+                    options.LoginPath = new PathString("/Seguranca/Login");
+                    options.LogoutPath = new PathString("/Seguranca/Logout");
                     options.ExpireTimeSpan = TimeSpan.FromMinutes(20);
                 });
 

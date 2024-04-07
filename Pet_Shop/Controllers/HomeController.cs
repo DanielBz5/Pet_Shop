@@ -38,49 +38,6 @@ namespace Pet_Shop.Controllers
             return View("Index");
         }
 
-        public IActionResult Login()
-        {
-            return View("_Login");
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Login(Cliente cliente)
-        {
-
-            if (homedao.ValidaLogin(cliente) != null)
-            {
-                var claims = new List<Claim>
-                {
-                    new Claim(ClaimTypes.Name, cliente.Nome),
-                    new Claim(ClaimTypes.NameIdentifier, cliente.Senha)
-                };
-
-                var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-
-                var authProperties = new AuthenticationProperties
-                {
-                    IsPersistent = cliente.RememberMe
-                };
-
-                HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), authProperties);
-
-                return RedirectToAction("Agendamento", "Agendamento");
-                
-            }
-
-            ViewBag.AcessoNegado = "Acesso Negado, Esse Usuario não Existe";
-            return View("_Login");
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Logout()
-        {
-            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            return RedirectToAction("Index", "Home");
-        }
-
         public IActionResult Register()
         {
             return View("_Register");

@@ -37,13 +37,13 @@
                         <a class="nav-link" asp-controller="Contato" asp-action="Contato">Contatos</a>
                         @if (User.Identity.IsAuthenticated)
                         {
-                            <form asp-controller="Home" asp-action="Logout" method="post">
+                            <form asp-controller="Seguranca" asp-action="Logout" method="post">
                                 <button type="submit" class="status-login"><i class="bi bi-box-arrow-in-left icon-acesso"></i></button><!--ta saindo branco no fundo-->
                             </form>
                         }
                         else
                         {
-                            <a class="status-login" asp-controller="Home" asp-action="Login"><i class="bi bi-person-circle icon-acesso"></i></a>
+                            <a class="status-login" asp-controller="Seguranca" asp-action="Login"><i class="bi bi-person-circle icon-acesso"></i></a>
                         }
                     </div>
                 </div>
