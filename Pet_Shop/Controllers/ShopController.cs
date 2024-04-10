@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.Extensions.Caching.Memory;
 using OfficeOpenXml;
 using OfficeOpenXml.Style;
 using Pet_Shop.Dao;
@@ -22,10 +23,13 @@ namespace Pet_Shop.Controllers
     {
         private readonly ShopDao shopdao;
         public readonly IWebHostEnvironment _webHostEnv;
-        public ShopController(ApplicationDbContext context, IWebHostEnvironment webHostEnv)
+        private readonly IMemoryCache _memoryCache;
+
+        public ShopController(ApplicationDbContext context, IWebHostEnvironment webHostEnv, IMemoryCache memoryCache)
         {
             _webHostEnv = webHostEnv;
             shopdao = new ShopDao(context);
+            _memoryCache = memoryCache;
         }
 
         public IActionResult Shop()
@@ -40,7 +44,7 @@ namespace Pet_Shop.Controllers
 
             Func<Produto, bool> filtro = p => p.Quantidade > 0;
             List<Produto> Produtos = shopdao.BuscaProdutos(filtro);
-            if(Produtos.Count == 0 && Produtos == null)
+            if (Produtos.Count == 0 && Produtos == null)
             {
                 return View("MessageBox", (TempData["Mensagem"] = "Não foi encontrado produtos com estoque", TempData["Titulo"] = "Atenção!"));
             }
@@ -52,13 +56,13 @@ namespace Pet_Shop.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult FiltroShop (Produto produto)
+        public IActionResult FiltroShop(Produto produto)
         {
             var Produtos = Filtro(produto);
             return View("Shop", Produtos);
         }
 
-        public List<Produto> Filtro (Produto produto)
+        public List<Produto> Filtro(Produto produto)
         {
             List<Produto> Produtos = new List<Produto>();
 
@@ -90,7 +94,7 @@ namespace Pet_Shop.Controllers
         [HttpGet("Shop/BuscaProduto")]
         public IActionResult BuscaProduto(int codProduto)
         {
-            var cod = new Produto{Cod = codProduto};
+            var cod = new Produto { Cod = codProduto };
             Produto produto = shopdao.ConsultaProduto(cod);
             if (produto == null)
             {
@@ -125,7 +129,7 @@ namespace Pet_Shop.Controllers
         public IActionResult AddProduto(Produto produto)
         {
             var imagem = HttpContext.Request.Form.Files.FirstOrDefault(); //acessa arquivos post
-            if(imagem == null)
+            if (imagem == null)
             {
                 ModelState.AddModelError("Imagem", "Escolha uma Imagem para o Produto");
             }
@@ -198,10 +202,10 @@ namespace Pet_Shop.Controllers
                 return View("GerenciaProduto");
             }
 
-            
+
             return View("MessageBox", (TempData["Mensagem"] = "Não foi possivel Alterar Produto", TempData["Titulo"] = "Atenção!"));
         }
-        
+
 
         [Authorize]
         [HttpPost]
@@ -262,20 +266,20 @@ namespace Pet_Shop.Controllers
                                                  ProdutoEstoque.QuantidadeAtual + ProdutoEstoque.QuantidadeMovimento :
                                                  ProdutoEstoque.QuantidadeAtual - ProdutoEstoque.QuantidadeMovimento;
 
-                if(ProdutoEstoque.QuantidadeAtual >= 0)
+                if (ProdutoEstoque.QuantidadeAtual >= 0)
                 {
-                    var produto = new Produto {Cod = ProdutoEstoque.Cod,};
+                    var produto = new Produto { Cod = ProdutoEstoque.Cod, };
 
                     Produto produtoOld = shopdao.ConsultaProduto(produto);
 
-                    var produtoNew =  shopdao.ConsultaProduto(produto);
+                    var produtoNew = shopdao.ConsultaProduto(produto);
                     produtoNew.Quantidade = ProdutoEstoque.QuantidadeAtual;
 
                     if (shopdao.AtualizaProduto(produtoOld, produtoNew))
                     {
                         var estoque = new Estoque
-                        { 
-                            Cod_Produto = ProdutoEstoque.Cod, 
+                        {
+                            Cod_Produto = ProdutoEstoque.Cod,
                             Nome = ProdutoEstoque.Nome,
                             Tipo_Movimento = ProdutoEstoque.TipoMovimento,
                             Data_ = ProdutoEstoque.Data_,
@@ -348,7 +352,7 @@ namespace Pet_Shop.Controllers
                     }
 
                     Produtos = shopdao.BuscaProdutosFiltro(filtro);
-                    
+
                     return ReportView(Produtos, null);
                 }
                 else if (relatorio.Modelo == "Estoque")
@@ -370,7 +374,7 @@ namespace Pet_Shop.Controllers
                     }
 
                     Estoque = shopdao.BuscaEstoque(filtro);
-                    return ReportView(null ,Estoque);
+                    return ReportView(null, Estoque);
                 }
 
                 return View("Relatorios");
@@ -393,17 +397,17 @@ namespace Pet_Shop.Controllers
                 RelName = "Produtos";
                 dbSet = "productList";
             }
-            else if(estoque != null)
+            else if (estoque != null)
             {
                 RelModel.AddRange(estoque);
                 RelName = "Estoque";
                 dbSet = "estoqueList";
             }
 
-            var caminhoReport = Path.Combine(_webHostEnv.WebRootPath, @"reports\"+RelName+".frx");
+            var caminhoReport = Path.Combine(_webHostEnv.WebRootPath, @"reports\" + RelName + ".frx");
             var reportFile = caminhoReport;
             var freport = new FastReport.Report();
-            
+
 
             freport.Report.Load(reportFile);
             freport.Dictionary.RegisterBusinessObject(RelModel, dbSet, 10, true);
@@ -427,9 +431,9 @@ namespace Pet_Shop.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ImportProdutos(IFormFile excelFile, IFormFileCollection Imagens )
+        public async Task<IActionResult> ImportProdutos(IFormFile excelFile, IFormFileCollection Imagens)
         {
-            if(await ImportaImagens(Imagens) != true)
+            if (await ImportaImagens(Imagens) != true)
                 return View("MessageBox", TempData["Titulo"] = "Atenção!");
 
             if (ValidaExcel(excelFile) != true)
@@ -477,10 +481,10 @@ namespace Pet_Shop.Controllers
                             catch
                             {
                                 ErroProdutos++;
-                            } 
+                            }
                         }
 
-                        return View("MessageBox", (TempData["Mensagem"] = "Foi Importado "+TotalProdutos+" Produtos, e "+ ErroProdutos + " apresentou erro.", TempData["Titulo"] = "Sucesso!"));
+                        return View("MessageBox", (TempData["Mensagem"] = "Foi Importado " + TotalProdutos + " Produtos, e " + ErroProdutos + " apresentou erro.", TempData["Titulo"] = "Sucesso!"));
                     }
                 }
 
@@ -588,7 +592,7 @@ namespace Pet_Shop.Controllers
             catch
             {
                 return null;
-            }    
+            }
         }
 
         [Authorize]
@@ -642,7 +646,7 @@ namespace Pet_Shop.Controllers
                             var height = 110;//img tamanho altura
                             picture.SetSize(Convert.ToInt32(width), Convert.ToInt32(height));
                             picture.SetPosition(cell.Start.Row, -120, cell.Start.Column, -120); // Define a posição e o tamanho da imagem(vertical/horizontal)
-                            
+
 
                             worksheet.Cells[row, 2].Value = produto.Cod;
                             worksheet.Cells[row, 3].Value = produto.Nome;
@@ -700,7 +704,55 @@ namespace Pet_Shop.Controllers
             }
         }
 
+
+        [HttpPost("Shop/RecebeCarrinho")]
+        public IActionResult RecebeCarrinho([FromBody] List<Produto> carrinho)
+            {
+            _memoryCache.Remove("carrinho");
+            _memoryCache.Set("carrinho", carrinho);
+            return Ok();
+        }
+
+        [Authorize]
+        [HttpGet("Shop/GeraPedido")]
+        public IActionResult GeraPedido()
+        {
+            Cliente cliente = new Cliente {Nome = User.Identity.Name, Senha = User.FindFirst(ClaimTypes.NameIdentifier)?.Value };
+            cliente = shopdao.BuscaCliente(cliente);
+
+            Pedido pedido = new Pedido { Cpf = cliente.Cpf, Nome = cliente.Nome, Telefone = cliente.Telefone , 
+                                        ValorTotal = 0, Endereco = cliente.Endereco, TipoPagamento = "", StatusPagamento = "" };
+            pedido.Cod = shopdao.CriaPedido(pedido);
+
+            _memoryCache.TryGetValue("carrinho", out List<Produto> produtos);
+            if (pedido.Cod != 0 && produtos.Count > 0)
+            {
+                foreach (var produto in produtos)
+                {
+                    ItemPedido item = new ItemPedido
+                    {
+                        CodPedido = pedido.Cod,
+                        CodProduto = produto.Cod,
+                        Nome = produto.Nome,
+                        Descricao = produto.Descricao,
+                        Valor = produto.Valor,
+                        Quantidade = produto.Quantidade
+                    };
+
+                    if (!shopdao.IncluiItemPedido(item))
+                        return View("MessageBox", (TempData["Mensagem"] = "Erro ao Incluir Items", TempData["Titulo"] = "Atenção!"));
+                }
+
+                if (!shopdao.AtualizaValorPedido(pedido))
+                {
+                    return View("MessageBox", (TempData["Mensagem"] = "Erro ao carregar valor", TempData["Titulo"] = "Atenção!"));
+                }
+
+                return View("Pedido");
+            }
+
+            return View("MessageBox", (TempData["Mensagem"] = "Erro ao Criar Pedido", TempData["Titulo"] = "Atenção!"));
+        }
+
     }
-
-
 }

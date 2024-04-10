@@ -6,7 +6,7 @@ export default class Produto {
         this.nome = produto.nome || null;
         this.valor = produto.valor || null;
         this.quantidade = produto.quantidade || null;
-        this.estoque_minimo = produto.estoque_minimo || null;
+        this.estoque_minimo = produto.estoque_minimo || 0;
         this.categoria = produto.categoria || null;
         this.descricao = produto.descricao || null;
         this.imagem = produto.imagem || null;

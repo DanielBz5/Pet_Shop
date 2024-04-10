@@ -54,6 +54,10 @@ if (fecharCarrinho) {
     fecharCarrinho.addEventListener('click', produtosCtrl.FecharCarrinho)
 }
 
+const ContinuaPedido = document.getElementById('continuar-pedido')
+if (ContinuaPedido) {
+    ContinuaPedido.addEventListener('click', produtosCtrl.EnviaPedido)
+}
 
 
 

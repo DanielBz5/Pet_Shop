@@ -166,5 +166,51 @@ function MessageBox(titulo, mensagem) {
     window.location.href = url;
 }
 
+export function EnviaPedido() {
+    var carrinho = JSON.parse(localStorage.getItem('carrinho')) || [];
+    var produtos = [];
+
+    carrinho.forEach(item => {
+        var produto = new Produto({//monta modelo convertido
+            cod: parseInt(item._cod), 
+            nome: item._nome,
+            valor: parseFloat(item._valor.replace('R$ ', '')),
+            quantidade: parseInt(item._quantidade.trim()), 
+            estoque_minimo: 0, 
+            categoria: item._categoria,
+            descricao: item._descricao,
+            imagem: ""
+        });
+
+        for (const key in produto) {//converte nome atributos
+            if (Object.prototype.hasOwnProperty.call(produto, key)) {
+                const newKey = key.replace(/^_/, '').charAt(0).toUpperCase() + key.slice(2);
+                produto[newKey] = produto[key];
+                if (newKey !== key) delete produto[key];
+            }
+        }
+
+        produtos.push(produto);
+    })
+
+    fetch('RecebeCarrinho', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(produtos)
+    })
+        .then(response => {
+            if (response.ok) {
+                window.location.href = 'GeraPedido';
+            } else {
+                MessageBox('Atenção', 'Erro ao carregar carrinho.');
+            }
+        })
+        .catch(error => {
+            MessageBox('Atenção', 'Erro ao montar pedido.');
+        });
+}
+
 
 

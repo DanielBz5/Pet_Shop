@@ -143,5 +143,73 @@ namespace Pet_Shop.Dao
                 return null;
             }
         }
+
+        public int CriaPedido(Pedido pedido)
+        {
+            try
+            {
+                _context.Pedido.Add(pedido);
+                int linhasAfetadas = _context.SaveChanges();
+                if (linhasAfetadas > 0)
+                {
+                    return pedido.Cod;
+                }
+                else
+                {
+                    return 0;
+                }
+            }
+            catch
+            {
+                return 0;
+            }
+        }
+
+        public bool IncluiItemPedido(ItemPedido item)
+        {
+            try
+            {
+                _context.ItemPedido.Add(item);
+                int linhasAfetadas = _context.SaveChanges();
+                return linhasAfetadas > 0 ? true : false;
+            }
+            catch(Exception ex)
+            {
+                return false;
+            }
+        }
+
+        public bool AtualizaValorPedido(Pedido pedido)
+        {
+            try
+            {
+                double totalPedido = _context.ItemPedido
+                .Where(i => i.CodPedido == pedido.Cod)
+                .Sum(i => i.Valor);
+
+                pedido.ValorTotal = totalPedido;
+                int linhasAfetadas = _context.SaveChanges();
+                return linhasAfetadas > 0 ? true : false;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public Cliente BuscaCliente(Cliente cliente)
+        {
+            try
+            {
+                return cliente = _context.Clientes.Where(c => c.Nome == cliente.Nome && c.Senha == cliente.Senha)
+                                                  .Select(c => new Cliente { Cpf = c.Cpf, Nome = c.Nome, Senha = c.Senha,
+                                                                            Telefone = c.Telefone, Endereco = c.Endereco })
+                                                  .SingleOrDefault();
+            }
+            catch(Exception ex)
+            {
+                return null;
+            }
+        }
     }
 }

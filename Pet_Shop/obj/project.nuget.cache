@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "XXA7xxgmg0mKPULvsmG8r0ucB0gcfDgUcCg6V+E9yA+Q48Lj3gPMNP9lIggpUlIrtQqDxZED1HUM1PHnJ+ZvSg==",
+  "dgSpecHash": "rNiGJL2mgPKI0kK5UrojlFLx4K4YHXcZ+ovTT21A82sI7sxt/WPq7tMvfyXOGgXTecCykX69dhtKVNrAdKOMmA==",
   "success": true,
   "projectFilePath": "C:\\Users\\Leo M\\source\\repos\\DanielBz5\\Pet_Shop\\Pet_Shop\\Pet_Shop.csproj",
   "expectedPackageFiles": [
@@ -65,7 +65,7 @@
     "C:\\Users\\Leo M\\.nuget\\packages\\mysql.data\\8.0.33\\mysql.data.8.0.33.nupkg.sha512",
     "C:\\Users\\Leo M\\.nuget\\packages\\mysql.entityframeworkcore\\5.0.17.2\\mysql.entityframeworkcore.5.0.17.2.nupkg.sha512",
     "C:\\Users\\Leo M\\.nuget\\packages\\netstandard.library\\1.6.1\\netstandard.library.1.6.1.nupkg.sha512",
-    "C:\\Users\\Leo M\\.nuget\\packages\\newtonsoft.json\\11.0.2\\newtonsoft.json.11.0.2.nupkg.sha512",
+    "C:\\Users\\Leo M\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512",
     "C:\\Users\\Leo M\\.nuget\\packages\\nuget.frameworks\\4.7.0\\nuget.frameworks.4.7.0.nupkg.sha512",
     "C:\\Users\\Leo M\\.nuget\\packages\\portable.bouncycastle\\1.9.0\\portable.bouncycastle.1.9.0.nupkg.sha512",
     "C:\\Users\\Leo M\\.nuget\\packages\\runtime.debian.8-x64.runtime.native.system.security.cryptography.openssl\\4.3.0\\runtime.debian.8-x64.runtime.native.system.security.cryptography.openssl.4.3.0.nupkg.sha512",

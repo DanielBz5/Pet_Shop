@@ -51,7 +51,6 @@ namespace Pet_Shop
 
 
             services.AddControllersWithViews();
-            services.AddMvc();
             services.AddMemoryCache();//serviço de cache
         }
 
