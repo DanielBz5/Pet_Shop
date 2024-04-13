@@ -587,6 +587,24 @@ h5 {
     padding-left: 8px;
     padding-right: 8px;
 }
+
+.valor-pedido {
+    background-color: #56cbc4;
+    font-size: 25px;
+    margin-bottom: 10px;
+    font-weight: bold;
+    border: none;
+}
+
+.img-qrcod {
+    margin-left: 25%;
+    margin-top: 10px;
+    margin-bottom: 15px;
+    width: 65%;
+    height: auto;
+}
+
+
 /*******************************************Manage***********************************************************************
 ---------------------------------------------------------------------------------------------------------------------------- */
 .container-manage {

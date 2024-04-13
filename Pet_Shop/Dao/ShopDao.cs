@@ -173,7 +173,7 @@ namespace Pet_Shop.Dao
                 int linhasAfetadas = _context.SaveChanges();
                 return linhasAfetadas > 0 ? true : false;
             }
-            catch(Exception ex)
+            catch
             {
                 return false;
             }
@@ -206,7 +206,38 @@ namespace Pet_Shop.Dao
                                                                             Telefone = c.Telefone, Endereco = c.Endereco })
                                                   .SingleOrDefault();
             }
+            catch
+            {
+                return null;
+            }
+        }
+
+        public bool AtualizaPedido(Pedido pedido)
+        {
+            try
+            {
+                _context.Entry(pedido).State = EntityState.Modified;//avisa que obj foi modificado
+                int linhasAfetadas = _context.SaveChanges();
+                return linhasAfetadas > 0 ? true : false;
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                throw new Exception("Deadlock! Aguarde um instante e tente novamente");
+            }
             catch(Exception ex)
+            {
+                var mensagem = ex.Message;
+                return false;
+            }
+        }
+
+        public Pedido ConsultaPedido(Pedido pedido)
+        {
+            try
+            {
+                return pedido = _context.Pedido.SingleOrDefault(p => p.Cod == pedido.Cod);
+            }
+            catch
             {
                 return null;
             }

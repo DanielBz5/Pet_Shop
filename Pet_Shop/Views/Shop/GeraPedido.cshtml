@@ -1,0 +1,66 @@
+﻿@model Pet_Shop.Models.Pedido
+
+<div class="container-manage">
+    <div class="manage-produto">
+        <h5 class="titulo-black">Finaliza Pedido <i class="bi bi-bag-plus-fill"></i></h5><br>
+        <form asp-controller="Shop" asp-action="GeraPedido" method="post" enctype="multipart/form-data">
+            <div class="row mb-3">
+                <label for="input3" class="col-sm-2 col-form-label">N°Pedido</label>
+                <div class="col-sm-10">
+                    <input type="text" asp-for="Cod" class="form-control" id="input3" readonly>
+                    <span asp-validation-for="Cod" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row mb-3" hidden>
+                <label for="input3" class="col-sm-2 col-form-label">Cpf</label>
+                <div class="col-sm-10">
+                    <input type="text" asp-for="Cpf" class="form-control" id="input3" readonly>
+                    <span asp-validation-for="Cpf" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label for="input3" class="col-sm-2 col-form-label">Cliente</label>
+                <div class="col-sm-10">
+                    <input type="text" asp-for="Nome" class="form-control" id="input3" readonly>
+                    <span asp-validation-for="Nome" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label for="input3" class="col-sm-2 col-form-label">Telefone</label>
+                <div class="col-sm-10">
+                    <input type="number" asp-for="Telefone" class="form-control" id="input3">
+                    <span asp-validation-for="Telefone" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label for="input3" class="col-sm-2 col-form-label">Endereço</label>
+                <div class="col-sm-10">
+                    <input type="text" asp-for="Endereco" class="form-control" id="input3">
+                    <span asp-validation-for="Endereco" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label for="input3" class="col-sm-2 col-form-label">Pagamento</label>
+                <div class="col-sm-10">
+                    <select class="form-control input-busca col-sm-10" aria-label="Default select example" asp-for="TipoPagamento">
+                        <option selected value="">Escolha Forma de Pagamento</option>
+                        <option value="Pix">Pix</option>
+                        <option value="Entrega">Pagar na Entrega</option>
+                    </select>
+                    <span asp-validation-for="TipoPagamento" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row mb-3" style="margin-left:10px">
+                <label class="valor-pedido" for="valor-pedido">Valor:</label>
+                <div class="valor-pedido">R$ <input class="valor-pedido" asp-for="ValorTotal" asp-format="{0:F2}" readonly /></div>
+            </div>
+
+            <div class="btn-login">
+                <a class="btn btn-secondary" asp-controller="Shop" asp-action="Shop"><i class="bi bi-caret-left-fill"></i>Voltar</a>
+                <button type="submit" class="btn btn-primary"><i class="bi bi-bag-plus-fill"></i> Finalizar Pedido</button>
+            </div>
+
+        </form>
+    </div>
+</div>

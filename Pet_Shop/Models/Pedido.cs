@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -28,6 +29,13 @@ namespace Pet_Shop.Models
         [Required(ErrorMessage = "O Tipo de Pagamento deve ser informada")]
         public string TipoPagamento { get; set; }
 
+        [BindNever]
         public string StatusPagamento { get; set; }
+
+        [BindNever]
+        public byte[] QrCode { get; set; }
+
+        [BindNever]
+        public string ChavePagamento { get; set; }
     }
 }

@@ -5,15 +5,19 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Caching.Memory;
+using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
 using OfficeOpenXml;
 using OfficeOpenXml.Style;
 using Pet_Shop.Dao;
 using Pet_Shop.Models;
+using Pet_Shop.Services;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -721,7 +725,7 @@ namespace Pet_Shop.Controllers
             cliente = shopdao.BuscaCliente(cliente);
 
             Pedido pedido = new Pedido { Cpf = cliente.Cpf, Nome = cliente.Nome, Telefone = cliente.Telefone , 
-                                        ValorTotal = 0, Endereco = cliente.Endereco, TipoPagamento = "", StatusPagamento = "" };
+                                        ValorTotal = 0, Endereco = cliente.Endereco, TipoPagamento = ""};
             pedido.Cod = shopdao.CriaPedido(pedido);
 
             _memoryCache.TryGetValue("carrinho", out List<Produto> produtos);
@@ -748,11 +752,83 @@ namespace Pet_Shop.Controllers
                     return View("MessageBox", (TempData["Mensagem"] = "Erro ao carregar valor", TempData["Titulo"] = "Atenção!"));
                 }
 
-                return View("Pedido");
+                return View("GeraPedido", pedido);
             }
 
             return View("MessageBox", (TempData["Mensagem"] = "Erro ao Criar Pedido", TempData["Titulo"] = "Atenção!"));
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize]
+        public async Task<IActionResult> GeraPedido(Pedido pedido)
+        {
+            if (ModelState.IsValid) 
+            {
+                if (shopdao.AtualizaPedido(pedido))
+                {
+                    switch (pedido.TipoPagamento)
+                    {
+                        case "Pix":
+                            if (await IntegracaoPix(pedido))
+                            {
+                                return View("ResultPedido", pedido);
+                            }
+                            else
+                            {
+                                return View("MessageBox", (TempData["Mensagem"] = "Erro na Integração com Pix", TempData["Titulo"] = "Atenção!"));
+                            }
+                           
+                        case "Entrega":
+                            return View("ResultPedido");
+                    }
+                }
+
+                return View("MessageBox", (TempData["Mensagem"] = "Erro em gerar pedido.", TempData["Titulo"] = "Atenção!"));
+            }
+            else
+            {
+                return View("GeraPedido", pedido);
+            }
+        }
+
+        
+        public async Task <bool> IntegracaoPix(Pedido pedido)
+        {
+            var configuration = ConfigurationHelper.GetConfiguration(Directory.GetCurrentDirectory());
+            var token = configuration.GetSection("PagamentoPix")["TokenPix"]; //lê token do appsettings
+
+            var client = new HttpClient();
+            var request = new HttpRequestMessage(HttpMethod.Post, "https://api.mercadopago.com/v1/payments");
+            request.Headers.Add("X-Idempotency-Key", "0d5020ed-1af6-469c-ae06-c3bec19954bb");
+            request.Headers.Add("Authorization", "Bearer APP_USR-3558336711445064-033014-a94da9a6b38ecc01eb9581f557d9ae22-817945637");
+            var content = new StringContent("{\r\n  \"description\": \"Payment for product\",\r\n  \"external_reference\": \"MP0001\",\r\n  \"payer\": {\r\n    \"email\": \"test_user_123@testuser.com\",\r\n    \"identification\": {\r\n      \"type\": \"CPF\",\r\n      \"number\": \"95749019047\"\r\n    }\r\n  },\r\n  \"payment_method_id\": \"pix\",\r\n  \"transaction_amount\": 10.0\r\n}", null, "application/json");
+            request.Content = content;
+            var response = await client.SendAsync(request);
+            response.EnsureSuccessStatusCode();
+
+            var JsonRetorno = (await response.Content.ReadAsStringAsync());
+            dynamic jsonObj = JsonConvert.DeserializeObject(JsonRetorno);
+
+            pedido.ChavePagamento = jsonObj.point_of_interaction.transaction_data.qr_code;
+            pedido.QrCode = jsonObj.point_of_interaction.transaction_data.qr_code_base64;
+
+            if (shopdao.AtualizaPedido(pedido))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+                
+        }
+
+        public IActionResult Teste()
+        {
+            Pedido pedido = new Pedido { Cod = 29 };
+            pedido = shopdao.ConsultaPedido(pedido);
+            return View("ResultPedido", pedido);
+        }
     }
 }

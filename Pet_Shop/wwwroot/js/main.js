@@ -37,6 +37,8 @@ if (btnAddCarrinho) {
     btnAddCarrinho.addEventListener('click', produtosCtrl.AddCarrinho)
 }
 
+
+//Carrinho
 const openCarrinho = document.getElementById('open-carrinho')
 if (openCarrinho) {
     openCarrinho.addEventListener('click', produtosCtrl.LoadCarrinho)
@@ -59,7 +61,11 @@ if (ContinuaPedido) {
     ContinuaPedido.addEventListener('click', produtosCtrl.EnviaPedido)
 }
 
-
+//ResultPedido
+const btncopy = document.getElementById('copy-pix')
+if (btncopy) {
+    btncopy.addEventListener('click', produtosCtrl.CopiaChave)
+}
 
 
 var total = 0;

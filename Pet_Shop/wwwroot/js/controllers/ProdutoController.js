@@ -212,5 +212,27 @@ export function EnviaPedido() {
         });
 }
 
+export function CopiaChave() {
+    const chave = document.getElementById('chave-pagamento').value;
+    CopiaAreaDeTransferencia(chave);
+    
+}
 
+function CopiaAreaDeTransferencia(texto) {
+    
+    var textareaTemp = document.createElement("textarea");
+    textareaTemp.value = texto;
 
+    document.body.appendChild(textareaTemp);
+
+    // Define o foco no textarea
+    textareaTemp.focus();
+
+    // Seleciona todo o texto dentro do textarea
+    textareaTemp.setSelectionRange(0, texto.length);
+
+    // Copia o texto selecionado
+    document.execCommand("copy");
+
+    document.body.removeChild(textareaTemp);
+}

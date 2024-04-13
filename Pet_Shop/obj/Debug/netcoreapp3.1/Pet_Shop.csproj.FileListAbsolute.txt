@@ -894,3 +894,5 @@ C:\Users\Leo M\source\repos\DanielBz5\Pet_Shop\Pet_Shop\bin\Debug\netcoreapp3.1\
 C:\Users\Leo M\source\repos\DanielBz5\Pet_Shop\Pet_Shop\bin\Debug\netcoreapp3.1\System.Text.Encoding.CodePages.dll
 C:\Users\Leo M\source\repos\DanielBz5\Pet_Shop\Pet_Shop\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp2.0\System.Text.Encoding.CodePages.dll
 C:\Users\Leo M\source\repos\DanielBz5\Pet_Shop\Pet_Shop\obj\Debug\netcoreapp3.1\Razor\Views\Shop\ImportProdutos.cshtml.g.cs
+C:\Users\Leo M\source\repos\DanielBz5\Pet_Shop\Pet_Shop\obj\Debug\netcoreapp3.1\Razor\Views\Shop\GeraPedido.cshtml.g.cs
+C:\Users\Leo M\source\repos\DanielBz5\Pet_Shop\Pet_Shop\obj\Debug\netcoreapp3.1\Razor\Views\Shop\ResultPedido.cshtml.g.cs
