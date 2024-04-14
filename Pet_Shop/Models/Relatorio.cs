@@ -13,19 +13,14 @@ namespace Pet_Shop.Models
         [Required(ErrorMessage = "O Modelo deve ser informado")]
         public string Modelo { get; set; }
 
-        
         public DateTime DataInicial { get; set; }
 
-        
         public DateTime DataFinal{ get; set; }
 
-        
         public int Codigo { get; set; }
 
-        
         public string TipoMovimento { get; set; }
 
-        
         public string Categoria { get; set; }
 
     }

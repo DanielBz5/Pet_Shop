@@ -1,7 +1,10 @@
 ﻿
 import * as servicosCtrl from './controllers/ServicosController.js';
 import * as produtosCtrl from './controllers/ProdutoController.js';
+import * as relatorioCtrl from './controllers/RelatorioController.js';
 
+
+//-----------------------------------------------------------Agendamento
 
 //View Agendamentos - Atualiza Valor ao selecionar serviço
 const selectServico = document.getElementById('ListaServicos');
@@ -9,14 +12,24 @@ if (selectServico) {
     selectServico.addEventListener('change', servicosCtrl.ValorServico);
 }
 
+//-----------------------------------------------------------Manage
+
 //Exibição Deleta Produto
 const bntDelete = document.getElementById('btn-deleta-produto');
 if (bntDelete) {
     bntDelete.addEventListener('click', produtosCtrl.DeleteProduto);
 }
 
+//Relatorio - Exibe Modelo
+
+const slcRel = document.getElementById('select-relatorio');
+if (slcRel) {
+    slcRel.addEventListener('change', relatorioCtrl.SelectModel);
+}
+
 
 //-----------------------------------------------------------Shop  
+
 //Mostra Produto
 const buttonsCompra = document.querySelectorAll('.btn-comprar');
 buttonsCompra.forEach(button => {
@@ -68,6 +81,7 @@ if (btncopy) {
 }
 
 
+
 var total = 0;
 var itemsSelecionados = [];//matriz
 
@@ -107,30 +121,7 @@ function SelectServico(Cod, div) {
 }
 
 
-
-
-
-//Escolhe modelo do Relatorio
-
-function selectModel() {
-
-    var relatorio = document.getElementById('select-relatorio').value;
-
-    if (relatorio === 'Produto') {
-        document.getElementById('Rel-produto').style.display = 'flex';
-        document.getElementById('Rel-estoque').style.display = 'none';
-    } else if (relatorio === 'Estoque') {
-        document.getElementById('Rel-estoque').style.display = 'flex';
-        document.getElementById('Rel-produto').style.display = 'none';
-    } else {
-        document.getElementById('Rel-produto').style.display = 'none';
-        document.getElementById('Rel-estoque').style.display = 'none';
-    }
-}
-
-
-
-function AvisoLoginTeste() {
-    alert("PARA TESTE Usuarios: Admin ou Daniel/ senha:123");
-}
+//function AvisoLoginTeste() {
+//    alert("PARA TESTE Usuarios: Admin ou Daniel/ senha:123");
+//}
 

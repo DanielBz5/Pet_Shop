@@ -343,48 +343,44 @@ namespace Pet_Shop.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Relatorios(Relatorio relatorio)// não está passando os filtros //arruma isso
         {
-            if (ModelState.IsValid)
+            if (relatorio.Modelo == "Produto")
             {
-                if (relatorio.Modelo == "Produto")
+                List<Produto> Produtos = new List<Produto>();
+                Func<Produto, bool> filtro = p => true;
+
+                if (relatorio.Categoria != null)
                 {
-                    List<Produto> Produtos = new List<Produto>();
-                    Func<Produto, bool> filtro = p => true;
-
-                    if (relatorio.Categoria != null)
-                    {
-                        filtro = p => p.Categoria == relatorio.Categoria;
-                    }
-
-                    Produtos = shopdao.BuscaProdutosFiltro(filtro);
-
-                    return ReportView(Produtos, null);
-                }
-                else if (relatorio.Modelo == "Estoque")
-                {
-                    List<Estoque> Estoque = new List<Estoque>();
-                    Func<Estoque, bool> filtro = e => true;
-
-                    if (relatorio.DataInicial != DateTime.MinValue && relatorio.DataFinal != DateTime.MinValue)
-                    {
-                        filtro = e => filtro(e) && e.Data_ >= relatorio.DataInicial && e.Data_ <= relatorio.DataFinal;
-                    }
-                    else if (relatorio.Codigo != 0)
-                    {
-                        filtro = e => filtro(e) && e.Cod_Produto == relatorio.Codigo;
-                    }
-                    else if (relatorio.TipoMovimento != null)
-                    {
-                        filtro = e => filtro(e) && e.Tipo_Movimento == relatorio.TipoMovimento;
-                    }
-
-                    Estoque = shopdao.BuscaEstoque(filtro);
-                    return ReportView(null, Estoque);
+                    filtro = p => p.Categoria == relatorio.Categoria;
                 }
 
-                return View("Relatorios");
+                Produtos = shopdao.BuscaProdutosFiltro(filtro);
+
+                return ReportView(Produtos, null);
+            }
+            else if (relatorio.Modelo == "Estoque")
+            {
+                List<Estoque> Estoque = new List<Estoque>();
+                Func<Estoque, bool> filtro = e => true;
+
+                if (relatorio.DataInicial != DateTime.MinValue && relatorio.DataFinal != DateTime.MinValue)
+                {
+                    filtro = e => e.Data_ >= relatorio.DataInicial && e.Data_ <= relatorio.DataFinal;
+                }
+                else if (relatorio.Codigo != 0)
+                {
+                    filtro = e => e.Cod_Produto == relatorio.Codigo;
+                }
+                else if (relatorio.TipoMovimento != null)
+                {
+                    filtro = e => e.Tipo_Movimento == relatorio.TipoMovimento;
+                }
+
+                Estoque = shopdao.BuscaEstoque(filtro);
+                return ReportView(null, Estoque);
             }
             else
             {
+                ModelState.AddModelError("Modelo", "O Modelo deve ser informado");
                 return View("Relatorios");
             }
         }
