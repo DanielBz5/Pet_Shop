@@ -38,14 +38,6 @@ namespace Pet_Shop.Controllers
 
         public IActionResult Shop()
         {
-            Cliente cliente = new Cliente();
-            cliente.Nome = User.Identity.Name;
-            cliente.Senha = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            if (cliente.Nome == "Admin")
-            {
-                return RedirectToAction("ManageShop");
-            }
-
             Func<Produto, bool> filtro = p => p.Quantidade > 0;
             List<Produto> Produtos = shopdao.BuscaProdutos(filtro);
             if (Produtos.Count == 0 && Produtos == null)
@@ -118,7 +110,17 @@ namespace Pet_Shop.Controllers
         [Authorize]
         public IActionResult ManageShop()
         {
-            return View();
+            Cliente cliente = new Cliente();
+            cliente.Nome = User.Identity.Name;
+            cliente.Senha = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (cliente.Nome == "Admin")
+            {
+                return View();
+            }
+            else
+            {
+                return View("MessageBox", (TempData["Mensagem"] = "Somente o Login Admin tem Acesso ao Estoque.", TempData["Titulo"] = "Atenção!"));
+            }
         }
 
         [Authorize]
