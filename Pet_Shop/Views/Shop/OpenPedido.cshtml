@@ -1,0 +1,79 @@
+﻿@model IEnumerable<Pet_Shop.Models.Pedido>
+
+
+
+@{
+    ViewData["Title"] = "Consulta Pedido";
+}
+
+<h1>Consulta de Pedidos</h1>
+
+<p class="titulo-black container-titulo-btn">
+    Consulta Pedido
+    <a class="btn btn-navega" asp-controller="Shop" asp-action="Shop"><i class="bi bi-bag-plus-fill"></i> Shop </a>
+</p>
+
+
+<table class="table table-striped-columns table-bordered Tabelacss consulta-produto">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Cod)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Nome)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ValorTotal)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Endereco)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TipoPagamento)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.StatusPagamento)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+
+                <td>
+                    <a class="celula" asp-controller="Shop" asp-action="OpenPedido" asp-route-Cod="@item.Cod">
+                        @Html.DisplayFor(modelItem => item.Cod)
+                    </a>
+                </td>
+                <td>
+                    <a class="celula" asp-controller="Shop" asp-action="OpenPedido" asp-route-Cod="@item.Cod">
+                        @Html.DisplayFor(modelItem => item.Nome)
+                    </a>
+                </td>
+                <td>
+                    <a class="celula" asp-controller="Shop" asp-action="OpenPedido" asp-route-Cod="@item.Cod">
+                        R$ @Html.DisplayFor(modelItem => item.ValorTotal)
+                    </a>
+                </td>
+                <td>
+                    <a class="celula" asp-controller="Shop" asp-action="OpenPedido" asp-route-Cod="@item.Cod">
+                        @Html.DisplayFor(modelItem => item.Endereco)
+                    </a>
+                </td>
+                <td>
+                    <a class="celula" asp-controller="Shop" asp-action="OpenPedido" asp-route-Cod="@item.Cod">
+                        @Html.DisplayFor(modelItem => item.TipoPagamento)
+                    </a>
+                </td>
+                <td>
+                    <a class="celula" asp-controller="Shop" asp-action="OpenPedido" asp-route-Cod="@item.Cod">
+                        @Html.DisplayFor(modelItem => item.StatusPagamento)
+                    </a>
+                </td>
+
+            </tr>
+        }
+    </tbody>
+</table>

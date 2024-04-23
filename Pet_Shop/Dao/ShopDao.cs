@@ -224,9 +224,8 @@ namespace Pet_Shop.Dao
             {
                 throw new Exception("Deadlock! Aguarde um instante e tente novamente");
             }
-            catch(Exception ex)
+            catch
             {
-                var mensagem = ex.Message;
                 return false;
             }
         }
@@ -236,6 +235,30 @@ namespace Pet_Shop.Dao
             try
             {
                 return pedido = _context.Pedido.SingleOrDefault(p => p.Cod == pedido.Cod);
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        public List<ItemPedido> BuscaItemsPedido(Pedido pedido)
+        {
+            try
+            {
+                return _context.ItemPedido.Where(i => i.CodPedido == pedido.Cod).ToList();
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        public List<Pedido> BuscaPedidos(Func<Pedido, bool> filtro)
+        {
+            try
+            {
+                return _context.Pedido.Where(filtro).ToList();//erro
             }
             catch
             {

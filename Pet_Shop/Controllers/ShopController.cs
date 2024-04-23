@@ -3,9 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Caching.Memory;
-using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using OfficeOpenXml;
 using OfficeOpenXml.Style;
@@ -14,10 +12,10 @@ using Pet_Shop.Models;
 using Pet_Shop.Services;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -33,7 +31,7 @@ namespace Pet_Shop.Controllers
         {
             _webHostEnv = webHostEnv;
             shopdao = new ShopDao(context);
-            _memoryCache = memoryCache;
+            _memoryCache = memoryCache; 
         }
 
         public IActionResult Shop()
@@ -261,7 +259,7 @@ namespace Pet_Shop.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult MovimentoEstoquePost(ProdutoEstoqueViewModel ProdutoEstoque)// arruma o delete 
+        public IActionResult MovimentoEstoquePost(ProdutoEstoqueViewModel ProdutoEstoque)
         {
             ProdutoEstoque.Data_ = DateTime.Now;
 
@@ -799,8 +797,20 @@ namespace Pet_Shop.Controllers
             var client = new HttpClient();
             var request = new HttpRequestMessage(HttpMethod.Post, "https://api.mercadopago.com/v1/payments");
             request.Headers.Add("X-Idempotency-Key", "0d5020ed-1af6-469c-ae06-c3bec19954bb");
-            request.Headers.Add("Authorization", "Bearer APP_USR-3558336711445064-033014-a94da9a6b38ecc01eb9581f557d9ae22-817945637");
-            var content = new StringContent("{\r\n  \"description\": \"Payment for product\",\r\n  \"external_reference\": \"MP0001\",\r\n  \"payer\": {\r\n    \"email\": \"test_user_123@testuser.com\",\r\n    \"identification\": {\r\n      \"type\": \"CPF\",\r\n      \"number\": \"95749019047\"\r\n    }\r\n  },\r\n  \"payment_method_id\": \"pix\",\r\n  \"transaction_amount\": 10.0\r\n}", null, "application/json");
+            request.Headers.Add("Authorization", "Bearer "+token);
+            var content = new StringContent("{" +
+                                            "\r\n  \"description\": \"Compra no Pet Shop\"," +
+                                            "\r\n  \"external_reference\": \"MP0001\"," +
+                                            "\r\n  \"payer\": {" +
+                                                "\r\n    \"email\": \"test_user_123@testuser.com\"," +
+                                                "\r\n    \"identification\": {" +
+                                                    "\r\n      \"type\": \"CPF\"," +
+                                                    "\r\n      \"number\": \""+pedido.Cpf+"\"\r\n    " +
+                                                            "}\r\n  " +
+                                                    "}," +
+                                            "\r\n  \"payment_method_id\": \"pix\"," +
+                                            "\r\n  \"transaction_amount\": 10.0\r\n" +
+                                            "}", null, "application/json");
             request.Content = content;
             var response = await client.SendAsync(request);
             response.EnsureSuccessStatusCode();
@@ -808,8 +818,10 @@ namespace Pet_Shop.Controllers
             var JsonRetorno = (await response.Content.ReadAsStringAsync());
             dynamic jsonObj = JsonConvert.DeserializeObject(JsonRetorno);
 
+            pedido.IdPagamento = jsonObj.id;
             pedido.ChavePagamento = jsonObj.point_of_interaction.transaction_data.qr_code;
             pedido.QrCode = jsonObj.point_of_interaction.transaction_data.qr_code_base64;
+            pedido.StatusPagamento = "pending";
 
             if (shopdao.AtualizaPedido(pedido))
             {
@@ -822,11 +834,128 @@ namespace Pet_Shop.Controllers
                 
         }
 
-        public IActionResult Teste()
+        public async Task<IActionResult> FinalizaPedido(Pedido pedido)
         {
-            Pedido pedido = new Pedido { Cod = 29 };
             pedido = shopdao.ConsultaPedido(pedido);
-            return View("ResultPedido", pedido);
+            if(await GetPagamento(pedido))
+            {
+                //Saida do Estoque
+                var Items = shopdao.BuscaItemsPedido(pedido);
+                foreach(var item in Items)
+                {
+                    Produto produto = new Produto { Cod = item.CodProduto };
+                    produto = shopdao.ConsultaProduto(produto);
+                    var ProdutoEstoque = new ProdutoEstoqueViewModel
+                    {
+                        Cod = item.CodProduto,
+                        Nome = item.Nome,
+                        Descricao = item.Descricao,
+                        TipoMovimento = "Saida Shop",
+                        QuantidadeAtual = produto.Quantidade,
+                        QuantidadeMovimento = item.Quantidade
+                    };
+
+                    MovimentoEstoquePost(ProdutoEstoque);
+                }
+                return View("ResultPedido", pedido);
+            }
+            else
+            {
+                return View("MessageBox", (TempData["Mensagem"] = "O Pagamento não foi realizado, você precisa fazer o pagamento antes de finalizar o pedido.", TempData["Titulo"] = "Atenção!"));
+            }
         }
+
+        public async Task<bool> GetPagamento(Pedido pedido)
+        {
+            var configuration = ConfigurationHelper.GetConfiguration(Directory.GetCurrentDirectory());
+            var token = configuration.GetSection("PagamentoPix")["TokenPix"]; //lê token do appsettings
+
+            var client = new HttpClient();
+            var request = new HttpRequestMessage(HttpMethod.Get, "https://api.mercadopago.com/v1/payments/"+pedido.IdPagamento+"");
+            request.Headers.Add("Authorization", "Bearer " + token);
+            var content = new StringContent(string.Empty);
+            content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+            request.Content = content;
+            var response = await client.SendAsync(request);
+            response.EnsureSuccessStatusCode();
+
+            var JsonRetorno = (await response.Content.ReadAsStringAsync());
+            dynamic jsonObj = JsonConvert.DeserializeObject(JsonRetorno);
+
+            var status = jsonObj.status;
+            if(status == "approved")
+            {
+                pedido.StatusPagamento = status;
+                if (shopdao.AtualizaPedido(pedido))
+                {
+                    return true;
+                }
+                else
+                {
+                    throw new Exception("Erro ao Atualizar status do Pagamento!");
+                }
+            }
+            else
+            {
+                return false;
+            }
+           
+        }
+
+        [Authorize]
+        public IActionResult ConsultaPedido()
+        {
+            Cliente cliente = new Cliente { Nome = User.Identity.Name, Senha = User.FindFirst(ClaimTypes.NameIdentifier)?.Value };
+            cliente = shopdao.BuscaCliente(cliente);
+            Func<Pedido, bool> filtro = p => p.Cpf == cliente.Cpf;
+            List<Pedido> pedidos = shopdao.BuscaPedidos(filtro);
+            if (pedidos.Count != 0)
+            {
+                return View("OpenPedido", pedidos);
+            }
+            else
+            {
+                return View("MessageBox", (TempData["Mensagem"] = "Não existe pedidos para você.", TempData["Titulo"] = "Atenção!"));
+            }
+        }
+
+        public IActionResult OpenPedido(Pedido pedido)
+        {
+            pedido = shopdao.ConsultaPedido(pedido);
+            if(pedido.IdPagamento != null)
+            {
+                return View("ResultPedido", pedido);
+            }
+            else
+            {
+                return View("GeraPedido", pedido);
+            }
+
+        }
+
+        //public IActionResult Teste()
+        //{
+        //    Pedido pedido = new  Pedido { Cod = 39};
+        //    pedido = shopdao.ConsultaPedido(pedido);
+
+        //    var Items = shopdao.BuscaItemsPedido(pedido);
+        //    foreach (var item in Items)
+        //    {
+        //        Produto produto = new Produto { Cod = item.CodProduto };
+        //        produto = shopdao.ConsultaProduto(produto);
+        //        var ProdutoEstoque = new ProdutoEstoqueViewModel
+        //        {
+        //            Cod = item.CodProduto,
+        //            Nome = item.Nome,
+        //            Descricao = item.Descricao,
+        //            TipoMovimento = "Saida Shop",
+        //            QuantidadeAtual = produto.Quantidade,
+        //            QuantidadeMovimento = item.Quantidade
+        //        };
+
+        //        MovimentoEstoquePost(ProdutoEstoque);
+        //    }
+        //    return View("ResultPedido", pedido);
+        //}
     }
 }

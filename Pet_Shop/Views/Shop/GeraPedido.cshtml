@@ -2,7 +2,7 @@
 
 <div class="container-manage">
     <div class="manage-produto">
-        <h5 class="titulo-black">Finaliza Pedido <i class="bi bi-bag-plus-fill"></i></h5><br>
+        <h5 class="titulo-black">Etapa 1: Criar Pedido<i class="bi bi-bag-plus-fill"></i></h5><br>
         <form asp-controller="Shop" asp-action="GeraPedido" method="post" enctype="multipart/form-data">
             <div class="row mb-3">
                 <label for="input3" class="col-sm-2 col-form-label">N°Pedido</label>
@@ -58,7 +58,7 @@
 
             <div class="btn-login">
                 <a class="btn btn-secondary" asp-controller="Shop" asp-action="Shop"><i class="bi bi-caret-left-fill"></i>Voltar</a>
-                <button type="submit" class="btn btn-primary"><i class="bi bi-bag-plus-fill"></i> Finalizar Pedido</button>
+                <button type="submit" class="btn btn-primary"><i class="bi bi-bag-plus-fill"></i> Continuar Pedido</button>
             </div>
 
         </form>

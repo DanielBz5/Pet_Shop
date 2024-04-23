@@ -12,6 +12,8 @@ namespace Pet_Shop.Models
         [Key]
         public int Cod { get; set; }
 
+        public long? IdPagamento { get; set; }
+
         public string Cpf { get; set; }
 
         public string Nome{ get; set; }

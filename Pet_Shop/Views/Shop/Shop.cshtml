@@ -2,7 +2,7 @@
 
 <div id="overlay" class="overlay"></div>
 <form class="filtro" asp-controller="Shop" asp-action="FiltroShop" method="post">
-    <h5 style="margin-right: 30px; color:black">Filtros</h5>
+    <h5 style="margin-right: 20px; color:black">Filtros</h5>
     <div class="filtro-item">
         <label for="inputCategoria5" class="form-label">Categoria</label>
         <select class="form-control input-busca" aria-label="Default select example" name="Categoria">
@@ -19,8 +19,9 @@
         <input type="text" id="inputNome5" class="form-control input-busca" aria-describedby="passwordHelpBlock" name="Nome">
     </div>
 
-    <button type="submit" class="btn btn-primary">Pesquisar</button>
+    <button type="submit" class="btn btn-primary" style="margin-left:-40px;">Pesquisar</button>
     <button type="button" id="open-carrinho" class="btn btn-dark"><i class="bi bi-cart3" style="font-size:20px;"></i></button>
+    <a class="btn btn-dark" asp-controller="Shop" asp-action="ConsultaPedido" style="border-radius: 30px; margin-left: 6px;"><i class="bi bi-truck" style="font-size:20px;"></i></a>
 </form>
 
 
