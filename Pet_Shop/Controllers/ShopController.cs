@@ -14,6 +14,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Security.Claims;
@@ -772,7 +773,7 @@ namespace Pet_Shop.Controllers
                             }
                             else
                             {
-                                return View("MessageBox", (TempData["Mensagem"] = "Erro na Integração com Pix", TempData["Titulo"] = "Atenção!"));
+                                return View("MessageBox", (TempData["Titulo"] = "Atenção!"));
                             }
                            
                         case "Entrega":
@@ -809,29 +810,44 @@ namespace Pet_Shop.Controllers
                                                             "}\r\n  " +
                                                     "}," +
                                             "\r\n  \"payment_method_id\": \"pix\"," +
-                                            "\r\n  \"transaction_amount\": 10.0\r\n" +
+                                            "\r\n  \"transaction_amount\": 1.0\r\n" +
                                             "}", null, "application/json");
             request.Content = content;
             var response = await client.SendAsync(request);
-            response.EnsureSuccessStatusCode();
 
-            var JsonRetorno = (await response.Content.ReadAsStringAsync());
-            dynamic jsonObj = JsonConvert.DeserializeObject(JsonRetorno);
-
-            pedido.IdPagamento = jsonObj.id;
-            pedido.ChavePagamento = jsonObj.point_of_interaction.transaction_data.qr_code;
-            pedido.QrCode = jsonObj.point_of_interaction.transaction_data.qr_code_base64;
-            pedido.StatusPagamento = "pending";
-
-            if (shopdao.AtualizaPedido(pedido))
+            if (response.StatusCode == HttpStatusCode.OK || response.StatusCode == HttpStatusCode.Created) // 200 OK e 201 Created
             {
-                return true;
+                var JsonRetorno = (await response.Content.ReadAsStringAsync());
+                dynamic jsonObj = JsonConvert.DeserializeObject(JsonRetorno);
+
+                pedido.IdPagamento = jsonObj.id;
+                pedido.ChavePagamento = jsonObj.point_of_interaction.transaction_data.qr_code;
+                pedido.QrCode = jsonObj.point_of_interaction.transaction_data.qr_code_base64;
+                pedido.StatusPagamento = "pending";
+
+                if (shopdao.AtualizaPedido(pedido))
+                {
+                    return true;
+                }
+                else
+                {
+                    TempData["Mensagem"] = "Erro ao atualizar Pedido com pagamento.";
+                    return false;
+                }
+            }
+            else if (response.StatusCode == HttpStatusCode.BadRequest) // 400 Bad Request
+            {
+                var JsonRetorno = (await response.Content.ReadAsStringAsync());
+                dynamic jsonObj = JsonConvert.DeserializeObject(JsonRetorno);
+
+                TempData["Mensagem"] = jsonObj.message;
             }
             else
             {
-                return false;
+                response.EnsureSuccessStatusCode();
             }
-                
+
+            return false;
         }
 
         public async Task<IActionResult> FinalizaPedido(Pedido pedido)
