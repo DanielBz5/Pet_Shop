@@ -20,6 +20,8 @@ using System.Net.Http.Headers;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
+
+
 namespace Pet_Shop.Controllers
 {
     public class ShopController : Controller
@@ -775,7 +777,17 @@ namespace Pet_Shop.Controllers
                             {
                                 return View("MessageBox", (TempData["Titulo"] = "Atenção!"));
                             }
-                           
+
+                        case "Cartao":
+                            if (await IntegracaoCartao(pedido))
+                            {
+                                return View("ResultPedido", pedido);
+                            }
+                            else
+                            {
+                                return View("MessageBox", (TempData["Titulo"] = "Atenção!"));
+                            }
+
                         case "Entrega":
                             return View("ResultPedido");
                     }
@@ -793,7 +805,7 @@ namespace Pet_Shop.Controllers
         public async Task <bool> IntegracaoPix(Pedido pedido)
         {
             var configuration = ConfigurationHelper.GetConfiguration(Directory.GetCurrentDirectory());
-            var token = configuration.GetSection("PagamentoPix")["TokenPix"]; //lê token do appsettings
+            var token = configuration.GetSection("MercadoPagoProducao")["Token"]; //lê token do appsettings
 
             var client = new HttpClient();
             var request = new HttpRequestMessage(HttpMethod.Post, "https://api.mercadopago.com/v1/payments");
@@ -884,7 +896,7 @@ namespace Pet_Shop.Controllers
         public async Task<bool> GetPagamento(Pedido pedido)
         {
             var configuration = ConfigurationHelper.GetConfiguration(Directory.GetCurrentDirectory());
-            var token = configuration.GetSection("PagamentoPix")["TokenPix"]; //lê token do appsettings
+            var token = configuration.GetSection("MercadoPagoProducao")["Token"]; //lê token do appsettings
 
             var client = new HttpClient();
             var request = new HttpRequestMessage(HttpMethod.Get, "https://api.mercadopago.com/v1/payments/"+pedido.IdPagamento+"");
@@ -949,29 +961,88 @@ namespace Pet_Shop.Controllers
 
         }
 
-        //public IActionResult Teste()
-        //{
-        //    Pedido pedido = new  Pedido { Cod = 39};
-        //    pedido = shopdao.ConsultaPedido(pedido);
+        [HttpPost("Shop/ProcessCard")]
+        public IActionResult ProcessCard([FromBody] string json)    
+        {
+            if(json != null)
+            {
+                Pedido pedido = new Pedido();
+                dynamic jsonObj = JsonConvert.DeserializeObject(json);
 
-        //    var Items = shopdao.BuscaItemsPedido(pedido);
-        //    foreach (var item in Items)
-        //    {
-        //        Produto produto = new Produto { Cod = item.CodProduto };
-        //        produto = shopdao.ConsultaProduto(produto);
-        //        var ProdutoEstoque = new ProdutoEstoqueViewModel
-        //        {
-        //            Cod = item.CodProduto,
-        //            Nome = item.Nome,
-        //            Descricao = item.Descricao,
-        //            TipoMovimento = "Saida Shop",
-        //            QuantidadeAtual = produto.Quantidade,
-        //            QuantidadeMovimento = item.Quantidade
-        //        };
+                jsonObj.token = pedido.TokenCard;
+                jsonObj.payment_method_id = pedido.TipoPagamento;
+                jsonObj.installments = pedido.Parcelas;
 
-        //        MovimentoEstoquePost(ProdutoEstoque);
-        //    }
-        //    return View("ResultPedido", pedido);
-        //}
+                if (shopdao.AtualizaPedido(pedido))
+                {
+                    return Ok();
+                }
+            }
+            return BadRequest();
+        }
+
+        public async Task<bool> IntegracaoCartao(Pedido pedido)
+        {
+            var configuration = ConfigurationHelper.GetConfiguration(Directory.GetCurrentDirectory());
+            var token = configuration.GetSection("MercadoPagoTeste")["Token"]; //lê token do appsettings
+
+            var client = new HttpClient();
+            var request = new HttpRequestMessage(HttpMethod.Post, "https://api.mercadopago.com/v1/payments");
+            request.Headers.Add("X-Idempotency-Key", "0d5020ed-1af6-469c-ae06-c3bec19954bb");
+            request.Headers.Add("Authorization", "Bearer " + token);
+            var content = new StringContent("{" +
+                                        "\r\n  \"description\": \"Payment for product\"," +
+                                        "\r\n  \"external_reference\": \"MP0001\"," +
+                                        "\r\n  \"installments\": " + pedido.Parcelas + "," +
+                                        "\r\n  \"payer\": {" +
+                                        "\r\n    \"email\": \"test_user_123@testuser.com\"," +
+                                        "\r\n    \"identification\": {" +
+                                        "\r\n      \"type\": \"CPF\"," +
+                                        "\r\n      \"number\": \"" + pedido.Cpf + "\"\r\n    }\r\n  }," +
+                                        "\r\n  \"payment_method_id\": \"" + pedido.TipoPagamento + "\"," +
+                                        "\r\n  \"token\": \"" + pedido.TokenCard + "\"," +
+                                        "\r\n  \"transaction_amount\": 10.0\r\n}",
+                                        null, "application/json");
+            request.Content = content;
+            var response = await client.SendAsync(request);
+
+            if (response.StatusCode == HttpStatusCode.OK || response.StatusCode == HttpStatusCode.Created) // 200 OK e 201 Created
+            {
+                var JsonRetorno = (await response.Content.ReadAsStringAsync());
+                dynamic jsonObj = JsonConvert.DeserializeObject(JsonRetorno);
+
+                pedido.IdPagamento = jsonObj.id;
+                pedido.StatusPagamento = jsonObj.status;
+
+                if (shopdao.AtualizaPedido(pedido))
+                {
+                    return true;
+                }
+                else
+                {
+                    TempData["Mensagem"] = "Erro ao atualizar Pedido com pagamento.";
+                    return false;
+                }
+            }
+            else if (response.StatusCode == HttpStatusCode.BadRequest) // 400 Bad Request
+            {
+                var JsonRetorno = (await response.Content.ReadAsStringAsync());
+                dynamic jsonObj = JsonConvert.DeserializeObject(JsonRetorno);
+
+                TempData["Mensagem"] = jsonObj.message;
+            }
+            else
+            {
+                response.EnsureSuccessStatusCode();
+            }
+
+            return false;
+        }
+
+        public IActionResult Teste()
+        {
+
+            return View("CartaoPagamento");
+        }
     }
 }

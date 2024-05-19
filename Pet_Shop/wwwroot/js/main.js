@@ -2,6 +2,9 @@
 import * as servicosCtrl from './controllers/ServicosController.js';
 import * as produtosCtrl from './controllers/ProdutoController.js';
 import * as relatorioCtrl from './controllers/RelatorioController.js';
+import MercadoPagoController from './controllers/CartaoPagamento.js';
+const mercadoPagoController = new MercadoPagoController();
+
 
 
 //-----------------------------------------------------------Agendamento
@@ -79,6 +82,47 @@ const btncopy = document.getElementById('copy-pix')
 if (btncopy) {
     btncopy.addEventListener('click', produtosCtrl.CopiaChave)
 }
+
+//Cartão Mercado pago
+
+//const formcard = document.getElementById('cartao-view')
+//if (formcar) {
+
+//    const mercadoPagoController = new MercadoPagoController();
+
+//    // Chamar os métodos para inicializar o Mercado Pago e criar o formulário de pagamento
+//    mercadoPagoController.initializeMercadoPago().then(() => {
+//        mercadoPagoController.createCardForm();
+
+//        // Adicionar evento de submit ao formulário após a inicialização do Mercado Pago
+//        document.getElementById("form-checkout").addEventListener("submit", event => {
+//            mercadoPagoController.onSubmit(event);
+//        });
+//    }).catch(error => {
+//        console.error("Erro ao inicializar o Mercado Pago:", error);
+//    });
+//}
+
+//Seleciona Cartão
+const selectPag = document.getElementById('select-pagamento')
+if (selectPag) {
+    selectPag.addEventListener('change', mercadoPagoController.selectCard);
+}
+
+//submit
+const viewCartao = document.getElementById('form-checkout');
+if (viewCartao) {
+    viewCartao.addEventListener('submit', mercadoPagoController.Submit.bind(mercadoPagoController));
+}
+
+
+
+//Fechar tela de Cartão
+const fechaCartao = document.getElementById('btn-fechar-cartao')
+if (fechaCartao) {
+    fechaCartao.addEventListener('click', mercadoPagoController.fechaView);
+}
+
 
 
 

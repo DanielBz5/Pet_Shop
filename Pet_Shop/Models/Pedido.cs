@@ -39,5 +39,9 @@ namespace Pet_Shop.Models
 
         [BindNever]
         public string ChavePagamento { get; set; }
+
+        public string TokenCard { get; set; }
+
+        public int? Parcelas { get; set; }
     }
 }

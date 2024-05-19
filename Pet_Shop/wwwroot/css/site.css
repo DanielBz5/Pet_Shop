@@ -604,6 +604,32 @@ h5 {
     height: auto;
 }
 
+/*--------Cartão MP*/
+#form-checkout {
+    display: flex;
+    flex-direction: column;
+    max-width: 600px;
+}
+
+.container-cartao {
+    height: 25px;
+    display: inline-block;
+    border: 1px solid rgb(118, 118, 118);
+    border-radius: 2px;
+    padding: 1px 2px;
+    background-color:white;
+}
+
+#cartao-view {
+    display: none;
+    flex-direction: column;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1001; /* maior que o overlay  */
+}
+
 
 /*******************************************Manage***********************************************************************
 ---------------------------------------------------------------------------------------------------------------------------- */

@@ -1,6 +1,7 @@
 ﻿@model Pet_Shop.Models.Pedido
 
 <div class="container-manage">
+    <div id="overlay" class="overlay"></div>
     <div class="manage-produto">
         <h5 class="titulo-black">Etapa 1: Criar Pedido<i class="bi bi-bag-plus-fill"></i></h5><br>
         <form asp-controller="Shop" asp-action="GeraPedido" method="post" enctype="multipart/form-data">
@@ -42,14 +43,17 @@
             <div class="row mb-3">
                 <label for="input3" class="col-sm-2 col-form-label">Pagamento</label>
                 <div class="col-sm-10">
-                    <select class="form-control input-busca col-sm-10" aria-label="Default select example" asp-for="TipoPagamento">
+                    <select id="select-pagamento" class="form-control input-busca col-sm-10" aria-label="Default select example" asp-for="TipoPagamento">
                         <option selected value="">Escolha Forma de Pagamento</option>
                         <option value="Pix">Pix</option>
+                        <option value="Cartao">Cartão</option>
                         <option value="Entrega">Pagar na Entrega</option>
                     </select>
                     <span asp-validation-for="TipoPagamento" class="text-danger"></span>
                 </div>
             </div>
+
+            <h6 id="mostra-cartao" style="display:none;">Cartão Adicionado<i class="bi bi-check-square-fill"></i></h6>
 
             <div class="row mb-3" style="margin-left:10px">
                 <label class="valor-pedido" for="valor-pedido">Valor:</label>
@@ -58,9 +62,39 @@
 
             <div class="btn-login">
                 <a class="btn btn-secondary" asp-controller="Shop" asp-action="Shop"><i class="bi bi-caret-left-fill"></i>Voltar</a>
-                <button type="submit" class="btn btn-primary"><i class="bi bi-bag-plus-fill"></i> Continuar Pedido</button>
+                <button type="submit" id="continua-pedido" class="btn btn-primary"><i class="bi bi-bag-plus-fill"></i> Continuar Pedido</button>
             </div>
 
         </form>
+
     </div>
 </div>
+
+<div id="cartao-view">
+    <div class="container-manage">
+        <div class="manage-produto">
+            <div class="top-carrinho">
+                <h5 style="color:black; margin-right:35px;">Adicione o Cartão  <i class="bi bi-credit-card"></i></h5>
+                <div></div>
+                <button type="button" id="btn-fechar-cartao" class="btn btn-danger bnt-fechar"><i class="bi bi-x-lg"></i></button>
+            </div>
+            <form id="form-checkout">
+                <div id="form-checkout__cardNumber" class="container-cartao"></div>
+                <div id="form-checkout__expirationDate" class="container-cartao"></div>
+                <div id="form-checkout__securityCode" class="container-cartao"></div>
+                <input type="text" id="form-checkout__cardholderName" />
+                <select id="form-checkout__issuer"></select>
+                <select id="form-checkout__installments"></select>
+                <select id="form-checkout__identificationType"></select>
+                <input type="text" id="form-checkout__identificationNumber" />
+                <input type="email" id="form-checkout__cardholderEmail" />
+
+                <div class="btn-login">
+                    <button class="btn btn-primary" type="submit" id="form-checkout__submit">Adicionar Cartão <i class="bi bi-credit-card"></i></button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
