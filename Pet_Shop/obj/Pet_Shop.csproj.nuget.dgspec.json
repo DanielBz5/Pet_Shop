@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Leo M\\source\\repos\\DanielBz5\\Pet_Shop\\Pet_Shop\\Pet_Shop.csproj": {}
+    "C:\\Users\\Leo M\\OneDrive\\Documentos\\Pessoal\\Asp.Net Core\\Git\\Pet_Shop\\Pet_Shop\\Pet_Shop.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Leo M\\source\\repos\\DanielBz5\\Pet_Shop\\Pet_Shop\\Pet_Shop.csproj": {
+    "C:\\Users\\Leo M\\OneDrive\\Documentos\\Pessoal\\Asp.Net Core\\Git\\Pet_Shop\\Pet_Shop\\Pet_Shop.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Leo M\\source\\repos\\DanielBz5\\Pet_Shop\\Pet_Shop\\Pet_Shop.csproj",
+        "projectUniqueName": "C:\\Users\\Leo M\\OneDrive\\Documentos\\Pessoal\\Asp.Net Core\\Git\\Pet_Shop\\Pet_Shop\\Pet_Shop.csproj",
         "projectName": "Pet_Shop",
-        "projectPath": "C:\\Users\\Leo M\\source\\repos\\DanielBz5\\Pet_Shop\\Pet_Shop\\Pet_Shop.csproj",
+        "projectPath": "C:\\Users\\Leo M\\OneDrive\\Documentos\\Pessoal\\Asp.Net Core\\Git\\Pet_Shop\\Pet_Shop\\Pet_Shop.csproj",
         "packagesPath": "C:\\Users\\Leo M\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Leo M\\source\\repos\\DanielBz5\\Pet_Shop\\Pet_Shop\\obj\\",
+        "outputPath": "C:\\Users\\Leo M\\OneDrive\\Documentos\\Pessoal\\Asp.Net Core\\Git\\Pet_Shop\\Pet_Shop\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Leo M\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -55,6 +55,10 @@
             "FastReport.OpenSource.Web": {
               "target": "Package",
               "version": "[2024.1.6, )"
+            },
+            "Microsoft.AspNet.WebApi.Client": {
+              "target": "Package",
+              "version": "[6.0.0, )"
             },
             "Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation": {
               "target": "Package",

@@ -22,6 +22,7 @@ using System.Threading.Tasks;
 
 
 
+
 namespace Pet_Shop.Controllers
 {
     public class ShopController : Controller
@@ -344,7 +345,7 @@ namespace Pet_Shop.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Relatorios(Relatorio relatorio)// não está passando os filtros //arruma isso
+        public IActionResult Relatorios(Relatorio relatorio)
         {
             if (relatorio.Modelo == "Produto")
             {
@@ -418,11 +419,20 @@ namespace Pet_Shop.Controllers
 
             var pdfExport = new PDFSimpleExport();
 
-            using MemoryStream ms = new MemoryStream();
-            pdfExport.Export(freport, ms);
-            ms.Flush();
+            using (MemoryStream ms = new MemoryStream())
+            {
+                pdfExport.Export(freport, ms);
+                ms.Flush();
 
-            return File(ms.ToArray(), "application/pdf");
+                // Salva Pdf Servidor
+                var fileName = $"{RelName}_{DateTime.Now:yyyyMMddHHmmss}.pdf";
+                var filePath = Path.Combine(_webHostEnv.WebRootPath, "relatorios_gerados", fileName);
+                System.IO.File.WriteAllBytes(filePath, ms.ToArray());
+
+                // Url Pdf
+                var fileUrl = Url.Content($"~/relatorios_gerados/{fileName}");
+                return Ok(new { Url = fileUrl });
+            }
         }
 
         [Authorize]
@@ -1039,10 +1049,47 @@ namespace Pet_Shop.Controllers
             return false;
         }
 
-        public IActionResult Teste()
-        {
+        //-----------------------------------------------------Parte de Teste 
 
-            return View("CartaoPagamento");
+        [HttpPost]
+        public async Task<IActionResult> ProcessaRelatorio([FromBody] Relatorio relatorio)
+        {
+            var result = Relatorios(relatorio) as OkObjectResult;
+            var url = (result.Value as dynamic)?.Url;
+
+            if (string.IsNullOrEmpty(url))
+            {
+                return BadRequest("Erro ao obter a URL do relatório");
+            }
+
+            using (var httpClient = new HttpClient())
+            {
+                var response = await httpClient.PostAsJsonAsync("http://localhost:5000/api/notificar", new { Url = url });
+                response.EnsureSuccessStatusCode();
+            }
+
+            return Ok();
+        }
+
+        [HttpGet("imprimir/{id}")]
+        public IActionResult ImprimirRelatorio(int id)
+        {
+            // Lógica para buscar e renderizar o conteúdo do relatório
+            string conteudoRelatorio = "<html><body><h1>Relatório</h1><p>Conteúdo do relatório aqui.</p></body></html>";
+
+            return Content($@"
+            <html>
+            <head>
+                <script type='text/javascript'>
+                    window.onload = function() {{
+                        window.print();
+                    }};
+                </script>
+            </head>
+            <body>
+                {conteudoRelatorio}
+            </body>
+            </html>", "text/html");
         }
     }
 }
