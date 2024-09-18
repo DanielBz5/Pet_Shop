@@ -764,7 +764,7 @@ namespace Pet_Shop.Controllers
         {
             if (ModelState.IsValid) 
             {
-                if (shopdao.AtualizaPedido(pedido))
+                if (shopdao.AtualizaPedido(pedido))//atualiza Tel e Endereco
                 {
                     switch (pedido.TipoPagamento)
                     {
@@ -779,6 +779,7 @@ namespace Pet_Shop.Controllers
                             }
 
                         case "Cartao":
+                        case "master":
                             if (await IntegracaoCartao(pedido))
                             {
                                 return View("ResultPedido", pedido);
@@ -961,22 +962,22 @@ namespace Pet_Shop.Controllers
 
         }
 
-        [HttpPost("Shop/ProcessCard")]
-        public IActionResult ProcessCard([FromBody] string json)    
+        [HttpPost("Shop/ProcessCard")] // bad request e gerando pedidos arruma
+        public IActionResult ProcessCard([FromBody] dynamic json)  //    Cartão teste :5031 4332 1540 6351/ Data: 11/25  CS:123
         {
-            if(json != null)
+            if (json != null)
             {
-                Pedido pedido = new Pedido();
-                dynamic jsonObj = JsonConvert.DeserializeObject(json);
+                string jsonString = Convert.ToString(json);// JsonConvert.DeserializeObject espera String
+                dynamic jsonObj = JsonConvert.DeserializeObject(jsonString);
 
-                jsonObj.token = pedido.TokenCard;
-                jsonObj.payment_method_id = pedido.TipoPagamento;
-                jsonObj.installments = pedido.Parcelas;
+                Pedido pedido = shopdao.ConsultaPedido(new Pedido { Cod = jsonObj.cod_pedido });
+                pedido.TokenCard = jsonObj.token;
+                pedido.TipoPagamento = jsonObj.payment_method_id;
+                pedido.Parcelas = jsonObj.installments;
 
+                if (jsonObj.token != null || jsonObj.token != "")
                 if (shopdao.AtualizaPedido(pedido))
-                {
                     return Ok();
-                }
             }
             return BadRequest();
         }
@@ -1039,10 +1040,11 @@ namespace Pet_Shop.Controllers
             return false;
         }
 
-        public IActionResult Teste()
-        {
+        //public IActionResult Teste()
+        //{
 
-            return View("CartaoPagamento");
-        }
+        //    return OK();
+
+        //}
     }
 }

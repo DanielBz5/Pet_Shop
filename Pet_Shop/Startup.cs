@@ -49,6 +49,12 @@ namespace Pet_Shop
                 options.Filters.Add(new TrataException());
             });
 
+            //NewtonsoftJson
+            services.AddControllers()
+            .AddNewtonsoftJson(options =>
+            {
+                options.SerializerSettings.Formatting = Newtonsoft.Json.Formatting.Indented;
+            });
 
             services.AddControllersWithViews();
             services.AddMemoryCache();//serviço de cache

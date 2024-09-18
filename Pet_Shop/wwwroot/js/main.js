@@ -103,6 +103,8 @@ if (btncopy) {
 //    });
 //}
 
+
+
 //Seleciona Cartão
 const selectPag = document.getElementById('select-pagamento')
 if (selectPag) {

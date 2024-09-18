@@ -80,7 +80,8 @@
     }
 
     Submit() {
-        event.preventDefault();  //Fez o Post json null      Cartão teste :5031 4332 1540 6351/ Data: 11/25  CS:123
+        var cod_pedido = document.getElementById('CodigoPedido').value;
+        event.preventDefault(); //    Cartão teste :5031 4332 1540 6351/ Data: 11/25  CS:123
 
         const {
             paymentMethodId: payment_method_id,
@@ -99,6 +100,7 @@
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
+                cod_pedido,
                 token,
                 issuer_id,
                 payment_method_id,
@@ -113,6 +115,7 @@
                     },
                 },
             }),
+            
         })
             .then(response => {
                 if (response.ok) {
@@ -125,6 +128,7 @@
             })
     }
 
+    //abre tela do Cartão e inicializa 
     selectCard() {
         const metodo = document.getElementById('select-pagamento').value;
         if (metodo == "Cartao") {
@@ -161,6 +165,11 @@
     MessageBox(titulo, mensagem) {
         const url = `MessageBox?titulo=${encodeURIComponent(titulo)}&mensagem=${encodeURIComponent(mensagem)}`;
         window.location.href = url;
+    }
+
+    BuscaCodPedido() {
+        const cod = document.getElementById('CodigoPedido').value
+        return cod;
     }
 
 }
