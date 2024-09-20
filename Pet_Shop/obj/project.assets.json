@@ -8455,19 +8455,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Leo M\\.nuget\\packages\\": {}
+    "C:\\Users\\daniel\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Leo M\\source\\repos\\DanielBz5\\Pet_Shop\\Pet_Shop\\Pet_Shop.csproj",
+      "projectUniqueName": "C:\\Users\\daniel\\source\\repos\\DanielBz5\\Pet_Shop\\Pet_Shop\\Pet_Shop.csproj",
       "projectName": "Pet_Shop",
-      "projectPath": "C:\\Users\\Leo M\\source\\repos\\DanielBz5\\Pet_Shop\\Pet_Shop\\Pet_Shop.csproj",
-      "packagesPath": "C:\\Users\\Leo M\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Leo M\\source\\repos\\DanielBz5\\Pet_Shop\\Pet_Shop\\obj\\",
+      "projectPath": "C:\\Users\\daniel\\source\\repos\\DanielBz5\\Pet_Shop\\Pet_Shop\\Pet_Shop.csproj",
+      "packagesPath": "C:\\Users\\daniel\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\daniel\\source\\repos\\DanielBz5\\Pet_Shop\\Pet_Shop\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Leo M\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\daniel\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [

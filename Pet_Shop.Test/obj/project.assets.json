@@ -9934,19 +9934,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Leo M\\.nuget\\packages\\": {}
+    "C:\\Users\\daniel\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Leo M\\source\\repos\\DanielBz5\\Pet_Shop\\Pet_Shop.Test\\Pet_Shop.Test.csproj",
+      "projectUniqueName": "C:\\Users\\daniel\\source\\repos\\DanielBz5\\Pet_Shop\\Pet_Shop.Test\\Pet_Shop.Test.csproj",
       "projectName": "Pet_Shop.Test",
-      "projectPath": "C:\\Users\\Leo M\\source\\repos\\DanielBz5\\Pet_Shop\\Pet_Shop.Test\\Pet_Shop.Test.csproj",
-      "packagesPath": "C:\\Users\\Leo M\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Leo M\\source\\repos\\DanielBz5\\Pet_Shop\\Pet_Shop.Test\\obj\\",
+      "projectPath": "C:\\Users\\daniel\\source\\repos\\DanielBz5\\Pet_Shop\\Pet_Shop.Test\\Pet_Shop.Test.csproj",
+      "packagesPath": "C:\\Users\\daniel\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\daniel\\source\\repos\\DanielBz5\\Pet_Shop\\Pet_Shop.Test\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Leo M\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\daniel\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -9960,8 +9960,8 @@
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
           "projectReferences": {
-            "C:\\Users\\Leo M\\source\\repos\\DanielBz5\\Pet_Shop\\Pet_Shop\\Pet_Shop.csproj": {
-              "projectPath": "C:\\Users\\Leo M\\source\\repos\\DanielBz5\\Pet_Shop\\Pet_Shop\\Pet_Shop.csproj"
+            "C:\\Users\\daniel\\source\\repos\\DanielBz5\\Pet_Shop\\Pet_Shop\\Pet_Shop.csproj": {
+              "projectPath": "C:\\Users\\daniel\\source\\repos\\DanielBz5\\Pet_Shop\\Pet_Shop\\Pet_Shop.csproj"
             }
           }
         }
