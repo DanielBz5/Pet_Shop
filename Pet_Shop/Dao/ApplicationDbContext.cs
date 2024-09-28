@@ -23,5 +23,10 @@ namespace Pet_Shop.Dao
         public DbSet<Pedido> Pedido { get; set; }
 
         public DbSet<ItemPedido> ItemPedido { get; set; }
+
+        public DbSet<Agendamento> Agendamento { get; set; }
+
+        public DbSet<Servicos> Servicos { get; set; }
     }
+
 }

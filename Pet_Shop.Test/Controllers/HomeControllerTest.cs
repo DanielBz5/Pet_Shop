@@ -66,7 +66,7 @@ namespace Pet_Shop.Test.Controllers
             var controller = new HomeController();
 
             // Act
-            var result = controller.Login() as ViewResult;
+            var result = controller.Index() as ViewResult;
 
             // Assert
             Assert.NotNull(result);

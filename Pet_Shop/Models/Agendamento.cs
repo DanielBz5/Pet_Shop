@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace Pet_Shop.Models
 {
+    [Table("Agendamento")]
     public class Agendamento
     {
+        [Key]
         public int Cod { get; set; }
 
         [Required(ErrorMessage = "O CPF deve ser informado")]

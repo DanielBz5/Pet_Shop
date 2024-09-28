@@ -40,7 +40,7 @@ namespace Pet_Shop
 
             //Confg Entity Framework
             services.AddDbContext<ApplicationDbContext>(options =>
-            options.UseMySQL(Configuration.GetConnectionString("DefaultConnection")));
+            options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
 
             //Confg Filtros

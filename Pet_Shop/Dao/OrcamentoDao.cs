@@ -1,4 +1,4 @@
-﻿using MySql.Data.MySqlClient;
+﻿using Microsoft.Data.SqlClient;
 using Pet_Shop.Models;
 using System;
 using System.Collections.Generic;
@@ -22,11 +22,11 @@ namespace Pet_Shop.Dao
             {
                 string sql = "SELECT * FROM servicos;";
 
-                MySqlConnection connection = conexaobanco.Open();
+                SqlConnection connection = conexaobanco.Open();
 
-                MySqlCommand command = new MySqlCommand(sql, connection);
+                SqlCommand command = new SqlCommand(sql, connection);
 
-                using (MySqlDataReader reader = command.ExecuteReader())
+                using (SqlDataReader reader = command.ExecuteReader())
                 {
                     while (reader.Read())
                     {

@@ -1,4 +1,4 @@
-﻿using MySql.Data.MySqlClient;
+﻿using Microsoft.Data.SqlClient;
 using Pet_Shop.Models;
 using System;
 using System.Collections.Generic;
@@ -24,11 +24,11 @@ namespace Pet_Shop.Dao
             {
                 string sql = "SELECT * FROM servicos;";
 
-                MySqlConnection connection = conexaobanco.Open();
+                SqlConnection connection = conexaobanco.Open();
 
-                MySqlCommand command = new MySqlCommand(sql, connection);
+                SqlCommand command = new SqlCommand(sql, connection);
 
-                using (MySqlDataReader reader = command.ExecuteReader())
+                using (SqlDataReader reader = command.ExecuteReader())
                 {
                     while (reader.Read())
                     {
@@ -64,11 +64,11 @@ namespace Pet_Shop.Dao
             {
                 string sql = "SELECT * FROM servicos WHERE Cod = '"+ CodServico + "';";
 
-                MySqlConnection connection = conexaobanco.Open();
+                SqlConnection connection = conexaobanco.Open();
 
-                MySqlCommand command = new MySqlCommand(sql, connection);
+                SqlCommand command = new SqlCommand(sql, connection);
 
-                using (MySqlDataReader reader = command.ExecuteReader())
+                using (SqlDataReader reader = command.ExecuteReader())
                 {
                     while (reader.Read())
                     {
@@ -97,10 +97,10 @@ namespace Pet_Shop.Dao
             {
                 string sql = "SELECT * FROM clientes WHERE Nome = '" + cliente.Nome + "' AND Senha = '" + cliente.Senha + "';";
 
-                MySqlConnection connection = conexaobanco.Open();
-                MySqlCommand command = new MySqlCommand(sql, connection);
+                SqlConnection connection = conexaobanco.Open();
+                SqlCommand command = new SqlCommand(sql, connection);
 
-                using (MySqlDataReader reader = command.ExecuteReader())
+                using (SqlDataReader reader = command.ExecuteReader())
                 {
                     while (reader.Read())
                     {
@@ -117,9 +117,9 @@ namespace Pet_Shop.Dao
                 Pet pet = new Pet();
 
                 sql = "SELECT * FROM pet WHERE CPF_Dono = '" + cliente.Cpf + "';";
-                command = new MySqlCommand(sql, connection);
+                command = new SqlCommand(sql, connection);
 
-                using (MySqlDataReader reader = command.ExecuteReader())
+                using (SqlDataReader reader = command.ExecuteReader())
                 {
                     while (reader.Read())
                     {
@@ -148,10 +148,10 @@ namespace Pet_Shop.Dao
             try
             {
                 string sql = "SELECT * FROM servicos WHERE Cod ='" + servicos.Cod + "';";
-                MySqlConnection connection = conexaobanco.Open();
-                MySqlCommand command = new MySqlCommand(sql, connection);
+                SqlConnection connection = conexaobanco.Open();
+                SqlCommand command = new SqlCommand(sql, connection);
 
-                using (MySqlDataReader reader = command.ExecuteReader())
+                using (SqlDataReader reader = command.ExecuteReader())
                 {
                     while (reader.Read())
                     {
@@ -168,7 +168,7 @@ namespace Pet_Shop.Dao
                        ",'" + pet.Especie + "','" + servicos.Nome + "','" + agendamento.Data + "');";
 
 
-                command = new MySqlCommand(sql, connection);
+                command = new SqlCommand(sql, connection);
                 int rowsAffected = command.ExecuteNonQuery();
 
                 if (rowsAffected > 0)
@@ -199,11 +199,11 @@ namespace Pet_Shop.Dao
             {
                 string sql = "SELECT * FROM agendamento;";
 
-                MySqlConnection connection = conexaobanco.Open();
+                SqlConnection connection = conexaobanco.Open();
 
-                MySqlCommand command = new MySqlCommand(sql, connection);
+                SqlCommand command = new SqlCommand(sql, connection);
 
-                using (MySqlDataReader reader = command.ExecuteReader())
+                using (SqlDataReader reader = command.ExecuteReader())
                 {
                     while (reader.Read())
                     {
@@ -254,11 +254,11 @@ namespace Pet_Shop.Dao
             {
                 string sql = "SELECT * FROM agendamento WHERE CPF = '" + agendamento.Cpf + "' OR _Data like '%" + Data + "%';";
 
-                MySqlConnection connection = conexaobanco.Open();
+                SqlConnection connection = conexaobanco.Open();
 
-                MySqlCommand command = new MySqlCommand(sql, connection);
+                SqlCommand command = new SqlCommand(sql, connection);
 
-                using (MySqlDataReader reader = command.ExecuteReader())
+                using (SqlDataReader reader = command.ExecuteReader())
                 {
                     while (reader.Read())
                     {
@@ -299,10 +299,10 @@ namespace Pet_Shop.Dao
             {
                 string sql = "SELECT * FROM clientes WHERE Nome = '" + cliente.Nome + "' AND Senha = '" + cliente.Senha + "';";
 
-                MySqlConnection connection = conexaobanco.Open();
-                MySqlCommand command = new MySqlCommand(sql, connection);
+                SqlConnection connection = conexaobanco.Open();
+                SqlCommand command = new SqlCommand(sql, connection);
 
-                using (MySqlDataReader reader = command.ExecuteReader())
+                using (SqlDataReader reader = command.ExecuteReader())
                 {
                     while (reader.Read())
                     {
@@ -318,9 +318,9 @@ namespace Pet_Shop.Dao
 
                 connection = conexaobanco.Open();
 
-                command = new MySqlCommand(sql, connection);
+                command = new SqlCommand(sql, connection);
 
-                using (MySqlDataReader reader = command.ExecuteReader())
+                using (SqlDataReader reader = command.ExecuteReader())
                 {
                     while (reader.Read())
                     {
@@ -359,10 +359,10 @@ namespace Pet_Shop.Dao
             {
                 string sql = "SELECT * FROM clientes WHERE Nome = '" + cliente.Nome + "' AND Senha = '" + cliente.Senha + "';";
 
-                MySqlConnection connection = conexaobanco.Open();
-                MySqlCommand command = new MySqlCommand(sql, connection);
+                SqlConnection connection = conexaobanco.Open();
+                SqlCommand command = new SqlCommand(sql, connection);
 
-                using (MySqlDataReader reader = command.ExecuteReader())
+                using (SqlDataReader reader = command.ExecuteReader())
                 {
                     while (reader.Read())
                     {
@@ -392,11 +392,11 @@ namespace Pet_Shop.Dao
             {
                 string sql = "SELECT * FROM agendamento WHERE Cod = '"+agendamento.Cod+"' ;";
 
-                MySqlConnection connection = conexaobanco.Open();
+                SqlConnection connection = conexaobanco.Open();
 
-                MySqlCommand command = new MySqlCommand(sql, connection);
+                SqlCommand command = new SqlCommand(sql, connection);
 
-                using (MySqlDataReader reader = command.ExecuteReader())
+                using (SqlDataReader reader = command.ExecuteReader())
                 {
                     while (reader.Read())
                     {
@@ -429,8 +429,8 @@ namespace Pet_Shop.Dao
             {
                 string sql = "DELETE FROM agendamento WHERE Cod = '" + agendamento.Cod + "';";
                
-                MySqlConnection connection = conexaobanco.Open();
-                MySqlCommand command = new MySqlCommand(sql, connection);
+                SqlConnection connection = conexaobanco.Open();
+                SqlCommand command = new SqlCommand(sql, connection);
                 int rowsAffected = command.ExecuteNonQuery();
 
                 if (rowsAffected > 0)

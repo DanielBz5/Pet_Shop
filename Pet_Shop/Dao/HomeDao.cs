@@ -1,5 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
-using MySql.Data.MySqlClient;
+﻿using Microsoft.Data.SqlClient;
+using Microsoft.Extensions.Configuration;
 using Pet_Shop.Models;
 using System;
 using System.Collections.Generic;
@@ -23,11 +23,11 @@ namespace Pet_Shop.Dao
             try { 
                 string sql = "SELECT * FROM clientes WHERE Nome = '" + cliente.Nome + "' and Senha = '" + cliente.Senha + "'";
 
-                MySqlConnection connection = conexaobanco.Open();
+                SqlConnection connection = conexaobanco.Open();
             
-                MySqlCommand command = new MySqlCommand(sql, connection);
+                SqlCommand command = new SqlCommand(sql, connection);
 
-                using (MySqlDataReader reader = command.ExecuteReader())
+                using (SqlDataReader reader = command.ExecuteReader())
                 {
                     while (reader.Read())
                     {
@@ -53,14 +53,14 @@ namespace Pet_Shop.Dao
         {
             try
             {
-                string sql = "INSERT INTO clientes (CPF, Nome, Senha, Telefone, Endereco) " +
-                             "VALUES ('"+cliente.Cpf +"','"+cliente.Nome + "','" + cliente.Senha + "','" + cliente.Telefone + "','" + cliente.Endereco+"');";
+                string sql = "INSERT INTO clientes (CPF, Nome, Senha, Telefone, Endereco, RememberMe) " +
+                             "VALUES ('"+cliente.Cpf +"','"+cliente.Nome + "','" + cliente.Senha + "','" + cliente.Telefone + "','" + cliente.Endereco+"','0');";
 
                 sql = sql + "INSERT INTO pet (CPF_Dono, Nome, Especie, Raca) " +
                           "VALUES ('" + cliente.Cpf + "','" + pet.Nome + "','" + pet.Especie + "','" + pet.Raca +"');";
 
-                MySqlConnection connection = conexaobanco.Open();
-                MySqlCommand command = new MySqlCommand(sql, connection);
+                SqlConnection connection = conexaobanco.Open();
+                SqlCommand command = new SqlCommand(sql, connection);
                 int rowsAffected = command.ExecuteNonQuery();
 
                 if(rowsAffected > 0) 

@@ -1,5 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
-using MySql.Data.MySqlClient;
+﻿using Microsoft.Data.SqlClient;
+using Microsoft.Extensions.Configuration;
 using Pet_Shop.Services;
 using System;
 using System.Collections.Generic;
@@ -12,24 +12,24 @@ namespace Pet_Shop.Dao
 {
     public class ConexaoBanco
     {
-        public MySqlConnection Open()
+        public SqlConnection Open()
         {
             var configuration = ConfigurationHelper.GetConfiguration(Directory.GetCurrentDirectory());
             var connectionString = configuration.GetConnectionString("DefaultConnection");
 
-             MySqlConnection connection = new MySqlConnection(connectionString);
+             SqlConnection connection = new SqlConnection(connectionString);
 
             connection.Open();
 
             return connection;
         }
 
-        public MySqlConnection Connection()
+        public SqlConnection Connection()
         {
             var configuration = ConfigurationHelper.GetConfiguration(Directory.GetCurrentDirectory());
             var connectionString = configuration.GetConnectionString("DefaultConnection");
 
-            MySqlConnection connection = new MySqlConnection(connectionString);
+            SqlConnection connection = new SqlConnection(connectionString);
 
             return connection;
         }
@@ -39,7 +39,7 @@ namespace Pet_Shop.Dao
             var configuration = ConfigurationHelper.GetConfiguration(Directory.GetCurrentDirectory());
             var connectionString = configuration.GetConnectionString("DefaultConnection");
 
-            MySqlConnection connection = new MySqlConnection(connectionString);
+            SqlConnection connection = new SqlConnection(connectionString);
 
             connection.Close();
         }
