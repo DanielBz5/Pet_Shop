@@ -56,7 +56,7 @@ namespace Pet_Shop.Dao
                 string sql = "INSERT INTO clientes (CPF, Nome, Senha, Telefone, Endereco, RememberMe) " +
                              "VALUES ('"+cliente.Cpf +"','"+cliente.Nome + "','" + cliente.Senha + "','" + cliente.Telefone + "','" + cliente.Endereco+"','0');";
 
-                sql = sql + "INSERT INTO pet (CPF_Dono, Nome, Especie, Raca) " +
+                sql = sql + "INSERT INTO pet (CpfDono, Nome, Especie, Raca) " +
                           "VALUES ('" + cliente.Cpf + "','" + pet.Nome + "','" + pet.Especie + "','" + pet.Raca +"');";
 
                 SqlConnection connection = conexaobanco.Open();
@@ -73,9 +73,11 @@ namespace Pet_Shop.Dao
                 }
                     
             }
-            catch(Exception)
+            catch(Exception ex)
             {
+                var teste = ex;
                 return false;
+                
             }
             finally
             {

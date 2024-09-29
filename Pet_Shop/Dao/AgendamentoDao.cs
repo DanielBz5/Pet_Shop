@@ -116,14 +116,14 @@ namespace Pet_Shop.Dao
 
                 Pet pet = new Pet();
 
-                sql = "SELECT * FROM pet WHERE CPF_Dono = '" + cliente.Cpf + "';";
+                sql = "SELECT * FROM pet WHERE CpfDono = '" + cliente.Cpf + "';";
                 command = new SqlCommand(sql, connection);
 
                 using (SqlDataReader reader = command.ExecuteReader())
                 {
                     while (reader.Read())
                     {
-                        pet.CpfDono = Convert.ToString(reader["CPF_Dono"]);
+                        pet.CpfDono = Convert.ToString(reader["CpfDono"]);
                         pet.Nome = Convert.ToString(reader["Nome"]);
                         pet.Especie = Convert.ToString(reader["Especie"]);
                         pet.Raca = Convert.ToString(reader["Raca"]);

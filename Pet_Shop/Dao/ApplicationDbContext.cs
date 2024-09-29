@@ -15,7 +15,7 @@ namespace Pet_Shop.Dao
         }
 
         public DbSet<Cliente> Clientes { get; set; }
-        public DbSet<Pet> Pets { get; set; }
+        public DbSet<Pet> Pet { get; set; }
 
         public DbSet<Produto> Produto { get; set; }
 

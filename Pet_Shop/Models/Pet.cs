@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Pet_Shop.Models
 {
-    [Table("Pets")]
+    [Table("Pet")]
     public class Pet
     {
         [Key]

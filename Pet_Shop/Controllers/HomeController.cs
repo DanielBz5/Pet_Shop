@@ -62,8 +62,7 @@ namespace Pet_Shop.Controllers
                 }
                 else
                 {
-                    ViewBag.ResultRegister = "Erro ao realizar cadastro";
-                    return View("_Register");
+                    return View("MessageBox", (TempData["Mensagem"] = "Erro ao realizar cadastro,", TempData["Titulo"] = "Atenção!"));
                 }
             }
         }
