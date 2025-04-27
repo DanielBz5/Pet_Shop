@@ -1,0 +1,10 @@
+C:\Users\daniel\source\repos\DanielBz5\Pet_Shop\PetShopWinForm\bin\Debug\PetShopWinForm.exe.config
+C:\Users\daniel\source\repos\DanielBz5\Pet_Shop\PetShopWinForm\bin\Debug\PetShopWinForm.exe
+C:\Users\daniel\source\repos\DanielBz5\Pet_Shop\PetShopWinForm\bin\Debug\PetShopWinForm.pdb
+C:\Users\daniel\source\repos\DanielBz5\Pet_Shop\PetShopWinForm\obj\Debug\PetShopWinForm.Properties.Resources.resources
+C:\Users\daniel\source\repos\DanielBz5\Pet_Shop\PetShopWinForm\obj\Debug\PetShopWinForm.csproj.GenerateResource.cache
+C:\Users\daniel\source\repos\DanielBz5\Pet_Shop\PetShopWinForm\obj\Debug\PetShopWinForm.csproj.CoreCompileInputs.cache
+C:\Users\daniel\source\repos\DanielBz5\Pet_Shop\PetShopWinForm\obj\Debug\PetShopWinForm.exe
+C:\Users\daniel\source\repos\DanielBz5\Pet_Shop\PetShopWinForm\obj\Debug\PetShopWinForm.pdb
+C:\Users\daniel\source\repos\DanielBz5\Pet_Shop\PetShopWinForm\obj\Debug\PetShopWinForm.Index.resources
+C:\Users\daniel\source\repos\DanielBz5\Pet_Shop\PetShopWinForm\obj\Debug\PetShopWinForm.csproj.AssemblyReference.cache
